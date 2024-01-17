@@ -1,13 +1,14 @@
 import axios from 'axios';
 
 axios.defaults.baseURL = import.meta.env.PROD
-  ? 'http://carloteka.com/api'
-  : 'http://localhost:8000/api';
+  ? 'http://localhost:8000/api'
+  : 'http://carloteka.com/api';
 
 export const fetchCategories = async () => {
   try {
     const response = await axios.get('/shop/categories/');
     const arrayData = response.data;
+    // console.log(response);
     return arrayData;
   } catch (error) {
     console.log(error);

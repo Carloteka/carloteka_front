@@ -1,13 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchItemDetails } from '../../api/api';
 import { SectionDescription } from './Description.styled';
+import { marked } from 'marked';
 
-type Good = { images: [{ image: string }]; name: string };
+type Good = { images: [{ image: string }]; name: string; description: string };
 
 const Description = () => {
   const { goodId } = useParams();
-
+  const description = useRef<HTMLDivElement>(null);
   const [good, setGood] = useState<Good>();
 
   useEffect(() => {
@@ -16,12 +17,20 @@ const Description = () => {
         const data = await fetchItemDetails(goodId);
         console.log(data);
         setGood(data);
+        getDescription(data.description);
       } catch (error) {
         console.log(error);
       }
     }
     getGoodDetail();
   }, [goodId]);
+
+  function getDescription(markdown: string) {
+    const target = description.current;
+    if (target) {
+      target.innerHTML = marked.parse(markdown) as string;
+    }
+  }
 
   return (
     good && (
@@ -37,15 +46,8 @@ const Description = () => {
       >
         <div>
           <h4 style={{ marginBottom: '12px' }}>{good.name}</h4>
-          <p>
-            це чудовий спосіб надати вашому інтер'єру природний та органічний
-            вигляд. Виготовлена з високоякісного дерева, вона має унікальну
-            текстуру та природні відтінки, що роблять кожну вазу особливою. Ця
-            ваза відмінно підходить для розміщення квітів, гілок, або інших
-            декоративних елементів, створюючи теплу та затишну атмосферу в
-            вашому приміщенні. Вона стане чудовим акцентом в вашому домі та
-            прикрасить будь-який інтер'єр.
-          </p>
+
+          <div ref={description}></div>
         </div>
         <img
           src={

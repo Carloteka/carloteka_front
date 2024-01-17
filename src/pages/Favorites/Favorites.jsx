@@ -64,7 +64,11 @@ const Favorites = () => {
           </ul>
         </FavoritesBox>
         {favorites?.length > 0 ? (
-          <Button type="button" onClick={() => clearFavorites()}>
+          <Button
+            className="secondaryBtn"
+            type="button"
+            onClick={() => clearFavorites()}
+          >
             Очистити список бажань
           </Button>
         ) : (

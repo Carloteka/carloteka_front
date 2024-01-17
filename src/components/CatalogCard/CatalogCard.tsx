@@ -105,7 +105,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
             {getBanner(in_stock)}
           </p>
         )}
-        <Link to={`/${category__id_name}/${id}`} state={{ id }}>
+        <Link to={`/${category__id_name}/${id}/description`} state={{ id }}>
           <img
             src={
               import.meta.env.PROD

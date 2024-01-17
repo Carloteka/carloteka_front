@@ -44,7 +44,7 @@ const GoodDetail = () => {
   const { setAmountInCart } = useContext(CartContext);
 
   const [good, setGood] = useState<Good>({} as Good);
-  //   console.log(good);
+  console.log(good);
 
   useEffect(() => {
     async function getGoodDetail() {
@@ -127,7 +127,7 @@ const GoodDetail = () => {
               sliderHandler={sliderHandler}
             ></Slider>
             <SellDiv>
-              <h3>{good.mini_description}</h3>
+              <h3>{good.name}</h3>
               <Price>₴ {good.price}</Price>
               <p>
                 <span>Наявність в магазині: </span>

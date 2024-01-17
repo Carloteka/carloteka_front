@@ -5,8 +5,8 @@ import {
   DeliverySection,
 } from './AboutPaymentAndDelivery.styled';
 import sprite from '../../images/sprite.svg';
-import paymentImg from '../../images/high-view-laptop-black-shopping-card-1x.jpg';
-
+import paymentImgJpg from '../../images/high-view-laptop-black-shopping-card-1x.jpg';
+import paymentImgAvif from '../../images/high-view-laptop-black-shopping-card-1x.avif';
 const AboutPaymentAndDelivery = () => {
   return (
     <>
@@ -35,12 +35,16 @@ const AboutPaymentAndDelivery = () => {
               <li>Оплата за реквізитами.</li>
             </ol>
           </div>
-          <img
-            src={paymentImg}
-            alt="black laptop and shopping card"
-            width={640}
-            height={426}
-          />
+
+          <picture>
+            <source srcSet={paymentImgAvif} width="640" height="426" />
+            <img
+              src={paymentImgJpg}
+              alt="black laptop and shopping card"
+              width="640"
+              height="426"
+            />
+          </picture>
         </PaymentSection>
         <DeliverySection>
           <h3>Доставка:</h3>

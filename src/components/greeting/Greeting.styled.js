@@ -36,14 +36,14 @@ export const Box = styled.div`
     }
   }
 `;
-export const Img = styled.img`
+export const Img = styled.picture`
   display: none;
   @media screen and (max-width: 1439px) {
     width: 100%;
     display: block;
   }
 `;
-export const ImgAside = styled.img`
+export const ImgAside = styled.picture`
   display: block;
   @media screen and (max-width: 1439px) {
     display: none;

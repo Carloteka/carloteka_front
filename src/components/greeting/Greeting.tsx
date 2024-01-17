@@ -8,7 +8,8 @@ import {
   Button,
 } from './Greeting.styled';
 import sprite from '../../images/sprite.svg';
-import heroImg from '../../images/Shield_and_sword-1.png';
+import heroImgPng from '../../images/Shield_and_sword-1.png';
+import heroImgAfiv from '../../images/Shield_and_sword-1.avif';
 
 export const Greeting = () => {
   return (
@@ -16,7 +17,15 @@ export const Greeting = () => {
       <Box>
         <div>
           <Title>Дерев’яні вироби на будь-який смак</Title>
-          <Img src={heroImg} alt="Shield and sword" width={640} height={646} />
+          <Img>
+            <source srcSet={heroImgAfiv} width="640" height="646" />
+            <img
+              src={heroImgPng}
+              alt="Shield and sword"
+              width="640"
+              height="646"
+            />
+          </Img>
           <Description>
             Вітаємо в інтернет-магазині КАРЛОТЕКА. Ми виготовляємо якісні
             дерев'яні вироби. У нас ви можете купити або замовити іграшкові
@@ -31,12 +40,15 @@ export const Greeting = () => {
             </svg>
           </Button>
         </div>
-        <ImgAside
-          src={heroImg}
-          alt="Shield and sword"
-          width={640}
-          height={646}
-        />
+        <ImgAside>
+          <source srcSet={heroImgAfiv} width="640" height="646" />
+          <img
+            src={heroImgPng}
+            alt="Shield and sword"
+            width="640"
+            height="646"
+          />
+        </ImgAside>
       </Box>
     </GreetingContainer>
   );

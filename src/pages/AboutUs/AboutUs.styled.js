@@ -85,24 +85,24 @@ export const SectionAboutShop = styled.section`
   }
 `;
 
-export const Img1 = styled.img`
+export const Img1 = styled.picture`
   position: absolute;
   top: 96px;
 `;
-export const Img3 = styled.img`
+export const Img3 = styled.picture`
   position: absolute;
   right: 236px;
 `;
-export const Img2 = styled.img`
+export const Img2 = styled.picture`
   position: absolute;
   right: 0;
 `;
-export const Img4 = styled.img`
+export const Img4 = styled.picture`
   position: absolute;
   right: 261px;
   bottom: 45px;
 `;
-export const Img5 = styled.img`
+export const Img5 = styled.picture`
   position: absolute;
   right: 0px;
   bottom: 0;

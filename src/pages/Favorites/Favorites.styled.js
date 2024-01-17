@@ -28,10 +28,7 @@ export const Card = styled.li`
 
 export const Button = styled.button`
   margin-left: auto;
-  padding: 5px 24px;
-  text-transform: uppercase;
-  color: #2d3f24;
-  border: 1px solid #2d3f24;
+
   @media screen and (min-width: 1440px) {
     width: 416px;
   }

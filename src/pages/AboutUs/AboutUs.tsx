@@ -13,24 +13,34 @@ import {
 } from './AboutUs.styled';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import sprite from '../../images/sprite.svg';
-import example1 from '../../images/about-Group 1026.png';
-import example2 from '../../images/about-Group 1023.png';
-import example3 from '../../images/about-Group 1027.png';
-import example4 from '../../images/about-Group 1025.png';
-import example5 from '../../images/about-Group 1024.png';
-import imgPath from '../../images/lamination-wood-grade-cylinders-manufacturer 1.jpg';
+import example1Png from '../../images/about-Group-1026.png';
+import example1Avif from '../../images/about-Group-1026.avif';
+import example2Png from '../../images/about-Group-1023.png';
+import example2Avif from '../../images/about-Group-1023.avif';
+import example3Png from '../../images/about-Group-1027.png';
+import example3Avif from '../../images/about-Group-1027.avif';
+import example4Png from '../../images/about-Group-1025.png';
+import example4Avif from '../../images/about-Group-1025.avif';
+import example5Png from '../../images/about-Group-1024.png';
+import example5Avif from '../../images/about-Group-1024.avif';
+import imgJpg from '../../images/lamination-wood-grade-cylinders-manufacturer 1.jpg';
+import imgAvif from '../../images/lamination-wood-grade-cylinders-manufacturer-1.avif';
 
 const AboutUs = () => {
   return (
     <>
       <PageTitle>Про нас</PageTitle>
       <ContainerLimiter paddingTopMob={'16px'} paddingTopDesc={'80px'}>
-        <img
-          src={imgPath}
-          alt="lamination wood grade cylinders manufacturer"
-          width={1312}
-          height={800}
-        />
+        <picture>
+          <source srcSet={imgAvif} width="1312" height="800" />
+          <img
+            src={imgJpg}
+            alt="lamination wood grade cylinders manufacturer"
+            width="1312"
+            height="800"
+          />
+        </picture>
+
         <SectionAboutBrand>
           <div>
             <FirstP>
@@ -62,45 +72,47 @@ const AboutUs = () => {
           </div>
           <div>
             <Table>
-              <tr>
-                <td>Назва компанії</td>
-                <td>Карлотека</td>
-              </tr>
-              <tr>
-                <td>Власник</td>
-                <td>Зайцева Наталія</td>
-              </tr>
-              <tr>
-                <td>Адреса</td>
-                <td>
-                  вул. А.Фарба 4б,<br></br> Дніпро, Україна
-                </td>
-              </tr>
-              <tr>
-                <td>Номер телефону</td>
-                <td>
-                  <a href="tel:+380955810075" title="Call +380955810075">
-                    +380 (95) 581-00-75
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>Відділ продажу</td>
-                <td>
-                  <a href="tel:+380955810075" title="Call +380955810075">
-                    +380955810075
-                  </a>
-                  <a href="tel:+380955810075" title="Call +380955810075">
-                    +380955810075
-                  </a>
-                  <a
-                    href="mailto:info.carloteka@gmail.com"
-                    title="mail to info.carloteka@gmail.com"
-                  >
-                    info.carloteka@gmail.com
-                  </a>
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>Назва компанії</td>
+                  <td>Карлотека</td>
+                </tr>
+                <tr>
+                  <td>Власник</td>
+                  <td>Зайцева Наталія</td>
+                </tr>
+                <tr>
+                  <td>Адреса</td>
+                  <td>
+                    вул. А.Фарба 4б,<br></br> Дніпро, Україна
+                  </td>
+                </tr>
+                <tr>
+                  <td>Номер телефону</td>
+                  <td>
+                    <a href="tel:+380955810075" title="Call +380955810075">
+                      +380 (95) 581-00-75
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Відділ продажу</td>
+                  <td>
+                    <a href="tel:+380955810075" title="Call +380955810075">
+                      +380955810075
+                    </a>
+                    <a href="tel:+380955810075" title="Call +380955810075">
+                      +380955810075
+                    </a>
+                    <a
+                      href="mailto:info.carloteka@gmail.com"
+                      title="mail to info.carloteka@gmail.com"
+                    >
+                      info.carloteka@gmail.com
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
             </Table>
           </div>
         </SectionAboutBrand>
@@ -127,41 +139,56 @@ const AboutUs = () => {
             </Link>
           </div>
           <div>
-            <Img1
-              src={example1}
-              alt="a wooden amphora"
-              width={229}
-              height={343}
-              loading="lazy"
-            />
-            <Img2
-              src={example2}
-              alt="a massive craft bound book"
-              width={343}
-              height={228}
-              loading="lazy"
-            />
-            <Img3
-              src={example3}
-              alt="a wooden chessboard with chess"
-              width={345}
-              height={276}
-              loading="lazy"
-            />
-            <Img4
-              src={example4}
-              alt="a craft backgammon board"
-              width={345}
-              height={276}
-              loading="lazy"
-            />
-            <Img5
-              src={example5}
-              alt="a wooden phone stand"
-              width={276}
-              height={345}
-              loading="lazy"
-            />
+            <Img1>
+              <source srcSet={example1Avif} width="229" height="343" />
+              <img
+                src={example1Png}
+                alt="a wooden amphora"
+                width="229"
+                height="343"
+                loading="lazy"
+              />
+            </Img1>
+            <Img2>
+              <source srcSet={example2Avif} width="343" height="228" />
+              <img
+                src={example2Png}
+                alt="a massive craft bound book"
+                width="343"
+                height="228"
+                loading="lazy"
+              />
+            </Img2>
+            <Img3>
+              <source srcSet={example3Avif} width="345" height="276" />
+              <img
+                src={example3Png}
+                alt="a wooden chessboard with chess"
+                width="345"
+                height="276"
+                loading="lazy"
+              />
+            </Img3>
+            <Img4>
+              <source srcSet={example4Avif} width="345" height="276" />
+              <img
+                src={example4Png}
+                alt="a craft backgammon board"
+                width="345"
+                height="276"
+                loading="lazy"
+              />
+            </Img4>
+            <Img5>
+              <source srcSet={example5Avif} width="276" height="345" />
+              <img
+                src={example5Png}
+                alt="a wooden phone stand"
+                width="276"
+                height="345"
+                loading="lazy"
+              />
+            </Img5>
           </div>
         </SectionAboutShop>
       </ContainerLimiter>
