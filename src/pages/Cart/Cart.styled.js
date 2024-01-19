@@ -28,12 +28,7 @@ export const Card = styled.li`
 
 export const Button = styled.button`
   margin-left: auto;
-  padding: 5px 24px;
-  width: 100%;
-  height: 48px;
-  text-transform: uppercase;
-  color: #2d3f24;
-  border: 1px solid #2d3f24;
+
   @media screen and (min-width: 1440px) {
     width: 416px;
   }
@@ -75,13 +70,10 @@ export const EmptyMessage = styled.div`
 export const GoToCatalog = styled(Link)`
   margin: 0;
   padding: 14.5px 8px;
-  width: 100%;
-  height: 48px;
+
   justify-content: flex-start;
-  color: #2d3f24;
+
   font-weight: 500;
-  border: 1px solid #2d3f24;
-  text-transform: uppercase;
 
   @media screen and (min-width: 1440px) {
     padding: 14.5px 24px;
@@ -95,10 +87,6 @@ export const GoToCatalog = styled(Link)`
     @media screen and (min-width: 1440px) {
       margin-right: 49px;
     }
-  }
-
-  &:visited {
-    color: #2d3f24;
   }
 `;
 
@@ -131,7 +119,7 @@ export const CouponBox = styled.form`
     margin: 40px 0 32px;
   }
 
-  .width_full {
+  .secondaryBtn {
     width: 100%;
   }
 
@@ -188,14 +176,10 @@ export const BuyBox = styled.div`
 
 export const GoToPayment = styled(Link)`
   padding: 14.5px 8px;
-  width: 100%;
-  height: 48px;
+
   justify-content: flex-end;
-  color: white;
-  background-color: #2d3f24;
+
   font-weight: 500;
-  border: 1px solid #2d3f24;
-  text-transform: uppercase;
 
   @media screen and (min-width: 1440px) {
     padding: 14.5px 24px;
@@ -207,9 +191,5 @@ export const GoToPayment = styled(Link)`
     @media screen and (min-width: 1440px) {
       margin-left: 135px;
     }
-  }
-
-  &:visited {
-    color: #2d3f24;
   }
 `;

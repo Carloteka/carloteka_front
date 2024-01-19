@@ -73,11 +73,6 @@ export const Description = styled.p`
 `;
 export const Button = styled(Link)`
   position: relative;
-  background-color: #2d3f24;
-  color: white;
-  width: 100%;
-  height: 48px;
-  text-transform: uppercase;
 
   @media screen and (min-width: 1440px) {
     width: 304px;

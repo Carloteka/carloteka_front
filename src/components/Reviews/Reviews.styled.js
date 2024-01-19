@@ -71,12 +71,6 @@ export const Form = styled.form`
   }
 
   button {
-    width: 100%;
-    height: 48px;
-    color: white;
-    background-color: #2d3f24;
-    text-transform: uppercase;
-
     @media screen and (min-width: 1440px) {
       width: 231px;
     }

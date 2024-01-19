@@ -63,12 +63,10 @@ export const EmptyMessage = styled.div`
 export const GoToCatalog = styled(Link)`
   margin: 0 auto;
   padding: 14.5px 8px;
-  width: 100%;
+
   justify-content: flex-start;
-  color: white;
+
   font-weight: 500;
-  background-color: #2d3f24;
-  text-transform: uppercase;
 
   @media screen and (min-width: 1440px) {
     padding: 14.5px 24px;
@@ -82,9 +80,5 @@ export const GoToCatalog = styled(Link)`
     @media screen and (min-width: 1440px) {
       margin-right: 49px;
     }
-  }
-
-  &:visited {
-    color: white;
   }
 `;

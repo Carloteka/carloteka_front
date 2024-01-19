@@ -12,12 +12,6 @@ export const Footer = () => {
           <List>
             <li>
               <svg>
-                <use href={`${sprite}#geo`} />
-              </svg>
-              <p>Київ, вул. Хрещатик 1</p>
-            </li>
-            <li>
-              <svg>
                 <use href={`${sprite}#clock`} />
               </svg>
               <p>Пн - Пт 9.00 - 19.00, Сб 09.0 - 17.00, Нд - вихідний</p>

@@ -62,11 +62,6 @@ export const SellDiv = styled.div`
   }
 
   a {
-    width: 100%;
-    height: 48px;
-    color: white;
-    background-color: #2d3f24;
-    text-transform: uppercase;
     order: 5;
   }
 
@@ -94,11 +89,6 @@ export const Material = styled.p`
 `;
 
 export const AddToCartBtn = styled.button`
-  width: 100%;
-  height: 48px;
-  text-transform: uppercase;
-  border: 1px solid #2d3f24;
-  color: #2d3f24;
   order: 5;
 
   @media screen and (min-width: 1440px) {

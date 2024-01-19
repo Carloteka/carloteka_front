@@ -143,7 +143,11 @@ const GoodDetail = () => {
                     return;
                   }}
                 />
-                <AddToCartBtn type="button" onClick={() => toggleCart()}>
+                <AddToCartBtn
+                  type="button"
+                  onClick={() => toggleCart()}
+                  className="secondaryBtn"
+                >
                   Додати до кошика
                 </AddToCartBtn>
                 <AddToFavoriteBtn
@@ -163,7 +167,9 @@ const GoodDetail = () => {
                     <use href={`${sprite}#favorite`} />
                   </svg>
                 </AddToFavoriteBtn>
-                <Link to={'/cart'}>Купити в один клік</Link>
+                <Link to={'/cart'} className="primaryBtn">
+                  Купити в один клік
+                </Link>
               </div>
               <p>
                 <span>Категорія: </span>

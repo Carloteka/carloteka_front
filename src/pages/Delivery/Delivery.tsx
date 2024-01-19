@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
+import { InputMask } from 'primereact/inputmask';
 import {
   DeliveryBox,
   Form,
@@ -322,8 +323,9 @@ const Delivery = () => {
                 </label>
                 <label>
                   Номер телефону
-                  <input
+                  <InputMask
                     placeholder="38067 123 4567"
+                    mask="99999 999 9999"
                     name="phone"
                     type="tel"
                     required
@@ -362,7 +364,7 @@ const Delivery = () => {
             <aside style={{ paddingTop: '116px' }}>
               <InvoiceInfo inCart={inCart} />
 
-              <button type="submit" form="delivery">
+              <button type="submit" form="delivery" className="primaryBtn">
                 продовжити
               </button>
             </aside>

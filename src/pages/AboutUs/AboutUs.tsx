@@ -131,7 +131,11 @@ const AboutUs = () => {
               головоломки з Вашими логотипами, ексклюзивні брелоки і фірмові
               коробки для Вашої продукції.
             </p>
-            <Link to={'/catalog'} title="На стрінку Товарів">
+            <Link
+              to={'/catalog'}
+              title="На стрінку Товарів"
+              className="primaryBtn"
+            >
               Каталог
               <svg width={16} height={16}>
                 <use href={`${sprite}#arrow-right`} />

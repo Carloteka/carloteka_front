@@ -15,20 +15,12 @@ export const FlexContainer = styled.div`
 
 export const ShowFiltersBtn = styled.button`
   display: flex;
-  width: 100%;
-  height: 48px;
-  color: white;
-  background-color: #2d3f24;
-  text-transform: uppercase;
   @media screen and (min-width: 1440px) {
     display: none;
   }
 
-  &.white-bcgr {
+  &.secondaryBtn {
     margin-bottom: 56px;
-    color: #2d3f24;
-    background-color: white;
-    border: 1px solid #799058;
   }
 `;
 
@@ -94,14 +86,6 @@ export const Form = styled.form`
     width: 18px;
     height: 18px;
   }
-
-  button {
-    width: 100%;
-    height: 48px;
-    color: white;
-    background-color: #2d3f24;
-    text-transform: uppercase;
-  }
 `;
 
 export const Checkbox = styled.input``;
@@ -143,6 +127,7 @@ export const Price = styled.fieldset`
 
     & .bar-left {
       padding: 0;
+      box-shadow: none;
     }
     & .bar-right {
       padding: 0;

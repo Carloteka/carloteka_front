@@ -9,13 +9,7 @@ export const DeliveryBox = styled.section`
   justify-content: center;
   align-items;
   
-  button {
-    width: 100%;
-    height: 48px;
-    color: white;
-    background-color: #2d3f24;
-    text-transform: uppercase;
-  }
+
 
   aside {
     padding-top: 116px;

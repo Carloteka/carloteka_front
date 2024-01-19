@@ -35,6 +35,16 @@ export const Header = () => {
     setInCart(goodsInCart);
   }, [setInCart, inCart, goodsInCart]);
 
+  function burgerMenuHandler() {
+    document.body.style.overflowY = 'hidden';
+    setShowMenu(true);
+  }
+
+  function onClose() {
+    document.body.style.overflowY = 'auto';
+    setShowMenu(false);
+  }
+
   return (
     <HeaderContainer>
       <LimiterConatiner>
@@ -62,14 +72,14 @@ export const Header = () => {
           <BurgerMenuBtn
             type="button"
             title="Меню"
-            onClick={() => setShowMenu(true)}
+            onClick={() => burgerMenuHandler()}
           >
             <svg width={18} height={12}>
               <use href={`${sprite}#burger-menu`} />
             </svg>
           </BurgerMenuBtn>
         </Actions>
-        {showMenu && <Menu onClickHandle={setShowMenu} />}
+        {showMenu && <Menu onClickHandle={onClose} />}
         {showCartMenu && <MenuCart onClickHandle={setShowCartMenu} />}
       </LimiterConatiner>
     </HeaderContainer>

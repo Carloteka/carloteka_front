@@ -472,13 +472,15 @@ const Catalog = () => {
                   </label>
                 </div>
               </Price>
-              <button type="submit">Застосувати</button>
+              <button type="submit" className="primaryBtn">
+                Застосувати
+              </button>
             </Form>
           </Aside>
 
           <ShowFiltersBtn
             type="button"
-            className={showFilters ? 'white-bcgr' : ''}
+            className={showFilters ? 'secondaryBtn' : 'primaryBtn'}
             onClick={() => setShowFilters((prev) => !prev)}
           >
             {showFilters ? 'Сховати фільтри' : 'Фільтри'}

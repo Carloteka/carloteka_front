@@ -109,7 +109,11 @@ export const CardForFavoritesAndCart = ({
         )}
 
         {location.pathname.includes('favorite') && (
-          <BuyBtnDesc type="button" onClick={() => buyBtnHandle()}>
+          <BuyBtnDesc
+            type="button"
+            className="primaryBtn"
+            onClick={() => buyBtnHandle()}
+          >
             Купити
           </BuyBtnDesc>
         )}
@@ -127,7 +131,11 @@ export const CardForFavoritesAndCart = ({
         </DelBtn>
       </Div>
       {location.pathname.includes('favorite') && (
-        <BuyBtn type="button" onClick={() => buyBtnHandle()}>
+        <BuyBtn
+          type="button"
+          className="primaryBtn"
+          onClick={() => buyBtnHandle()}
+        >
           Купити
         </BuyBtn>
       )}

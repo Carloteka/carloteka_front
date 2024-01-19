@@ -44,41 +44,6 @@ export const CloseButton = styled.button`
   }
 `;
 
-export const FlexContainer = styled.div`
-@media screen and (max-width: 1439px) {
-      flex-direction: column;
-      row-gap:24px;
-    }
-
-  display: flex; 
-  justify-content: space-between;
-
-  h3 {
-    margin-bottom:16px;
-      font-size: 20px;
-  line-height: calc(27 / 20);
-   
-  }
-
-  button:first-of-type {
-    margin-bottom:8px;  
-  }
-
-    button {  
-  font-weight: 400;
-  font-size: 18px;
-  line-height: calc(25 / 18);
-    color: #5B5B59;
-  }
-
-  button:disabled {
-    color:#101010;
-    cursor:auto;
-  }
-}
-
-`;
-
 export const List = styled.ul`
   display: flex;
   flex-direction: column;

@@ -33,7 +33,7 @@ export const Greeting = () => {
             піци, посуд для суші, підноси для подачі кави) для ресторанів, кафе,
             барів, магазинів тощо.
           </Description>
-          <Button to={'/catalog'}>
+          <Button to={'/catalog'} className="primaryBtn">
             Детальніше
             <svg width={16} height={16}>
               <use href={`${sprite}#arrow-right`} />

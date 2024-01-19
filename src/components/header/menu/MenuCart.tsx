@@ -120,10 +120,18 @@ export const MenuCart = ({ onClickHandle }: MenuCartProps) => {
           <p>₴ {getTotalPrice()}</p>
         </Total>
 
-        <Link to={'/cart'} onClick={() => onClickHandle(false)}>
+        <Link
+          to={'/cart'}
+          onClick={() => onClickHandle(false)}
+          className="primaryBtn"
+        >
           переглянути кошик
         </Link>
-        <Link to={'/delivery'} onClick={() => onClickHandle(false)}>
+        <Link
+          to={'/delivery'}
+          onClick={() => onClickHandle(false)}
+          className="primaryBtn"
+        >
           Купити
         </Link>
       </MenuContainer>

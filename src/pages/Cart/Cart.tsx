@@ -110,13 +110,17 @@ const Cart = () => {
         </FavoritesBox>
         {inCart.length > 0 ? (
           <FlexBox>
-            <GoToCatalog to={'/catalog'}>
+            <GoToCatalog to={'/catalog'} className="secondaryBtn">
               <svg width={14} height={9}>
                 <use href={`${sprite}#arrow-right`} />
               </svg>
               продовжити покупки
             </GoToCatalog>
-            <Button type="button" onClick={() => clearCart()}>
+            <Button
+              type="button"
+              onClick={() => clearCart()}
+              className="secondaryBtn"
+            >
               Очистити кошик
             </Button>
           </FlexBox>
@@ -126,7 +130,7 @@ const Cart = () => {
               <use href={`${sprite}#cart`} />
             </svg>
             <h2>Ваш кошик пустий</h2>
-            <GoToCatalog to={'/catalog'}>
+            <GoToCatalog to={'/catalog'} className="secondaryBtn">
               <svg width={14} height={9}>
                 <use href={`${sprite}#arrow-right`} />
               </svg>
@@ -143,7 +147,7 @@ const Cart = () => {
                 <input type="text" placeholder="Номер купону" />
               </label>
               <Button
-                className="width_full"
+                className="secondaryBtn"
                 type="button"
                 onClick={() => console.log('apply coupon')}
               >
@@ -162,7 +166,7 @@ const Cart = () => {
                 </div>
               </div>
 
-              <GoToPayment to={'/payment'}>
+              <GoToPayment to={'/payment'} className="primaryBtn">
                 перейти до оплати
                 <svg width={14} height={9}>
                   <use href={`${sprite}#arrow-right`} />

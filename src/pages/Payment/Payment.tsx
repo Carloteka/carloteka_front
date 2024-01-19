@@ -3,12 +3,12 @@ import { CartContext } from '../../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
+import { InputMask } from 'primereact/inputmask';
 import {
   DeliveryBox,
   GoToDelivery,
   Form,
   RelativeDiv,
-  Button,
   PaymentMethodDiv,
   FlexContainer,
   SuccessBox,
@@ -39,6 +39,8 @@ type Good = {
 const Payment = () => {
   const { setAmountInCart } = useContext(CartContext);
   const navigate = useNavigate();
+
+  const [value, setValue] = useState<string | undefined>('');
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<undefined | string>();
@@ -132,7 +134,10 @@ const Payment = () => {
       <>
         <PageTitle>Оплата</PageTitle>
         <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'80px'}>
-          <GoToDelivery to={isSuccess ? '/catalog' : '/delivery'}>
+          <GoToDelivery
+            to={isSuccess ? '/catalog' : '/delivery'}
+            className="secondaryBtn"
+          >
             <svg width={16} height={16}>
               <use href={`${sprite}#arrow-right`} />
             </svg>
@@ -208,10 +213,12 @@ const Payment = () => {
                     <RelativeDiv>
                       <label>
                         Номер картки
-                        <input
+                        <InputMask
+                          value={value || ''}
+                          onChange={(e) => setValue(e.value || undefined)}
                           placeholder="111 222 333 444 555 666"
+                          mask="999 999 999 999 999 999"
                           name="cardNo"
-                          type="number"
                           required
                         />
                       </label>
@@ -225,10 +232,12 @@ const Payment = () => {
 
                     <label className="short">
                       Місяць / Рік
-                      <input
+                      <InputMask
+                        value={value || ''}
+                        onChange={(e) => setValue(e.value || undefined)}
                         placeholder="01 / 2024"
+                        mask="99/9999"
                         name="cardExpire"
-                        type="number"
                         className="short"
                         required
                       />
@@ -245,7 +254,9 @@ const Payment = () => {
                         required
                       />
                     </label>
-                    <Button type="submit">підтвердити</Button>
+                    <button type="submit" className="primaryBtn">
+                      підтвердити
+                    </button>
                   </FlexContainer>
                 </Form>
                 <span>OR</span>
@@ -360,7 +371,9 @@ const Payment = () => {
                       <use href={`${sprite}#i`} />
                     </svg>
                   </div>
-                  <Button type="submit">підтвердити</Button>
+                  <button type="submit" className="primaryBtn">
+                    підтвердити
+                  </button>
                 </form>
               </ModalMain>
             </Modal>

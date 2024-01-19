@@ -204,6 +204,7 @@ export const SearchBar = () => {
                     title="Show all results"
                     to={`/catalog?query=${query}`}
                     onClick={() => setShowResult(false)}
+                    className="primaryBtn"
                   >
                     Всі результати
                   </Button>

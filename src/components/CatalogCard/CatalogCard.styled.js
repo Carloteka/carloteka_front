@@ -55,6 +55,10 @@ export const Button = styled.button`
     width: 24px;
     height: 22px;
   }
+
+  &:hover {
+    box-shadow: 1px 1px 7px 0 rgba(218, 212, 200, 70%);
+  }
 `;
 
 export const Div = styled.div`

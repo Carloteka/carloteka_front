@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const TextContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -54,22 +55,11 @@ export const Title = styled.h2`
 
 export const LinkBtn = styled(Link)`
   padding: 13.5px 24px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-size: 19px;
   font-weight: 500;
   line-height: 1;
-  text-transform: uppercase;
-  border: 1px solid #2d3f24;
-  color: #2d3f24;
 
   @media screen and (min-width: 1440px) {
     width: 304px;
-  }
-
-  &:visited {
-    color: #2d3f24;
   }
 `;

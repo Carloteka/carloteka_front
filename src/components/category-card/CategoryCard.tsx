@@ -58,7 +58,7 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
         <Slider arrayToRender={arrayToRender} sliderHandler={sliderHandler} />
         <p>{description}</p>
         <LinkBtn
-          className="card_btn"
+          className="secondaryBtn"
           to={`/catalog?category-id-name=${category.id_name}`}
         >
           Переглянути

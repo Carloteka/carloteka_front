@@ -121,9 +121,4 @@ export const Button = styled(Link)`
   font-size: 19px;
   line-height: 1;
   font-weight: 500;
-  color: white;
-  background-color: #2d3f24;
-  &:visited {
-    color: white;
-  }
 `;

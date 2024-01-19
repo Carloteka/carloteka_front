@@ -31,12 +31,7 @@ export const MenuContainer = styled.div`
     width: 599px;
     min-height: 1024px;
   }
-  a {
-    height: 48px;
-    color: white;
-    background-color: #2d3f24;
-    text-transform: uppercase;
-  }
+
   a:last-child {
     margin-top: 32px;
   }
@@ -101,10 +96,4 @@ export const Total = styled.div`
   font-size: 18px;
   font-weight: 700;
   line-height: calc(23 / 18);
-`;
-
-export const LinkLarge = styled(Link)`
-  font-size: 24px;
-  font-weight: 700;
-  line-height: calc(31 / 24);
 `;

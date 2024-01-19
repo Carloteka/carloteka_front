@@ -112,9 +112,6 @@ export const BuyBtnDesc = styled.button`
   }
   margin-right: 88px;
   width: 192px;
-  height: 48px;
-  color: white;
-  background-color: #2d3f24;
   order: 3;
 `;
 
@@ -126,10 +123,7 @@ export const DelBtn = styled.button`
 
 export const BuyBtn = styled.button`
   margin: 32px 0 0;
-  height: 48px;
-  width: 100%;
-  color: white;
-  background-color: #2d3f24;
+
   @media screen and (min-width: 1440px) {
     display: none;
   }

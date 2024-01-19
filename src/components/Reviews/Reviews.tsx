@@ -103,6 +103,7 @@ const Reviews = () => {
           </FlexContainer>
           <button
             type="submit"
+            className="primaryBtn"
             onClick={() => {
               return false;
             }}

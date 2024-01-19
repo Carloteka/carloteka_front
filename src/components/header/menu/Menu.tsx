@@ -1,7 +1,6 @@
 import {
   MenuContainer,
   CloseButton,
-  FlexContainer,
   List,
   FlexCatalogContainer,
   CategoriesList,
@@ -25,28 +24,10 @@ type Categories = {
 };
 
 interface MenuProps {
-  onClickHandle: (arg0: boolean) => void;
+  onClickHandle: () => void;
 }
 
 export const Menu = ({ onClickHandle }: MenuProps) => {
-  let language: string | null = 'ukr';
-  let currency: string | null = 'uah';
-
-  if (localStorage.getItem('language')) {
-    language = localStorage.getItem('language');
-  } else {
-    localStorage.setItem('language', 'ukr');
-  }
-
-  if (localStorage.getItem('currency')) {
-    currency = localStorage.getItem('currency');
-  } else {
-    localStorage.setItem('currency', 'uah');
-  }
-
-  const [isUkr, setIsUkr] = useState(language === 'ukr');
-  const [isUah, setIsUah] = useState(currency === 'uah');
-
   const tempString = localStorage.getItem('categories') as string;
   const categories: Categories[] = JSON.parse(tempString);
 
@@ -54,59 +35,11 @@ export const Menu = ({ onClickHandle }: MenuProps) => {
 
   return (
     <MenuContainer>
-      <CloseButton onClick={() => onClickHandle(false)}>
+      <CloseButton onClick={() => onClickHandle()}>
         <svg width={24} height={24}>
           <use href={`${sprite}#close`} />
         </svg>
       </CloseButton>
-      <FlexContainer>
-        <div>
-          <h3>Мова</h3>
-          <button
-            type="button"
-            disabled={isUkr}
-            onClick={() => {
-              localStorage.language = 'ukr';
-              setIsUkr(true);
-            }}
-          >
-            Українська
-          </button>
-          <button
-            type="button"
-            disabled={!isUkr}
-            onClick={() => {
-              localStorage.language = 'eng';
-              setIsUkr(false);
-            }}
-          >
-            English
-          </button>
-        </div>
-        <div>
-          <h3>Валюта</h3>
-          <button
-            type="button"
-            disabled={isUah}
-            onClick={() => {
-              localStorage.currency = 'uah';
-              setIsUah(true);
-            }}
-          >
-            Українська гривня
-          </button>
-          <button
-            type="button"
-            disabled={!isUah}
-            onClick={() => {
-              localStorage.currency = 'usd';
-              setIsUah(false);
-            }}
-          >
-            Американський долар
-          </button>
-        </div>
-      </FlexContainer>
       <nav>
         <List>
           <li>
@@ -128,7 +61,7 @@ export const Menu = ({ onClickHandle }: MenuProps) => {
                   <li key={el.id_name}>
                     <Link
                       to={`/catalog?category-id-name=${el.id_name}`}
-                      onClick={() => onClickHandle(false)}
+                      onClick={() => onClickHandle()}
                     >
                       {el.name}
                     </Link>
@@ -138,15 +71,12 @@ export const Menu = ({ onClickHandle }: MenuProps) => {
             )}
           </li>
           <li>
-            <LinkLarge to={'/about'} onClick={() => onClickHandle(false)}>
+            <LinkLarge to={'/about'} onClick={() => onClickHandle()}>
               Про нас
             </LinkLarge>
           </li>
           <li>
-            <LinkLarge
-              to={'/aboutPayment'}
-              onClick={() => onClickHandle(false)}
-            >
+            <LinkLarge to={'/aboutPayment'} onClick={() => onClickHandle()}>
               Оплата & Доставка
             </LinkLarge>
           </li>
@@ -156,8 +86,6 @@ export const Menu = ({ onClickHandle }: MenuProps) => {
         <h3>Зв’язатись з нами</h3>
         <address>
           <ul>
-            <li>4b A. Farba St., Dnipro, Ukraine</li>
-
             <Tel>
               <a href="tel:+380955810075" title="Call +380955810075">
                 +380 (95) 581-00-75

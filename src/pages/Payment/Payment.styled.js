@@ -36,23 +36,17 @@ export const DeliveryBox = styled.section`
 &::after {
     right:0;}
 }
-
-
 `;
 
 export const GoToDelivery = styled(Link)`
   margin-bottom: 56px;
   padding: 0 24px;
   width: 528px;
-  height: 48px;
   justify-content: flex-start;
   gap: 10px;
   font-size: 19px;
   line-height: 1;
   font-weight: 500;
-  color: #2d3f24;
-  text-transform: uppercase;
-  border: 1px solid #2d3f24;
 
   svg {
     transform: rotate(180deg);
@@ -103,20 +97,6 @@ export const RelativeDiv = styled.div`
     position: absolute;
     bottom: 17px;
     right: 16px;
-  }
-`;
-export const Button = styled.button`
-  width: 100%;
-
-  color: white;
-  background-color: #2d3f24;
-  text-transform: uppercase;
-
-  &:hover {
-    background-color: #101010;
-  }
-  &:focus {
-    border: 2px solid #dad4c8;
   }
 `;
 
