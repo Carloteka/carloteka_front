@@ -44,7 +44,6 @@ const GoodDetail = () => {
   const { setAmountInCart } = useContext(CartContext);
 
   const [good, setGood] = useState<Good>({} as Good);
-  console.log(good);
 
   useEffect(() => {
     async function getGoodDetail() {

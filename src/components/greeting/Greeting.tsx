@@ -18,7 +18,12 @@ export const Greeting = () => {
         <div>
           <Title>Дерев’яні вироби на будь-який смак</Title>
           <Img>
-            <source srcSet={heroImgAfiv} width="640" height="646" />
+            <source
+              srcSet={heroImgAfiv}
+              width="640"
+              height="646"
+              type={'image/avif'}
+            />
             <img
               src={heroImgPng}
               alt="Shield and sword"
@@ -41,7 +46,12 @@ export const Greeting = () => {
           </Button>
         </div>
         <ImgAside>
-          <source srcSet={heroImgAfiv} width="640" height="646" />
+          <source
+            srcSet={heroImgAfiv}
+            width="640"
+            height="646"
+            type={'image/avif'}
+          />
           <img
             src={heroImgPng}
             alt="Shield and sword"

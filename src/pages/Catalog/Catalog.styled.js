@@ -71,9 +71,9 @@ export const Form = styled.form`
     padding: 0 3px;
     display: flex;
     align-items: center;
+    gap: 16px;
     width: 100%;
     min-height: 25px;
-    text-indent: 16px;
   }
   label:lastchild {
     margin-bottom: 0;

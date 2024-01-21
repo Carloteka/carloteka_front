@@ -45,7 +45,6 @@ export const SearchBar = () => {
     async function getAllGoods() {
       try {
         const data = await fetchPopularGoods();
-        console.log(data);
         localStorage.setItem('goods', JSON.stringify(data));
         setGoods(data);
       } catch (error) {
@@ -77,7 +76,6 @@ export const SearchBar = () => {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function filtering(array: Good[] | Categories[]): any[] {
-      console.log(array);
       const filteredArray = array.filter((el: Good | Categories) =>
         el.name.toUpperCase().includes(query.toUpperCase()),
       );
@@ -124,12 +122,7 @@ export const SearchBar = () => {
       </button>
       {showResult && query && (
         <>
-          <Backdrop
-            onClick={() => {
-              console.log('click');
-              setShowResult(false);
-            }}
-          ></Backdrop>
+          <Backdrop onClick={() => setShowResult(false)}></Backdrop>
           <SearchResultDiv>
             {!(searchedGoods.length > 0) && !(searchedCategories.length > 0) ? (
               <>

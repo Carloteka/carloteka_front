@@ -15,7 +15,6 @@ const Description = () => {
     async function getGoodDetail() {
       try {
         const data = await fetchItemDetails(goodId);
-        console.log(data);
         setGood(data);
         getDescription(data.description);
       } catch (error) {
