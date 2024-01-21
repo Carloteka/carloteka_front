@@ -129,11 +129,24 @@ const Payment = () => {
     // e.form.reset();
   }
 
+  function getDeliveryInfo(term: string) {
+    if (!localStorage.getItem('delivery')) {
+      localStorage.setItem('delivery', JSON.stringify({}));
+    }
+    const deliveryData = JSON.parse(localStorage.getItem('delivery') as string);
+    const { post, office, city, country } = deliveryData;
+    return term
+      ? `${post.value === 'novaposhta' ? '1-3 ' : '3-12 '}`
+      : `Доставити до відділеня ${
+          post.value === 'novaposhta' ? 'Нової Пошти' : 'УкрПошти'
+        } №${office}, ${city.label}, ${country.label}.`;
+  }
+
   return (
     (inCart.length > 0 || isSuccess) && (
       <>
         <PageTitle>Оплата</PageTitle>
-        <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'80px'}>
+        <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'80px'}>
           <GoToDelivery
             to={isSuccess ? '/catalog' : '/delivery'}
             className="secondaryBtn"
@@ -154,8 +167,8 @@ const Payment = () => {
                 <OrderInfoDiv>
                   <h3>Деталі замовлення</h3>
                   <DivBorderBottom>
-                    <p>Товар</p>
-                    <p>Сума:</p>
+                    <h4>Товар</h4>
+                    <h4>Сума:</h4>
                   </DivBorderBottom>
 
                   <ul>
@@ -183,20 +196,18 @@ const Payment = () => {
                 </OrderInfoDiv>
                 <DeliveryInfoDiv>
                   <h3>Деталі доставки</h3>
+                  <p>{getDeliveryInfo('')}</p>
                   <p>
-                    Доставити до відділеня Нової Пошти №23, проспект Перемоги
-                    10, Київ, Україна.
-                  </p>
-                  <p>
-                    Ми відправляємо замовлення впродовж 1-3 робочих днів.
-                    Вартість доставки базується на тарифах Нової Пошти /
-                    Укрпошти.
+                    Ми відправляємо замовлення впродовж{' '}
+                    {getDeliveryInfo('term')}
+                    робочих днів. Вартість доставки базується на тарифах Нової
+                    Пошти / Укрпошти.
                   </p>
                 </DeliveryInfoDiv>
               </div>
             </SuccessBox>
           ) : (
-            <DeliveryBox>
+            <DeliveryBox style={{ paddingBottom: '88px' }}>
               <div>
                 <Form onSubmit={submitHandle} id="payment">
                   <h2>Оплата онлайн</h2>
@@ -216,9 +227,10 @@ const Payment = () => {
                         <InputMask
                           value={value || ''}
                           onChange={(e) => setValue(e.value || undefined)}
-                          placeholder="111 222 333 444 555 666"
-                          mask="999 999 999 999 999 999"
+                          placeholder="1111 2222 3333 4444"
+                          mask="9999 9999 9999 9999"
                           name="cardNo"
+                          slotChar="-"
                           required
                         />
                       </label>
@@ -333,7 +345,7 @@ const Payment = () => {
                   type="button"
                   onClick={() => setPaymentMethod(undefined)}
                 >
-                  <svg width={18} height={18}>
+                  <svg width={9} height={9}>
                     <use href={`${sprite}#close`} />
                   </svg>
                 </button>

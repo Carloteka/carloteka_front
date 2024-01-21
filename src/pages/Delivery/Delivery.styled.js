@@ -4,27 +4,51 @@ import Select from 'react-select';
 export const DeliveryBox = styled.section`
   position: relative;
   display: flex;
-  gap: 32px;
-
+  flex-direction: column-reverse;
   justify-content: center;
-  align-items;
-  
+  gap: 24px;
+  text-align: left;
 
+  button {
+    display: none;
+    @media screen and (min-width: 1440px) {
+      display: flex;
+    }
+  }
 
   aside {
-    padding-top: 116px;
+    padding-top: 0;
+    @media screen and (min-width: 1440px) {
+      padding-top: 116px;
+    }
+  }
+
+  @media screen and (min-width: 1440px) {
+    flex-direction: row;
+    gap: 32px;
   }
 `;
 
 export const Form = styled.form`
-  width: 752px;
+  width: 100%;
+
+  @media screen and (min-width: 1440px) {
+    width: 752px;
+  }
 
   h2 {
-    margin-bottom: 40px;
+    margin-bottom: 24px;
+
+    @media screen and (min-width: 1440px) {
+      margin-bottom: 40px;
+    }
   }
 
   h3 {
-    margin: 56px 0 40px;
+    margin: 24px 0;
+    @media screen and (min-width: 1440px) {
+      margin: 56px 0 40px;
+    }
   }
 
   label {
@@ -36,19 +60,27 @@ export const Form = styled.form`
   }
 
   .short {
-    width: 368px;
+    width: 100%;
+
+    @media screen and (min-width: 1440px) {
+      width: 368px;
+    }
   }
 
   input,
   select {
-    padding: 16px;
+    padding: 8px;
     width: 100%;
     height: 50px;
     border: 1px solid #a7a5a3;
+
+    @media screen and (min-width: 1440px) {
+      padding: 16px;
+    }
   }
 
   textarea {
-    padding: 16px;
+    padding: 8px;
     width: 100%;
     height: 112px;
     font-family: inherit;
@@ -56,6 +88,25 @@ export const Form = styled.form`
     line-height: calc(25 / 18);
     color: #000;
     resize: none;
+
+    @media screen and (max-width: 1439px) {
+      &::-webkit-input-placeholder {
+        position: absolute;
+        top: 40px;
+      }
+    }
+
+    @media screen and (min-width: 1440px) {
+      padding: 16px;
+    }
+  }
+
+  button {
+    margin-top: 24px;
+    display: flex;
+    @media screen and (min-width: 1440px) {
+      display: none;
+    }
   }
 `;
 
@@ -63,7 +114,11 @@ export const FlexContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  row-gap: 32px;
+  row-gap: 16px;
+
+  @media screen and (min-width: 1440px) {
+    row-gap: 32px;
+  }
 `;
 
 export const StyledSelect = styled(Select)`
@@ -72,6 +127,13 @@ export const StyledSelect = styled(Select)`
   }
   &.react-select-container {
     width: 100%;
+  }
+  .rs__control {
+    padding: 0 8px;
+
+    @media screen and (min-width: 1440px) {
+      padding: 0 16px;
+    }
   }
   .rs__input {
     margin: 0;

@@ -30,9 +30,14 @@ const AboutUs = () => {
   return (
     <>
       <PageTitle>Про нас</PageTitle>
-      <ContainerLimiter paddingTopMob={'16px'} paddingTopDesc={'80px'}>
+      <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'80px'}>
         <picture>
-          <source srcSet={imgAvif} width="1312" height="800" />
+          <source
+            srcSet={imgAvif}
+            width="1312"
+            height="800"
+            type={'image/avif'}
+          />
           <img
             src={imgJpg}
             alt="lamination wood grade cylinders manufacturer"
@@ -72,47 +77,47 @@ const AboutUs = () => {
           </div>
           <div>
             <Table>
-              <tbody>
-                <tr>
-                  <td>Назва компанії</td>
-                  <td>Карлотека</td>
-                </tr>
-                <tr>
-                  <td>Власник</td>
-                  <td>Зайцева Наталія</td>
-                </tr>
-                <tr>
-                  <td>Адреса</td>
-                  <td>
-                    вул. А.Фарба 4б,<br></br> Дніпро, Україна
-                  </td>
-                </tr>
-                <tr>
-                  <td>Номер телефону</td>
-                  <td>
-                    <a href="tel:+380955810075" title="Call +380955810075">
-                      +380 (95) 581-00-75
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Відділ продажу</td>
-                  <td>
-                    <a href="tel:+380955810075" title="Call +380955810075">
-                      +380955810075
-                    </a>
-                    <a href="tel:+380955810075" title="Call +380955810075">
-                      +380955810075
-                    </a>
-                    <a
-                      href="mailto:info.carloteka@gmail.com"
-                      title="mail to info.carloteka@gmail.com"
-                    >
-                      info.carloteka@gmail.com
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
+              <div>
+                <p>Назва компанії</p>
+                <p className="companyTitle">Карлотека</p>
+              </div>
+              <div>
+                <p>Власник</p>
+                <p>Зайцева Наталія</p>
+              </div>
+              <div>
+                <p>Адреса</p>
+                <p>
+                  вул. А.Фарба 4б,<br></br> Дніпро, Україна
+                </p>
+              </div>
+              <div>
+                <p className="telNo">Номер телефону</p>
+                <p>
+                  <a href="tel:+380955810075" title="Call +380955810075">
+                    +380 (95) 581-00-75
+                  </a>
+                </p>
+              </div>
+              <div>
+                <p style={{ position: 'absolute', width: '71px' }}>
+                  Відділ продажу
+                </p>
+                <p style={{ marginLeft: 'auto' }}>
+                  <a href="tel:+380955810075" title="Call +380955810075">
+                    +380955810075
+                  </a>
+                  <a href="tel:+380955810075" title="Call +380955810075">
+                    +380955810075
+                  </a>
+                  <a
+                    href="mailto:info.carloteka@gmail.com"
+                    title="mail to info.carloteka@gmail.com"
+                  >
+                    info.carloteka@gmail.com
+                  </a>
+                </p>
+              </div>
             </Table>
           </div>
         </SectionAboutBrand>
@@ -144,7 +149,12 @@ const AboutUs = () => {
           </div>
           <div>
             <Img1>
-              <source srcSet={example1Avif} width="229" height="343" />
+              <source
+                srcSet={example1Avif}
+                width="229"
+                height="343"
+                type={'image/avif'}
+              />
               <img
                 src={example1Png}
                 alt="a wooden amphora"
@@ -154,7 +164,12 @@ const AboutUs = () => {
               />
             </Img1>
             <Img2>
-              <source srcSet={example2Avif} width="343" height="228" />
+              <source
+                srcSet={example2Avif}
+                width="343"
+                height="228"
+                type={'image/avif'}
+              />
               <img
                 src={example2Png}
                 alt="a massive craft bound book"
@@ -164,7 +179,12 @@ const AboutUs = () => {
               />
             </Img2>
             <Img3>
-              <source srcSet={example3Avif} width="345" height="276" />
+              <source
+                srcSet={example3Avif}
+                width="345"
+                height="276"
+                type={'image/avif'}
+              />
               <img
                 src={example3Png}
                 alt="a wooden chessboard with chess"
@@ -174,7 +194,12 @@ const AboutUs = () => {
               />
             </Img3>
             <Img4>
-              <source srcSet={example4Avif} width="345" height="276" />
+              <source
+                srcSet={example4Avif}
+                width="345"
+                height="276"
+                type={'image/avif'}
+              />
               <img
                 src={example4Png}
                 alt="a craft backgammon board"
@@ -184,7 +209,12 @@ const AboutUs = () => {
               />
             </Img4>
             <Img5>
-              <source srcSet={example5Avif} width="276" height="345" />
+              <source
+                srcSet={example5Avif}
+                width="276"
+                height="345"
+                type={'image/avif'}
+              />
               <img
                 src={example5Png}
                 alt="a wooden phone stand"

@@ -45,6 +45,15 @@ export const ThumbPhoto = styled.div`
     background-color: #b4a525;
   }
 `;
+
+export const Name = styled.h4`
+  margin-bottom: 0;
+
+  @media screen and (min-width: 1440px) {
+    margin-bottom: 24px;
+  }
+`;
+
 export const Button = styled.button`
   border-radius: 50%;
   width: 50px;

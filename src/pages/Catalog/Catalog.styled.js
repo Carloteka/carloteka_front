@@ -18,10 +18,6 @@ export const ShowFiltersBtn = styled.button`
   @media screen and (min-width: 1440px) {
     display: none;
   }
-
-  &.secondaryBtn {
-    margin-bottom: 56px;
-  }
 `;
 
 export const Aside = styled.aside`
@@ -75,9 +71,9 @@ export const Form = styled.form`
     padding: 0 3px;
     display: flex;
     align-items: center;
+    gap: 16px;
     width: 100%;
     min-height: 25px;
-    text-indent: 16px;
   }
   label:lastchild {
     margin-bottom: 0;
@@ -159,16 +155,18 @@ export const Price = styled.fieldset`
 `;
 
 export const TagsContainer = styled.div`
-  margin-bottom: 40px;
-  padding-right: 148px;
+  margin-bottom: 16px;
+  padding-right: 0;
   position: relative;
-  display: none;
+  display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 16px;
+  order: 2;
 
   @media screen and (min-width: 1440px) {
-    display: flex;
+    margin-bottom: 40px;
+    padding-right: 148px;
+    order: 1;
   }
 
   ul {
@@ -179,12 +177,23 @@ export const TagsContainer = styled.div`
   }
 
   li {
-    padding: 7.5px 8px 7.5px 8px;
+    padding: 4px;
     height: 40px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
     background-color: #f2f0ec;
+
+    @media screen and (min-width: 1440px) {
+      padding: 7.5px 8px;
+      height: auto;
+      gap: 8px;
+    }
+  }
+
+  button {
+    width: 24px;
+    height: 24px;
   }
 
   svg {
@@ -222,10 +231,16 @@ export const TagsContainer = styled.div`
 
 export const FlexDiv = styled.div`
   margin-bottom: 40px;
-  display: none;
+  display: inline-flex;
   text-align: left;
-  @media screen and (min-width: 1440px) {
-    display: inline-flex;
+  order: 2;
+
+  @media screen and (max-width: 1439px) {
+    order: 1;
+    margin-bottom: 16px;
+    & > span {
+      display: none;
+    }
   }
 `;
 
@@ -233,6 +248,8 @@ export const GoodsList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  order: 3;
+
   @media screen and (min-width: 1440px) {
     gap: 32px;
   }
@@ -240,11 +257,13 @@ export const GoodsList = styled.ul`
   li {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 16px;
-    width: 304px;
-    height: 440px;
+    width: 288px;
+    // min-height: 440px;
     @media screen and (min-width: 1440px) {
-      height: 456px;
+      width: 304px;
+      // min-height: 456px;
       gap: 0px;
     }
   }
@@ -255,7 +274,7 @@ export const SelectBox = styled.div`
   align-items: baseline;
   gap: 4px;
   position: relative;
-  height: 25px;
+  min-height: 25px;
 
   svg {
     position: absolute;
@@ -267,11 +286,16 @@ export const SelectBox = styled.div`
   }
   & > p {
     padding-right: 48px;
-    height: 25px;
+    min-height: 25px;
     font-weight: 700;
-    font-size: 18px;
-    line-height: calc(23 / 18);
+    font-size: 15px;
+    line-height: calc(21 / 15);
     cursor: pointer;
+
+    @media screen and (min-width: 1440px) {
+      font-size: 18px;
+      line-height: calc(23 / 18);
+    }
   }
 `;
 

@@ -71,26 +71,13 @@ export const Price = styled.p`
   order: 1;
 
   @media screen and (max-width: 1439px) {
-    margin: 22px 0 2px;
+    margin: 22px 0 8px;
     text-align: end;
     font-size: 16px;
     line-height: calc(23 / 16);
     order: 2;
   }
 
-  @media screen and (min-width: 1440px) {
-    margin-right: 32px;
-    color: #101010;
-  }
-  &::first-letter {
-    color: #5b5b59;
-  }
-`;
-
-export const TotalPrice = styled.p`
-  width: 120px;
-  color: #000;
-  order: 2;
   @media screen and (min-width: 1440px) {
     margin-right: 32px;
     color: #101010;
@@ -116,9 +103,19 @@ export const BuyBtnDesc = styled.button`
 `;
 
 export const DelBtn = styled.button`
-  width: 16px;
-  height: 16px;
+  margin-left: auto;
+  overflow: hidden;
   order: 4;
+  @media screen and (min-width: 1440px) {
+    padding-left: 8px;
+    width: 24px;
+    height: 24px;
+  }
+
+  svg {
+    stroke: #000;
+    scale: 2;
+  }
 `;
 
 export const BuyBtn = styled.button`

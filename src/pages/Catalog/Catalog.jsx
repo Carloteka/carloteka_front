@@ -51,7 +51,7 @@ const Catalog = () => {
   function getPriceValue(field) {
     const temp = params[field];
 
-    return temp ? temp : field === 'price-to' ? 4000 : 0;
+    return temp ? temp : field === 'price-to' ? 10000 : 0;
   }
 
   function getSortingValue() {
@@ -148,9 +148,9 @@ const Catalog = () => {
       tagsList.push({ field: 'price', tag: price });
     }
 
-    if (tagsList.length > 0) {
-      tagsList.push('dummy');
-    }
+    // if (tagsList.length > 0) {
+    //   tagsList.push('dummy');
+    // }
 
     return tagsList;
   }
@@ -188,28 +188,6 @@ const Catalog = () => {
       return;
     }
     const amount = catalog.filter((el) => el.in_stock === 3);
-    return amount.length;
-  }
-
-  function getGoodsSizeLarge() {
-    if (catalog === undefined) {
-      return;
-    }
-    const amount = catalog.filter((el) => el.size === 'large');
-    return amount.length;
-  }
-  function getGoodsSizeMiddle() {
-    if (catalog === undefined) {
-      return;
-    }
-    const amount = catalog.filter((el) => el.size === 'middle');
-    return amount.length;
-  }
-  function getGoodsSizeLittle() {
-    if (catalog === undefined) {
-      return;
-    }
-    const amount = catalog.filter((el) => el.size === 'little');
     return amount.length;
   }
 
@@ -344,6 +322,13 @@ const Catalog = () => {
       <PageTitle>Каталог</PageTitle>
       <ContainerLimiter paddingTopMob={'16px'} paddingTopDesc={'56px'}>
         <FlexContainer>
+          <ShowFiltersBtn
+            type="button"
+            className={showFilters ? 'secondaryBtn' : 'primaryBtn'}
+            onClick={() => setShowFilters((prev) => !prev)}
+          >
+            {showFilters ? 'Сховати фільтри' : 'Фільтри'}
+          </ShowFiltersBtn>
           <Aside $show={showFilters}>
             <Form onSubmit={handleSubmit} id="filter">
               <fieldset>
@@ -387,24 +372,6 @@ const Catalog = () => {
                     onChange={() => onChangeHandler('specific-order', 'True')}
                   />
                   Під замовлення ({getGoodsToOrder()})
-                </label>
-              </fieldset>
-
-              <fieldset>
-                <legend>Розмір</legend>
-
-                <label>
-                  <Checkbox type="checkbox" name="size" value="large" />
-                  Великий ({getGoodsSizeLarge()} 9)
-                </label>
-
-                <label>
-                  <Checkbox type="checkbox" name="size" value="middle" />
-                  Середній ({getGoodsSizeMiddle()} 6)
-                </label>
-                <label>
-                  <Checkbox type="checkbox" name="size" value="little" />
-                  Маленький ({getGoodsSizeLittle()} 4)
                 </label>
               </fieldset>
 
@@ -465,7 +432,7 @@ const Catalog = () => {
                         setMaxValue(e.target.value);
                         onChangeHandler('price-to', e.target.value);
                       }}
-                      placeholder="4000"
+                      placeholder="10000"
                       min={minValue}
                       max="10000"
                     />
@@ -478,52 +445,44 @@ const Catalog = () => {
             </Form>
           </Aside>
 
-          <ShowFiltersBtn
-            type="button"
-            className={showFilters ? 'secondaryBtn' : 'primaryBtn'}
-            onClick={() => setShowFilters((prev) => !prev)}
-          >
-            {showFilters ? 'Сховати фільтри' : 'Фільтри'}
-          </ShowFiltersBtn>
           {!query && catalog?.length > 0 ? (
-            <div style={{ padding: '0' }}>
-              {tags?.length > 1 && (
+            <div
+              style={{ padding: '0', display: 'flex', flexDirection: 'column' }}
+            >
+              {tags?.length > 0 && (
                 <TagsContainer>
                   <ul>
                     {tags.map((el, index) => (
                       <li key={`${el.value}-${index}`}>
                         <p>{el.tag}</p>
-                        <svg
-                          width={15}
-                          height={15}
+                        <button
+                          type="button"
                           onClick={() => deleteFilter(el.field, el.value)}
                         >
-                          <use href={`${sprite}#close`} />
-                        </svg>
-                        <label>
-                          Видалити всі
-                          <input
-                            type="reset"
-                            form="filter"
-                            value=""
-                            onClick={() => {
-                              setSearchParams({});
-                              setTags([]);
-                            }}
-                          />
-                        </label>
+                          <svg width={9} height={9}>
+                            <use href={`${sprite}#close`} />
+                          </svg>
+                        </button>
                       </li>
                     ))}
+                    <li>
+                      <label>
+                        Видалити всі
+                        <input
+                          type="reset"
+                          form="filter"
+                          value=""
+                          onClick={() => {
+                            setSearchParams({});
+                            setTags([]);
+                          }}
+                        />
+                      </label>
+                    </li>
                   </ul>
                 </TagsContainer>
               )}
-              <FlexDiv
-                style={{
-                  marginBottom: '40px',
-                  display: 'inlineFlex',
-                  textAlign: 'left',
-                }}
-              >
+              <FlexDiv>
                 <span>
                   Представлено {getRangeToDisplay()} з {quantity}
                 </span>

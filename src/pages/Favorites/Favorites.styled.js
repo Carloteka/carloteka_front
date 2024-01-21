@@ -1,7 +1,32 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const FavoritesBox = styled.div`
+export const ListHeaderWrapper = styled.div`
+  padding: 8px;
+  width: 100%;
+  display: flex;
+  text-align: start;
+  background-color: #dad4c8;
+  @media screen and (min-width: 1440px) {
+    padding: 12px 24px 12px 112px;
+  }
+`;
+
+export const Name = styled.p`
+  margin-right: 22px;
+  @media screen and (min-width: 1440px) {
+    margin-right: 508px;
+  }
+`;
+
+export const Price = styled.p`
+  margin-right: 20px;
+  @media screen and (min-width: 1440px) {
+    margin-right: 74px;
+  }
+`;
+
+export const FavoritesList = styled.ul`
   padding: 0 0 32px;
   width: 100%;
   border-bottom: 1px solid #dad4c8;

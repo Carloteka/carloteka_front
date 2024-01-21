@@ -19,6 +19,8 @@
   list-style: none;
 
   gap: 32px;
+
+  order: 3;
 }
 @media screen and (min-width: 1440px) {
   .paginator {

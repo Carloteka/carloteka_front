@@ -2,18 +2,19 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const MenuContainer = styled.div`
-  padding: 130px 18px 180px;
+  padding: 120px 16px 120px;
   position: absolute;
   top: 0;
   right: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 72px;
+  gap: 40px;
   background-color: white;
   z-index: 2;
   @media screen and (min-width: 1440px) {
     padding: 112px;
+    gap: 72px;
     width: 592px;
     min-height: 1024px;
   }
@@ -31,15 +32,22 @@ export const MenuContainer = styled.div`
 
 export const CloseButton = styled.button`
   position: absolute;
-  top: 65px;
-  left: 16px;
+  top: 56px;
+  right: 16px;
+  width: 24px;
+  height: 24px;
 
   svg {
+    width: 16px;
+    height: 16px;
     stroke: #101010;
+    @media screen and (min-width: 1440px) {
+      width: 24px;
+      height: 24px;
+    }
   }
 
   @media screen and (min-width: 1440px) {
-    top: 56px;
     left: 56px;
   }
 `;
@@ -69,7 +77,9 @@ export const CategoriesList = styled.ul`
   flex-direction: column;
   gap: 8px;
   li {
-    width: 352px;
+    @media screen and (min-width: 1440px) {
+      width: 352px;
+    }
   }
 `;
 export const LinkLarge = styled(Link)`

@@ -6,7 +6,6 @@ import {
 } from './AboutPaymentAndDelivery.styled';
 import sprite from '../../images/sprite.svg';
 import paymentImgJpg from '../../images/high-view-laptop-black-shopping-card-1x.jpg';
-import paymentImgAvif from '../../images/high-view-laptop-black-shopping-card-1x.avif';
 const AboutPaymentAndDelivery = () => {
   return (
     <>
@@ -36,15 +35,12 @@ const AboutPaymentAndDelivery = () => {
             </ol>
           </div>
 
-          <picture>
-            <source srcSet={paymentImgAvif} width="640" height="426" />
-            <img
-              src={paymentImgJpg}
-              alt="black laptop and shopping card"
-              width="640"
-              height="426"
-            />
-          </picture>
+          <img
+            src={paymentImgJpg}
+            alt="black laptop and shopping card"
+            width="640"
+            height="426"
+          />
         </PaymentSection>
         <DeliverySection>
           <h3>Доставка:</h3>

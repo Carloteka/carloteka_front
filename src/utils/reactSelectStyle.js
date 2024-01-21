@@ -11,7 +11,7 @@ export const reactSelectStyle = {
     '&:hover': {
       borderColor: 'black',
     },
-    padding: '0 16px',
+
     height: '50px',
     boxShadow: isFocused ? '0 4px 4px 0 #00000025' : 'none',
     border: isFocused ? '2px solid #2d3f24' : '1px solid #a7a5a3',

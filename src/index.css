@@ -32,6 +32,7 @@ body {
 
 main {
   background-color: white;
+  overflow-x: hidden;
 }
 
 ul {
@@ -63,6 +64,14 @@ button {
   font-size: 19px;
   line-height: 1;
   font-weight: 500;
+}
+
+@media screen and (max-width: 1439px) {
+  .primaryBtn,
+  .secondaryBtn {
+    font-size: 16px;
+    line-height: calc(21 / 16);
+  }
 }
 
 .primaryBtn {

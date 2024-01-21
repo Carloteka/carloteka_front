@@ -3,6 +3,7 @@ import { CartContext } from '../Layout';
 import { Link } from 'react-router-dom';
 import {
   ThumbPhoto,
+  Name,
   Button,
   Div,
   FlexContainer,
@@ -124,7 +125,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
           />
         </Link>
       </ThumbPhoto>
-      <h4>{name}</h4>
+      <Name>{name}</Name>
       <Div>
         <FlexContainer>
           <ul>

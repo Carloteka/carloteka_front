@@ -4,69 +4,98 @@ import { Link } from 'react-router-dom';
 export const DeliveryBox = styled.section`
   position: relative;
   display: flex;
+  flex-direction: column-reverse;
   gap: 32px;
   justify-content: center;
-  align-items;
-  
-  button {
-   height: 48px;
-  };
+  text-align: left;
 
-  & > div {position: relative;};
+  @media screen and (min-width: 1440px) {
+    flex-direction: row;
+  }
+
+  button {
+    height: 48px;
+  }
+
+  & > div {
+    position: relative;
+  }
 
   & > div > span {
-    margin:40px 0;
-    display:flex;
+    margin: 40px 0;
+    display: flex;
     justify-content: center;
     align-items: center;
     font-weight: 700;
-  font-size: 18px;
-  line-height: calc(23 / 18);
+    font-size: 15px;
+    line-height: calc(21 / 15);
 
-  &::before,&::after  {
-    content:'';
-    position:absolute;
-    width:336px;
-    height:1px;
-    background-color:#A7A5A3;
+    @media screen and (min-width: 1440px) {
+      font-size: 18px;
+      line-height: calc(23 / 18);
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 117px;
+      width: 41%;
+      height: 1px;
+      background-color: #a7a5a3;
+
+      @media screen and (min-width: 1440px) {
+        width: 336px;
+        width: 45%;
+      }
+    }
+    &::before {
+      left: 0;
+    }
+    &::after {
+      right: 0;
+    }
   }
-&::before {
-    left:0;
-}
-&::after {
-    right:0;}
-}
 `;
 
 export const GoToDelivery = styled(Link)`
-  margin-bottom: 56px;
+  margin-bottom: 24px;
   padding: 0 24px;
-  width: 528px;
+  width: 100%;
   justify-content: flex-start;
   gap: 10px;
-  font-size: 19px;
-  line-height: 1;
-  font-weight: 500;
+
+  @media screen and (min-width: 1440px) {
+    margin-bottom: 56px;
+    width: 528px;
+  }
 
   svg {
     transform: rotate(180deg);
   }
 
   p {
-    width: 100%;
+    width: 214px;
     text-align: center;
+    @media screen and (min-width: 1440px) {
+      width: 100%;
+    }
   }
 `;
 
 export const Form = styled.form`
-  width: 752px;
+  width: 100%;
 
-  h2 {
-    margin-bottom: 40px;
+  @media screen and (min-width: 1440px) {
+    width: 752px;
   }
 
-  h3 {
-    margin: 56px 0 40px;
+  h2 {
+    margin-bottom: 24px;
+
+    @media screen and (min-width: 1440px) {
+      margin-bottom: 40px;
+    }
   }
 
   label {
@@ -78,14 +107,22 @@ export const Form = styled.form`
   }
 
   .short {
-    width: 368px;
+    width: 100%;
+
+    @media screen and (min-width: 1440px) {
+      width: 368px;
+    }
   }
 
   input {
-    padding: 16px;
+    padding: 8px;
     width: 100%;
     height: 50px;
     border: 1px solid #a7a5a3;
+
+    @media screen and (min-width: 1440px) {
+      padding: 16px;
+    }
   }
 `;
 
@@ -96,19 +133,33 @@ export const RelativeDiv = styled.div`
   img {
     position: absolute;
     bottom: 17px;
-    right: 16px;
+    right: 8px;
+
+    @media screen and (min-width: 1440px) {
+      right: 16px;
+    }
   }
 `;
 
 export const PaymentMethodDiv = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
 
+  @media screen and (max-width: 1439px) {
+    flex-direction: column;
+    gap: 16px;
+  }
+
   button {
-    width: 364px;
+    width: 100%;
     border: 1px solid #a7a5a3;
     background-color: inherit;
+
+    @media screen and (min-width: 1440px) {
+      width: 364px;
+    }
   }
 `;
 
@@ -116,16 +167,41 @@ export const FlexContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  row-gap: 32px;
+  row-gap: 16px;
+
+  @media screen and (min-width: 1440px) {
+    row-gap: 32px;
+  }
+
+  button {
+    margin: 16px 0 0;
+    @media screen and (min-width: 1440px) {
+      margin: 0;
+    }
+  }
 `;
 
 export const SuccessBox = styled.div`
-  padding: 112px;
-  border: 1px solid #dad4c8;
+  text-align: left;
+
+  @media screen and (min-width: 1440px) {
+    padding: 112px;
+    border: 1px solid #dad4c8;
+  }
+
+  @media screen and (max-width: 1439px) {
+    & > div {
+      flex-direction: column;
+      gap: 32px;
+    }
+  }
 
   h2 {
-    margin-bottom: 64px;
+    margin-bottom: 32px;
     text-align: center;
+    @media screen and (min-width: 1440px) {
+      margin-bottom: 64px;
+    }
   }
 
   div {
@@ -144,30 +220,54 @@ export const SuccessBox = styled.div`
 `;
 
 export const OrderInfoDiv = styled.div`
-  width: 528px;
+  width: 100%;
+
+  @media screen and (min-width: 1440px) {
+    width: 528px;
+  }
 
   span {
     font-weight: 700;
-    font-size: 18px;
-    line-height: calc(23 / 18);
+    font-size: 15px;
+    line-height: calc(21 / 15);
+
+    @media screen and (min-width: 1440px) {
+      font-size: 18px;
+      line-height: calc(23 / 18);
+    }
   }
 
   ul {
-    margin: 16px 0;
+    margin: 8px 0;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 8px;
+
+    @media screen and (min-width: 1440px) {
+      margin: 16px 0;
+      gap: 16px;
+    }
   }
 
   & > div:last-child {
-    margin-top: 24px;
+    margin-top: 16px;
+
+    @media screen and (min-width: 1440px) {
+      margin-top: 24px;
+    }
   }
 `;
 export const DeliveryInfoDiv = styled.div`
-  width: 448px;
+  @media screen and (min-width: 1440px) {
+    width: 448px;
+  }
 
   p:last-child {
-    margin-top: 1em;
+    margin-top: 8px;
+
+    @media screen and (min-width: 1440px) {
+      margin-top: 1em;
+    }
   }
 `;
 

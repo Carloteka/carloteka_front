@@ -28,8 +28,10 @@ export const Limiter = styled.div<StyleProp>`
   padding: ${({ paddingmob }) => `${paddingmob} 0 72px`};
   width: 288px;
   text-align: center;
-  @media screen and (min-width: 768px) {
-    // width: 960px;
+
+  @media screen and (min-width: 1024px) {
+    padding: 64px 0;
+    width: 960px;
   }
 
   @media screen and (min-width: 1440px) {

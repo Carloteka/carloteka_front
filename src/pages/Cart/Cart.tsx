@@ -2,9 +2,12 @@ import { useState, useContext } from 'react';
 import { CartContext } from '../../components/Layout';
 import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
-import { ListHeader } from '../../components/listHeader/ListHeader';
 import {
-  FavoritesBox,
+  ListHeaderWrapper,
+  Name,
+  Price,
+  Quantity,
+  FavoritesList,
   Card,
   Button,
   EmptyMessage,
@@ -15,7 +18,7 @@ import {
   BuyBox,
   GoToPayment,
 } from './Cart.styled';
-import { CardForFavoritesAndCart } from '../../components/cardForFavoritesAndCart/CardForFavoritesAndCart';
+import { CartCard } from '../../components/CartCard/CartCard';
 import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
 import { addToCart } from '../../utils/addToCart';
 import sprite from '../../images/sprite.svg';
@@ -93,25 +96,28 @@ const Cart = () => {
   return (
     <>
       <PageTitle>Кошик</PageTitle>
-      <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'56px'}>
-        <ListHeader />
-        <FavoritesBox>
-          <ul>
-            {inCart.map((el: Good) => (
-              <Card key={el.id_name}>
-                <CardForFavoritesAndCart
-                  good={el}
-                  onClickDelete={delFromCart}
-                  increment={increment}
-                />
-              </Card>
-            ))}
-          </ul>
-        </FavoritesBox>
+      <ContainerLimiter paddingTopMob={'32px'} paddingTopDesc={'56px'}>
+        <ListHeaderWrapper>
+          <Name>Товар</Name>
+          <Price>Ціна</Price>
+          <Quantity>Кількість</Quantity>
+          <p>Загальна вартість</p>
+        </ListHeaderWrapper>
+        <FavoritesList>
+          {inCart.map((el: Good) => (
+            <Card key={el.id_name}>
+              <CartCard
+                good={el}
+                onClickDelete={delFromCart}
+                increment={increment}
+              />
+            </Card>
+          ))}
+        </FavoritesList>
         {inCart.length > 0 ? (
           <FlexBox>
             <GoToCatalog to={'/catalog'} className="secondaryBtn">
-              <svg width={14} height={9}>
+              <svg width={16} height={16}>
                 <use href={`${sprite}#arrow-right`} />
               </svg>
               продовжити покупки

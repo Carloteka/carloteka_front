@@ -8,7 +8,6 @@ export const fetchCategories = async () => {
   try {
     const response = await axios.get('/shop/categories/');
     const arrayData = response.data;
-    // console.log(response);
     return arrayData;
   } catch (error) {
     console.log(error);
@@ -18,7 +17,6 @@ export const fetchCategories = async () => {
 export const fetchItemDetails = async (id) => {
   try {
     const response = await axios.get(`/shop/items/${id}/`);
-    // console.log(response);
     const arrayData = response.data;
     return arrayData;
   } catch (error) {
@@ -28,7 +26,7 @@ export const fetchItemDetails = async (id) => {
 
 export const fetchPopularGoods = async () => {
   const params = {
-    'page-size': 12,
+    limit: 4,
   };
   // console.log(Object.entries(params).map(([key, value]) => `${key}=${value}`));
   try {
@@ -50,7 +48,7 @@ export const fetchPopularGoods = async () => {
 
 export const fetchAllGoods = async (limit) => {
   const params = {
-    'page-size': limit || 100,
+    limit: limit || 100,
   };
   try {
     const response = await axios.get('/shop/items/', { params });
@@ -62,11 +60,10 @@ export const fetchAllGoods = async (limit) => {
 };
 
 export const fetchFilteredGoods = async (search) => {
-  const params = { 'page-size': 12 };
+  const params = { limit: 12 };
   try {
     const response = await axios.get(`/shop/items/${search}`, { params });
     const arrayData = response.data.results;
-    // console.log(arrayData);
     return { count: response.data.count, data: arrayData };
   } catch (error) {
     console.log(error);

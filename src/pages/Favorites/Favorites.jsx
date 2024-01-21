@@ -1,16 +1,17 @@
 import { useState } from 'react';
-
 import { PageTitle } from 'src/components/pageTitle/PageTitle';
 import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter.tsx';
-import { ListHeader } from 'src/components/listHeader/ListHeader';
 import {
-  FavoritesBox,
+  ListHeaderWrapper,
+  Name,
+  Price,
+  FavoritesList,
   Card,
   Button,
   EmptyMessage,
   GoToCatalog,
 } from './Favorites.styled';
-import { CardForFavoritesAndCart } from 'src/components/cardForFavoritesAndCart/CardForFavoritesAndCart';
+import { FavoritesCard } from '../../components/FavoritesCard/FavoritesCard';
 import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
 import sprite from '../../images/sprite.svg';
 
@@ -50,19 +51,18 @@ const Favorites = () => {
     <>
       <PageTitle>Список бажань</PageTitle>
       <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'56px'}>
-        <ListHeader />
-        <FavoritesBox>
-          <ul>
-            {favorites?.map((el) => (
-              <Card key={el.id_name}>
-                <CardForFavoritesAndCart
-                  good={el}
-                  onClickDelete={delFromFavorite}
-                />
-              </Card>
-            ))}
-          </ul>
-        </FavoritesBox>
+        <ListHeaderWrapper>
+          <Name>Товар</Name>
+          <Price>Ціна</Price>
+          <p>Рейтинг товару та відгуки</p>
+        </ListHeaderWrapper>
+        <FavoritesList>
+          {favorites?.map((el) => (
+            <Card key={el.id_name}>
+              <FavoritesCard good={el} onClickDelete={delFromFavorite} />
+            </Card>
+          ))}
+        </FavoritesList>
         {favorites?.length > 0 ? (
           <Button
             className="secondaryBtn"

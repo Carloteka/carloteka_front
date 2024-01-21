@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 
 export const SectionAdditionalInfo = styled.section`
-  padding-top: 8px;
+  padding-top: 0px;
   min-height: 211px;
   display: flex;
   justify-content: space-between;
 
   color: #000;
+
+  @media screen and (min-width: 1440px) {
+    padding-top: 8px;
+  }
 
   & > table {
     width: 100%;
@@ -19,6 +23,7 @@ export const SectionAdditionalInfo = styled.section`
 
     @media screen and (min-width: 1440px) {
       width: 640px;
+      min-height: 186px;
     }
   }
 
@@ -34,7 +39,12 @@ export const SectionAdditionalInfo = styled.section`
   }
 
   & > table td:last-child {
+    padding-bottom: 12px;
     text-align: right;
+
+    @media screen and (min-width: 1440px) {
+      padding-bottom: 0px;
+    }
   }
 
   & > details {

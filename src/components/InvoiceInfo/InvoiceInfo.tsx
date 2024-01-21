@@ -2,7 +2,6 @@ import {
   InfoBox,
   DeliveryPrice,
   Total,
-  CustomTitle,
   PolicyLink,
 } from './InvoiceInfo.styled';
 
@@ -58,7 +57,7 @@ export const InvoiceInfo = ({ inCart }: InvoiceInfoProps) => {
         <p>₴ {getTotalPrice() + 95}</p>
       </Total>
 
-      <CustomTitle>Метод оплати</CustomTitle>
+      <h3>Метод оплати</h3>
       <p>
         Ви можете оплатити з допомогою кредитної/дебітної картки, Apple Pay,
         Google Pay, а також готівкою.

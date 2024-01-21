@@ -193,7 +193,7 @@ const Delivery = () => {
     inCart.length > 0 && (
       <>
         <PageTitle>Доставка</PageTitle>
-        <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'80px'}>
+        <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'80px'}>
           <DeliveryBox>
             <Form onSubmit={submitHandle} id="delivery">
               <h2>Адреса доставки</h2>
@@ -360,8 +360,11 @@ const Delivery = () => {
                   }
                 ></textarea>
               </label>
+              <button type="submit" form="delivery" className="primaryBtn">
+                продовжити
+              </button>
             </Form>
-            <aside style={{ paddingTop: '116px' }}>
+            <aside>
               <InvoiceInfo inCart={inCart} />
 
               <button type="submit" form="delivery" className="primaryBtn">

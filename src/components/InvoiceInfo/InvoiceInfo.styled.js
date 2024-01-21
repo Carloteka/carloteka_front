@@ -2,17 +2,34 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const InfoBox = styled.div`
-  margin-bottom: 24px;
-  padding: 31px 30.5px 19px;
-  width: 528px;
+  margin-bottom: 0;
+  padding: 16px;
+  width: 100%;
   background-color: #dad4c8;
 
-  h3 {
+  @media screen and (min-width: 1440px) {
     margin-bottom: 24px;
+    padding: 31px 30.5px 19px;
+    width: 528px;
+  }
+
+  h3:first-child {
+    margin: 0 0 16px 0;
+    @media screen and (min-width: 1440px) {
+      margin: 0 0 24px 0;
+    }
+  }
+
+  h3 {
+    margin: 32px 0 24px;
   }
 
   h4:last-child {
-    width: 97px;
+    width: auto;
+
+    @media screen and (min-width: 1440px) {
+      width: 97px;
+    }
   }
 
   ul {
@@ -56,13 +73,6 @@ export const Total = styled.div`
   font-weight: 700;
   font-size: 18px;
   line-height: calc(23 / 18);
-`;
-
-export const CustomTitle = styled.h3`
-  margin: 32px 0 24px;
-  font-weight: 600;
-  font-size: 25px;
-  line-height: calc(29 / 25);
 `;
 
 export const PolicyLink = styled(Link)`
