@@ -8,7 +8,7 @@ export const fetchCategories = async () => {
   try {
     const response = await axios.get('/shop/categories/');
     const arrayData = response.data;
-    // console.log(response);
+    console.log(response);
     return arrayData;
   } catch (error) {
     console.log(error);
