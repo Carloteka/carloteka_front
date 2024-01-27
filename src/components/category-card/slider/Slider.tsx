@@ -6,9 +6,14 @@ type Image = { image: string };
 interface SliderProps {
   arrayToRender: Image[];
   sliderHandler: (payload: number) => void;
+  description: string;
 }
 
-export const Slider = ({ arrayToRender, sliderHandler }: SliderProps) => {
+export const Slider = ({
+  arrayToRender,
+  sliderHandler,
+  description,
+}: SliderProps) => {
   // цей метод повинен мати захист коли довжина масиву менша за ширину слайдеру
   // function sliderHandler(payload) {
   // setArray(((width+payload)>array.length) || index+payload<0 ? array : arrayToRender.slice(index+payload, width+payload));
@@ -33,7 +38,7 @@ export const Slider = ({ arrayToRender, sliderHandler }: SliderProps) => {
                   ? `http://carloteka.com/${el.image}`
                   : `http://localhost:8000/${el.image}`
               }
-              alt="img першої категорії"
+              alt={description}
               width={640}
               height={512}
               loading="lazy"

@@ -29,11 +29,11 @@ const Favorites = () => {
   }
 
   let favoriteGoodsArray = goods.filter((el) =>
-    favoritesIds.some((id) => el.id_name === id),
+    favoritesIds.some((id) => el.id === id),
   );
 
   const [favorites, setFavorites] = useState(
-    favoriteGoodsArray.filter((el) => el.length !== 0),
+    favoriteGoodsArray.filter((el) => el.id !== 0),
   );
 
   function clearFavorites() {
@@ -42,7 +42,7 @@ const Favorites = () => {
   }
 
   function delFromFavorite(id) {
-    const newArray = favoriteGoodsArray.filter((el) => el.id_name !== id);
+    const newArray = favoriteGoodsArray.filter((el) => el.id !== id);
     toggleLocalStorage(true, 'favorite', id);
     setFavorites(newArray);
   }
@@ -58,7 +58,7 @@ const Favorites = () => {
         </ListHeaderWrapper>
         <FavoritesList>
           {favorites?.map((el) => (
-            <Card key={el.id_name}>
+            <Card key={el.id}>
               <FavoritesCard good={el} onClickDelete={delFromFavorite} />
             </Card>
           ))}

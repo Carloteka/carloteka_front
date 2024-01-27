@@ -1,6 +1,18 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+export const Backdrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f0ec50;
+  z-index: 0;
+`;
+
 export const MenuContainer = styled.div`
   padding: 120px 16px 120px;
   position: absolute;
@@ -12,6 +24,8 @@ export const MenuContainer = styled.div`
   gap: 40px;
   background-color: white;
   z-index: 2;
+  transition: right 0.25s ease-out;
+
   @media screen and (min-width: 1440px) {
     padding: 112px;
     gap: 72px;

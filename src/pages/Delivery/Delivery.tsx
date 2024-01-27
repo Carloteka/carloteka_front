@@ -13,15 +13,7 @@ import {
 import { InvoiceInfo } from '../../components/InvoiceInfo/InvoiceInfo';
 import sprite from '../../images/sprite.svg';
 import { reactSelectStyle } from '../../utils/reactSelectStyle';
-
-type Good = {
-  images: [{ image: string }];
-  name: string;
-  price: number;
-  length: number;
-  id_name: string;
-  quantity: number;
-};
+import { Good } from '../../../@types/custom';
 
 type InputObject = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,7 +24,7 @@ type InputObject = {
 const Delivery = () => {
   const navigate = useNavigate();
 
-  let goodsInCart: { id: string; amount: number }[] = [];
+  let goodsInCart: { id: number; amount: number }[] = [];
 
   const [delivery, setDelivery] = useState<InputObject>();
 
@@ -60,9 +52,9 @@ const Delivery = () => {
   }
 
   const goodsInCartArray = goods.filter(
-    (el: { id_name: string; quantity: number }) =>
+    (el: { id: number; quantity: number }) =>
       goodsInCart.some((item) => {
-        if (el.id_name === item.id) {
+        if (el.id === item.id) {
           el.quantity = item.amount;
           return true;
         } else return false;
@@ -70,7 +62,7 @@ const Delivery = () => {
   );
 
   const [inCart] = useState<Good[]>(
-    goodsInCartArray.filter((el: { length: number }) => el.length !== 0),
+    goodsInCartArray.filter((el: { id: number }) => el.id !== 0),
   );
 
   function submitHandle(e: React.FormEvent) {
@@ -163,7 +155,8 @@ const Delivery = () => {
     });
 
   function getOfficeValue() {
-    if (delivery) {
+    if (delivery?.office) {
+      // console.log(delivery.length);
       const selectedLabel = [
         'Відділеня 23, проспект Перемоги 1',
         'Відділеня 11, вул. Вербицького 14',
@@ -186,6 +179,8 @@ const Delivery = () => {
           </>
         ),
       };
+    } else {
+      return undefined;
     }
   }
 

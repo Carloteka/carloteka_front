@@ -26,15 +26,7 @@ import sprite from '../../images/sprite.svg';
 import visaImg from '../../images/visa.png';
 import photo from '../../images/photo.jpg';
 import GooglePayButton from '@google-pay/button-react';
-
-type Good = {
-  images: [{ image: string }];
-  name: string;
-  price: number;
-  length: number;
-  id_name: string;
-  quantity: number;
-};
+import { Good } from '../../../@types/custom';
 
 const Payment = () => {
   const { setAmountInCart } = useContext(CartContext);
@@ -46,7 +38,7 @@ const Payment = () => {
   const [paymentMethod, setPaymentMethod] = useState<undefined | string>();
   const [card] = useState<string>('visa');
 
-  let goodsInCart: { id: string; amount: number }[] = [];
+  let goodsInCart: { id: number; amount: number }[] = [];
 
   if (localStorage.getItem('cart')) {
     goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
@@ -67,9 +59,9 @@ const Payment = () => {
   }
 
   const goodsInCartArray = goods.filter(
-    (el: { id_name: string; quantity: number }) =>
+    (el: { id: number; quantity: number }) =>
       goodsInCart.some((item) => {
-        if (el.id_name === item.id) {
+        if (el.id === item.id) {
           el.quantity = item.amount;
           return true;
         } else return false;
@@ -77,7 +69,7 @@ const Payment = () => {
   );
 
   const [inCart, setInCart] = useState<Good[]>(
-    goodsInCartArray.filter((el: { length: number }) => el.length !== 0),
+    goodsInCartArray.filter((el: { id: number }) => el.id !== 0),
   );
 
   function getTotalPrice() {
@@ -173,7 +165,7 @@ const Payment = () => {
 
                   <ul>
                     {inCart?.map((el) => (
-                      <li key={el.id_name}>
+                      <li key={el.id}>
                         <div>
                           <p>
                             {el.name}

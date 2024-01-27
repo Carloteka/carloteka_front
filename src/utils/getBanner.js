@@ -1,15 +1,15 @@
-export function getBanner(in_stock) {
+export function getBanner(stock) {
   let banner = '';
-  switch (in_stock) {
-    case 2:
+  switch (stock) {
+    case 'BACKORDER':
       banner = 'очікується';
       break;
 
-    case 3:
+    case 'SPECIFIC_ORDER':
       banner = 'під замовлення';
       break;
 
-    case 0:
+    case 'OUT_OF_STOCK':
       banner = 'немає в наявності';
       break;
 

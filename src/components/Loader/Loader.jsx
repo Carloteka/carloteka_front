@@ -1,9 +1,9 @@
-import { LoaderWrap, Load } from './Loader.styled';
+import { LoaderWrap } from './Loader.styled';
 
 export const Loader = () => {
   return (
     <LoaderWrap>
-      <Load>Loading...</Load>
+      <div></div>
     </LoaderWrap>
   );
 };

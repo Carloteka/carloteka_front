@@ -3,23 +3,23 @@ import { CartContext } from '../Layout';
 import { Increment } from '../Increment/Increment';
 import { Img, Name, Div, Price, TotalPrice, DelBtn } from './CartCard.styled';
 import sprite from '../../images/sprite.svg';
-
-type Good = {
-  images: [{ image: string }];
-  name: string;
-  price: number;
-  id_name: string;
-  quantity: number;
-};
+import { Good } from '../../../@types/custom';
+// type Good = {
+//   images: [{ image: string }];
+//   name: string;
+//   price: number;
+//   id_name: string;
+//   quantity: number;
+// };
 
 interface CartCardProps {
   good: Good;
-  onClickDelete: (id: string) => void;
-  increment: (quantity: number, id: string) => void;
+  onClickDelete: (id: number) => void;
+  increment: (quantity: number, id: number) => void;
 }
 
 export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
-  const { images, name, price, id_name } = good;
+  const { image_set, name, price, id } = good;
 
   const { setAmountInCart } = useContext(CartContext);
   const [quantity, setQuantity] = useState(1);
@@ -31,7 +31,7 @@ export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
 
     const newArray = JSON.parse(localStorage.getItem('cart') as string);
 
-    const temp = newArray.find((el: { id: string }) => el.id === good.id_name);
+    const temp = newArray.find((el: { id: number }) => el.id === good.id);
 
     setQuantity(temp.amount);
   }, [quantity]);
@@ -41,8 +41,8 @@ export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
       <Img
         src={
           import.meta.env.PROD
-            ? `http://carloteka.com/${images[0].image}`
-            : `http://localhost:8000/${images[0].image}`
+            ? `http://carloteka.com/${image_set[0].image}`
+            : `http://localhost:8000/${image_set[0].image}`
         }
         width={60}
         height={82}
@@ -58,7 +58,7 @@ export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
         <p>Кількість</p>
         <Increment
           increment={increment}
-          id_name={id_name}
+          id={id}
           quantity={quantity}
           setQuantity={setQuantity}
         />
@@ -72,7 +72,7 @@ export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
         type="button"
         onClick={() => {
           setAmountInCart((amountInCart: number) => amountInCart - 1);
-          onClickDelete(id_name);
+          onClickDelete(id);
         }}
       >
         <svg width={16} height={16}>

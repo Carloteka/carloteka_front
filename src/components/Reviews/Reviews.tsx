@@ -80,7 +80,7 @@ const Reviews = () => {
                 <li key={index} onClick={() => setRate(index + 1)}>
                   <Star
                     style={{
-                      fill: index <= rate - 1 ? '#2d3f24' : 'transparent',
+                      fill: index < rate ? '#2d3f24' : 'transparent',
                     }}
                   >
                     <use href={`${sprite}#star`} />

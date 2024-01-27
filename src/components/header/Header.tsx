@@ -79,8 +79,9 @@ export const Header = () => {
             </svg>
           </BurgerMenuBtn>
         </Actions>
-        {showMenu && <Menu onClickHandle={onClose} />}
-        {showCartMenu && <MenuCart onClickHandle={setShowCartMenu} />}
+        <Menu onClickHandle={onClose} showMenu={showMenu} />
+
+        <MenuCart onClickHandle={setShowCartMenu} showCartMenu={showCartMenu} />
       </LimiterConatiner>
     </HeaderContainer>
   );

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 export const Backdrop = styled.div`
   position: fixed;
@@ -7,32 +6,36 @@ export const Backdrop = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f2f0ec50;
   z-index: 0;
 `;
 
-export const MenuContainer = styled.div`
+export const MenuContainer = styled.div<{ $showCartMenu: boolean }>`
   padding: 130px 18px 180px;
   position: absolute;
   top: 0;
-  right: 0;
-  width: 100%;
+  width: 288px;
+  right: ${({ $showCartMenu }) => ($showCartMenu ? '0' : '-288px')};
 
   display: flex;
   flex-direction: column;
 
   background-color: white;
   z-index: 2;
+  transition: right 0.5s ease-out;
+
   @media screen and (min-width: 1440px) {
     padding: 112px 56px 151px;
+
+    right: ${({ $showCartMenu }) => ($showCartMenu ? '0' : '-599px')};
+
     width: 599px;
     min-height: 1024px;
   }
 
-  a:last-child {
+  a {
     margin-top: 32px;
   }
 `;

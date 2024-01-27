@@ -62,6 +62,9 @@
 [data-hidden='true'] {
   display: none;
 }
+li:has(button[data-hidden='true']) {
+  display: none;
+}
 
 /* addition width+gap of disappearing buttons to padding of ul to avoid moving navigation buttons   */
 .paginator:has(> li:first-child[data-hidden='true']) {

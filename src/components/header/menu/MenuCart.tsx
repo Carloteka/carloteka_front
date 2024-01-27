@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { CartContext } from '../../Layout';
 import {
   Backdrop,
@@ -12,53 +12,46 @@ import {
 import { toggleCartInLocalStorage } from '../../../utils/toggleCartInLocalStorage';
 import sprite from '../../../images/sprite.svg';
 import { Link } from 'react-router-dom';
-
-type Good = {
-  images: [{ image: string }];
-  name: string;
-  price: number;
-  length: number;
-  id_name: string;
-  quantity: number;
-};
+import { Good } from '../../../../@types/custom';
 
 interface MenuCartProps {
   onClickHandle: (arg0: boolean) => void;
+  showCartMenu: boolean;
 }
 
-export const MenuCart = ({ onClickHandle }: MenuCartProps) => {
-  const { setAmountInCart } = useContext(CartContext);
+export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
+  const { amountInCart, setAmountInCart } = useContext(CartContext);
 
-  let goodsInCart: { id: string; amount: number }[] = [];
+  const [inCart, setInCart] = useState<Good[]>([]);
 
-  if (localStorage.getItem('cart')) {
-    goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
-  }
+  useEffect(() => {
+    let goodsInCart: { id: number; amount: number }[] = [];
 
-  let goods: [] = [];
+    if (localStorage.getItem('cart')) {
+      goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
+    }
 
-  if (localStorage.getItem('goods')) {
-    goods = JSON.parse(localStorage.getItem('goods') as string);
-  }
+    let goods: [] = [];
 
-  const goodsInCartArray = goods.filter(
-    (el: { id_name: string; quantity: number }) =>
-      goodsInCart.some((item) => {
-        if (el.id_name === item.id) {
-          el.quantity = item.amount;
-          return true;
-        } else return false;
-      }),
-  );
+    if (localStorage.getItem('goods')) {
+      goods = JSON.parse(localStorage.getItem('goods') as string);
+    }
 
-  const [inCart, setInCart] = useState<Good[]>(
-    goodsInCartArray.filter((el: { length: number }) => el.length !== 0),
-  );
-
-  function delFromCart(id: string) {
-    const newArray = goodsInCartArray.filter(
-      (el: { id_name: string }) => el.id_name !== id,
+    const goodsInCartArray = goods.filter(
+      (el: { id: number; quantity: number }) =>
+        goodsInCart.some((item) => {
+          if (el.id === item.id) {
+            el.quantity = item.amount;
+            return true;
+          } else return false;
+        }),
     );
+
+    setInCart(goodsInCartArray.filter((el: { id: number }) => el.id !== 0));
+  }, [amountInCart]);
+
+  function delFromCart(id: number) {
+    const newArray = inCart.filter((el: { id: number }) => el.id !== id);
     toggleCartInLocalStorage(true, id);
     setInCart(newArray);
   }
@@ -73,68 +66,73 @@ export const MenuCart = ({ onClickHandle }: MenuCartProps) => {
 
   return (
     <>
-      <Backdrop onClick={() => onClickHandle(false)}></Backdrop>
-      <MenuContainer>
-        <CloseButton onClick={() => onClickHandle(false)}>
-          <svg width={24} height={24}>
-            <use href={`${sprite}#close`} />
-          </svg>
-        </CloseButton>
-        <ul>
-          {inCart?.map((el: Good) => (
-            <Card key={el.id_name}>
-              <Img
-                src={
-                  import.meta.env.PROD
-                    ? `http://carloteka.com/${el.images[0].image}`
-                    : `http://localhost:8000/${el.images[0].image}`
-                }
-                width={127}
-                height={158}
-                alt={el.name}
-                loading="lazy"
-              />
-              <div>
-                <h4>Декоративна ваза з натурального дерева{el.name}</h4>
-                <Price>Ціна: ₴ {el.price}</Price>
-                <p>Кількість: {el.quantity}</p>
-              </div>
+      <Backdrop
+        onClick={() => onClickHandle(false)}
+        style={{ display: showCartMenu ? 'flex' : 'none' }}
+      ></Backdrop>
+      {inCart?.length > 0 && (
+        <MenuContainer $showCartMenu={showCartMenu}>
+          <CloseButton onClick={() => onClickHandle(false)}>
+            <svg width={24} height={24}>
+              <use href={`${sprite}#close`} />
+            </svg>
+          </CloseButton>
+          <ul>
+            {inCart?.map((el: Good) => (
+              <Card key={el.id}>
+                <Img
+                  src={
+                    import.meta.env.PROD
+                      ? `http://carloteka.com/${el.image_set[0].image}`
+                      : `http://localhost:8000/${el.image_set[0].image}`
+                  }
+                  width={127}
+                  height={158}
+                  alt={el.name}
+                  loading="lazy"
+                />
+                <div>
+                  <h4>Декоративна ваза з натурального дерева{el.name}</h4>
+                  <Price>Ціна: ₴ {el.price}</Price>
+                  <p>Кількість: {el.quantity}</p>
+                </div>
 
-              <button
-                type="button"
-                onClick={() => {
-                  setAmountInCart((amountInCart: number) => amountInCart - 1);
-                  delFromCart(el.id_name);
-                }}
-              >
-                <svg width={9} height={8}>
-                  <use href={`${sprite}#del-x`} />
-                </svg>
-              </button>
-            </Card>
-          ))}
-        </ul>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAmountInCart((amountInCart: number) => amountInCart - 1);
+                    delFromCart(el.id);
+                  }}
+                >
+                  <svg width={9} height={8}>
+                    <use href={`${sprite}#del-x`} />
+                  </svg>
+                </button>
+              </Card>
+            ))}
+          </ul>
 
-        <Total>
-          <p>Вартість:</p>
-          <p>₴ {getTotalPrice()}</p>
-        </Total>
+          <Total>
+            <p>Вартість:</p>
+            <p>₴ {getTotalPrice().toFixed(2)}</p>
+          </Total>
 
-        <Link
-          to={'/cart'}
-          onClick={() => onClickHandle(false)}
-          className="primaryBtn"
-        >
-          переглянути кошик
-        </Link>
-        <Link
-          to={'/delivery'}
-          onClick={() => onClickHandle(false)}
-          className="primaryBtn"
-        >
-          Купити
-        </Link>
-      </MenuContainer>
+          <Link
+            to={'/cart'}
+            onClick={() => onClickHandle(false)}
+            className="primaryBtn"
+          >
+            переглянути кошик
+          </Link>
+          <Link
+            to={'/delivery'}
+            onClick={() => onClickHandle(false)}
+            className="primaryBtn"
+          >
+            Купити
+          </Link>
+        </MenuContainer>
+      )}
     </>
   );
 };

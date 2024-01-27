@@ -4,6 +4,10 @@ import sprite from '../../images/sprite.svg';
 import { socialLinks } from '../../socialLinks';
 
 export const Footer = () => {
+  function scrollToTop() {
+    window.scrollTo(0, 0);
+  }
+
   return (
     <Wrapper>
       <div>
@@ -42,13 +46,19 @@ export const Footer = () => {
         <h3>Про нас</h3>
         <List>
           <li>
-            <Link to={'/about'}>Наша історія</Link>
+            <Link to={'/about'} onClick={() => scrollToTop()}>
+              Наша історія
+            </Link>
           </li>
           <li>
-            <Link to={'/exampleofwork'}>Що ми виготовляємо</Link>
+            <Link to={'/exampleofwork'} onClick={() => scrollToTop()}>
+              Що ми виготовляємо
+            </Link>
           </li>
           <li>
-            <Link to={'/policy'}>Політика конфіденційності</Link>
+            <Link to={'/policy'} onClick={() => scrollToTop()}>
+              Політика конфіденційності
+            </Link>
           </li>
         </List>
       </div>
@@ -56,13 +66,19 @@ export const Footer = () => {
         <h3>Допомога</h3>
         <List>
           <li>
-            <Link to={'/aboutPayment'}>Оплата & Доставка</Link>
+            <Link to={'/aboutPayment'} onClick={() => scrollToTop()}>
+              Оплата & Доставка
+            </Link>
           </li>
           <li>
-            <Link to={'/refund'}>Повернення & Відшкодування</Link>
+            <Link to={'/refund'} onClick={() => scrollToTop()}>
+              Повернення & Відшкодування
+            </Link>
           </li>
           <li>
-            <Link to={'/help'}>Служба підтримки</Link>
+            <Link to={'/help'} onClick={() => scrollToTop()}>
+              Служба підтримки
+            </Link>
           </li>
         </List>
       </div>

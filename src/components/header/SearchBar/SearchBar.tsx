@@ -10,24 +10,7 @@ import sprite from '../../../images/sprite.svg';
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { fetchCategories, fetchPopularGoods } from '../../../api/api';
-
-type Good = {
-  images: [{ image: string }];
-  mini_image: string;
-  name: string;
-  price: number;
-  id_name: string;
-  quantity: number;
-};
-
-type Categories = {
-  mini_image: string;
-  images: [{ image: string }];
-  name: string;
-  price: number;
-  id_name: string;
-  description: string;
-};
+import { Categories, Good } from '../../../../@types/custom';
 
 export const SearchBar = () => {
   const [showResult, setShowResult] = useState<boolean>(false);
@@ -141,19 +124,19 @@ export const SearchBar = () => {
                       <h4>Категорії товарів</h4>
                       <ul>
                         {searchedCategories.map((el) => (
-                          <li key={el?.id_name}>
+                          <li key={el?.id}>
                             <img
                               src={
                                 import.meta.env.PROD
-                                  ? `http://carloteka.com/${el.images[0].image}`
-                                  : `http://localhost:8000/${el.images[0].image}`
+                                  ? `http://carloteka.com/${el.image_set[0].image}`
+                                  : `http://localhost:8000/${el.image_set[0].image}`
                               }
                               width={47}
                               height={56}
                               alt={el.name}
                             />
                             <Link
-                              to={`/catalog?category-id-name=${el.id_name}`}
+                              to={`/catalog?category__i=${el.id}`}
                               onClick={() => setShowResult(false)}
                             >
                               {el?.name}
@@ -168,7 +151,7 @@ export const SearchBar = () => {
                       <h4>Товари</h4>
                       <ul>
                         {searchedGoods.map((el) => (
-                          <li key={el?.id_name}>
+                          <li key={el?.id}>
                             <img
                               src={
                                 import.meta.env.PROD
@@ -180,7 +163,7 @@ export const SearchBar = () => {
                               alt={el.name}
                             />
                             <Link
-                              to={`/catalog?query=${query}`}
+                              to={`/${el.category.id}/${el.slug}/description`}
                               onClick={() => setShowResult(false)}
                             >
                               {el?.name}

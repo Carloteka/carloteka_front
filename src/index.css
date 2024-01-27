@@ -13,7 +13,7 @@ body {
   margin: 0;
   padding: 0;
   min-width: 320px;
-  min-height: 100dvh;
+  min-height: 100lvh;
   display: flex;
   justify-content: center;
   font-family: 'Rubik', sans-serif;

@@ -37,7 +37,7 @@ function App() {
         <Route path="refund" element={<Refund />} />
         <Route path="aboutPayment" element={<AboutPaymentAndDelivery />} />
 
-        <Route path=":category_name/:goodId" element={<GoodDetail />}>
+        <Route path=":goodId" element={<GoodDetail />}>
           <Route path="description" element={<Description />} />
           <Route path="additional" element={<AdditionalInfo />} />
           <Route path="reviews" element={<Reviews />} />

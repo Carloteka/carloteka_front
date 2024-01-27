@@ -22,20 +22,12 @@ import { CartCard } from '../../components/CartCard/CartCard';
 import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
 import { addToCart } from '../../utils/addToCart';
 import sprite from '../../images/sprite.svg';
-
-type Good = {
-  images: [{ image: string }];
-  name: string;
-  price: number;
-  length: number;
-  id_name: string;
-  quantity: number;
-};
+import { Good } from '../../../@types/custom';
 
 const Cart = () => {
   const { setAmountInCart } = useContext(CartContext);
 
-  let goodsInCart: { id: string; amount: number }[] = [];
+  let goodsInCart: { id: number; amount: number }[] = [];
 
   if (localStorage.getItem('cart')) {
     goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
@@ -48,9 +40,9 @@ const Cart = () => {
   }
 
   const goodsInCartArray = goods.filter(
-    (el: { id_name: string; quantity: number }) =>
+    (el: { id: number; quantity: number }) =>
       goodsInCart.some((item) => {
-        if (el.id_name === item.id) {
+        if (el.id === item.id) {
           el.quantity = item.amount;
           return true;
         } else return false;
@@ -58,7 +50,7 @@ const Cart = () => {
   );
 
   const [inCart, setInCart] = useState<Good[]>(
-    goodsInCartArray.filter((el: { length: number }) => el.length !== 0),
+    goodsInCartArray.filter((el: { id: number }) => el.id !== 0),
   );
 
   function clearCart() {
@@ -67,9 +59,9 @@ const Cart = () => {
     setAmountInCart(0);
   }
 
-  function delFromCart(id: string) {
+  function delFromCart(id: number) {
     const newArray = goodsInCartArray.filter(
-      (el: { id_name: string }) => el.id_name !== id,
+      (el: { id: number }) => el.id !== id,
     );
     toggleCartInLocalStorage(true, id);
     setInCart(newArray);
@@ -83,11 +75,10 @@ const Cart = () => {
     );
   }
 
-  function increment(amount: number, id: string) {
+  function increment(amount: number, id: number) {
     const newArray: Good[] = [...inCart];
-    newArray[
-      inCart.findIndex((el: { id_name: string }) => el.id_name === id)
-    ].quantity = amount;
+    newArray[inCart.findIndex((el: { id: number }) => el.id === id)].quantity =
+      amount;
 
     addToCart(amount, id, 'replace');
     setInCart(newArray);
@@ -105,7 +96,7 @@ const Cart = () => {
         </ListHeaderWrapper>
         <FavoritesList>
           {inCart.map((el: Good) => (
-            <Card key={el.id_name}>
+            <Card key={el.id}>
               <CartCard
                 good={el}
                 onClickDelete={delFromCart}
