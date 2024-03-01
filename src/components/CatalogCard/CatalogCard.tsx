@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { CartContext } from '../Layout';
+import { CartContext, FavoritesContext } from '../Layout';
 import { Link } from 'react-router-dom';
 import {
   ThumbPhoto,
@@ -23,6 +23,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
   const { id, name, mini_image, price, stock, slug, stars } = item;
 
   const { setAmountInCart } = useContext(CartContext);
+  const { setAmountInFavorites } = useContext(FavoritesContext);
 
   let cartArray: { id: number; amount: number }[] = [];
   let favoriteArray: number[] = [];
@@ -54,6 +55,9 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
   function toggleFavorite() {
     toggleLocalStorage(isFavorite, 'favorite', id);
     setIsFavorite((prev) => !prev);
+    setAmountInFavorites((amountInFavorites: number) =>
+      isFavorite ? amountInFavorites - 1 : amountInFavorites + 1,
+    );
   }
 
   return (

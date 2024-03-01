@@ -4,13 +4,6 @@ import { Increment } from '../Increment/Increment';
 import { Img, Name, Div, Price, TotalPrice, DelBtn } from './CartCard.styled';
 import sprite from '../../images/sprite.svg';
 import { Good } from '../../../@types/custom';
-// type Good = {
-//   images: [{ image: string }];
-//   name: string;
-//   price: number;
-//   id_name: string;
-//   quantity: number;
-// };
 
 interface CartCardProps {
   good: Good;

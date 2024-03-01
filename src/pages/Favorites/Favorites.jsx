@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { FavoritesContext } from '../../components/Layout';
 import { PageTitle } from 'src/components/pageTitle/PageTitle';
 import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter.tsx';
 import {
@@ -16,6 +17,8 @@ import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
 import sprite from '../../images/sprite.svg';
 
 const Favorites = () => {
+  const { setAmountInFavorites } = useContext(FavoritesContext);
+
   let favoritesIds = [];
 
   if (localStorage.getItem('favorite')) {
@@ -39,6 +42,7 @@ const Favorites = () => {
   function clearFavorites() {
     localStorage.favorite = [];
     setFavorites([]);
+    setAmountInFavorites(0);
   }
 
   function delFromFavorite(id) {

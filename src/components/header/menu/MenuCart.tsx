@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import { Good } from '../../../../@types/custom';
 
 interface MenuCartProps {
-  onClickHandle: (arg0: boolean) => void;
+  onClickHandle: () => void;
   showCartMenu: boolean;
 }
 
@@ -67,12 +67,12 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
   return (
     <>
       <Backdrop
-        onClick={() => onClickHandle(false)}
+        onClick={() => onClickHandle()}
         style={{ display: showCartMenu ? 'flex' : 'none' }}
       ></Backdrop>
       {inCart?.length > 0 && (
         <MenuContainer $showCartMenu={showCartMenu}>
-          <CloseButton onClick={() => onClickHandle(false)}>
+          <CloseButton onClick={() => onClickHandle()}>
             <svg width={24} height={24}>
               <use href={`${sprite}#close`} />
             </svg>
@@ -92,7 +92,7 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
                   loading="lazy"
                 />
                 <div>
-                  <h4>Декоративна ваза з натурального дерева{el.name}</h4>
+                  <h4>{el.name}</h4>
                   <Price>Ціна: ₴ {el.price}</Price>
                   <p>Кількість: {el.quantity}</p>
                 </div>
@@ -119,14 +119,14 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
 
           <Link
             to={'/cart'}
-            onClick={() => onClickHandle(false)}
+            onClick={() => onClickHandle()}
             className="primaryBtn"
           >
             переглянути кошик
           </Link>
           <Link
             to={'/delivery'}
-            onClick={() => onClickHandle(false)}
+            onClick={() => onClickHandle()}
             className="primaryBtn"
           >
             Купити

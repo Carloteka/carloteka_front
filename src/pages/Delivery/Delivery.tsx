@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Loader } from '../../components/Loader/Loader';
 import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import { InputMask } from 'primereact/inputmask';
@@ -14,6 +15,11 @@ import { InvoiceInfo } from '../../components/InvoiceInfo/InvoiceInfo';
 import sprite from '../../images/sprite.svg';
 import { reactSelectStyle } from '../../utils/reactSelectStyle';
 import { Good } from '../../../@types/custom';
+import {
+  fetchNPAreas,
+  fetchNPSettlements,
+  fetchNPWarehouses,
+} from '../../api/api';
 
 type InputObject = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,12 +27,60 @@ type InputObject = {
   name?: string;
 };
 
+type NPItemObject = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Ref?: string;
+  Description?: string;
+};
+
 const Delivery = () => {
   const navigate = useNavigate();
+  const warehouseError = 'У цьому населенному пункті не має відділень';
 
   let goodsInCart: { id: number; amount: number }[] = [];
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [delivery, setDelivery] = useState<InputObject>();
+
+  const [areasUkr, setAreasUkr] = useState<{ Description: string }[]>([]);
+  const [settlements, setSettlements] = useState<[]>([]);
+  const [warehouses, setWarehouses] = useState([]);
+  const [city, setCity] = useState<object>({});
+  console.log(city);
+
+  async function getNPAreas() {
+    try {
+      setIsLoading(true);
+      const data = await fetchNPAreas();
+      setAreasUkr(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getNPSettlements(Ref: string) {
+    try {
+      setIsLoading(true);
+      const data = await fetchNPSettlements(Ref);
+      setSettlements(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getNPWarehouses(Ref: string) {
+    try {
+      setIsLoading(true);
+      const data = await fetchNPWarehouses(Ref);
+      setWarehouses(data === 404 ? [data] : data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
     if (!localStorage.getItem('delivery')) {
@@ -68,6 +122,9 @@ const Delivery = () => {
   function submitHandle(e: React.FormEvent) {
     e.preventDefault();
 
+    if (delivery?.city && warehouses.length > 0 && warehouses[0] === 404) {
+      return;
+    }
     // const target = e.target as HTMLFormElement;
     // const elementsCollection =
     //   target.elements as HTMLCollectionOf<HTMLInputElement>;
@@ -114,6 +171,7 @@ const Delivery = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function saveValue(e: any | string, field: string) {
+    // console.log(e);
     if (!localStorage.getItem('delivery')) {
       localStorage.setItem('delivery', JSON.stringify({}));
     }
@@ -122,11 +180,34 @@ const Delivery = () => {
     if (typeof e === 'string') {
       newArray = { ...temp, [field]: e };
     }
-    if (field === 'office') {
-      newArray = { ...temp, [field]: e.value };
-    }
+
     newArray = { ...temp, [field]: e };
     localStorage.setItem('delivery', JSON.stringify(newArray));
+
+    if (field === 'country' && e.value === 'Україна' && areasUkr.length === 0) {
+      getNPAreas();
+    }
+    if (field === 'oblast') {
+      const area: NPItemObject | undefined = areasUkr.find(
+        (el: NPItemObject) => el.Description === e.value,
+      );
+      if (area) {
+        getNPSettlements(area?.Ref as string);
+      }
+    }
+    if (field === 'city') {
+      const town: NPItemObject | undefined = settlements.find(
+        (el: NPItemObject) => el.Description === e.value,
+      );
+      if (town) {
+        setCity(town);
+        getNPWarehouses(town['Ref'] as string);
+      }
+    }
+    // if (field === 'post' && e.value === 'novaposhta') {
+    //   getNPWarehouses(city.Ref);
+    // }
+
     setDelivery(newArray);
   }
 
@@ -139,10 +220,10 @@ const Delivery = () => {
       };
     });
 
-  const getOfficeOptions = (labelsArray: string[], valuesArray: string[]) =>
-    labelsArray.map((item, index) => {
+  const getOfficeOptions = (labelsArray: string[]) =>
+    labelsArray.map((item) => {
       return {
-        value: valuesArray[index],
+        value: item,
         label: (
           <>
             <GeoIcon width={24} height={24}>
@@ -154,39 +235,10 @@ const Delivery = () => {
       };
     });
 
-  function getOfficeValue() {
-    if (delivery?.office) {
-      // console.log(delivery.length);
-      const selectedLabel = [
-        'Відділеня 23, проспект Перемоги 1',
-        'Відділеня 11, вул. Вербицького 14',
-        'Відділеня 4, Харківське шосе 3',
-      ].find((el) => {
-        const re = el.match(/\d+/);
-        if (re) {
-          return parseInt(re[0]) === +delivery?.office;
-        }
-      });
-
-      return {
-        value: delivery?.office,
-        label: (
-          <>
-            <GeoIcon width={24} height={24}>
-              <use href={`${sprite}#geo`} />
-            </GeoIcon>
-            <span>{selectedLabel}</span>
-          </>
-        ),
-      };
-    } else {
-      return undefined;
-    }
-  }
-
   return (
     inCart.length > 0 && (
       <>
+        {isLoading && <Loader />}
         <PageTitle>Доставка</PageTitle>
         <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'80px'}>
           <DeliveryBox>
@@ -220,48 +272,6 @@ const Delivery = () => {
                   />
                 </label>
                 <label>
-                  Країна
-                  <StyledSelect
-                    className="react-select-container"
-                    classNamePrefix="rs"
-                    name={'country'}
-                    placeholder={'Оберіть країну'}
-                    options={getOptions(['Україна', 'Польща'])}
-                    styles={reactSelectStyle}
-                    required
-                    onChange={(e) => saveValue(e as object, 'country')}
-                    value={delivery?.country ? delivery?.country : undefined}
-                  />
-                </label>
-                <label>
-                  Регіон
-                  <StyledSelect
-                    className="react-select-container"
-                    classNamePrefix="rs"
-                    name={'oblast'}
-                    placeholder={'Оберіть регіон'}
-                    options={getOptions(['Україна', 'Польща'])}
-                    styles={reactSelectStyle}
-                    required
-                    onChange={(e) => saveValue(e as object, 'oblast')}
-                    value={delivery?.oblast ? delivery?.oblast : undefined}
-                  />
-                </label>
-                <label>
-                  Місто
-                  <StyledSelect
-                    className="react-select-container"
-                    classNamePrefix="rs"
-                    name={'city'}
-                    placeholder={'Оберіть місто'}
-                    options={getOptions(['Україна', 'Польща'])}
-                    styles={reactSelectStyle}
-                    required
-                    onChange={(e) => saveValue(e as object, 'city')}
-                    value={delivery?.city ? delivery?.city : undefined}
-                  />
-                </label>
-                <label>
                   Служба доставки
                   <StyledSelect
                     className="react-select-container"
@@ -278,30 +288,122 @@ const Delivery = () => {
                     value={delivery?.post ? delivery?.post : undefined}
                   />
                 </label>
-                <label>
-                  Номер відділення
-                  <StyledSelect
-                    className="react-select-container"
-                    classNamePrefix="rs"
-                    name={'office'}
-                    placeholder={'Оберіть номер відділення'}
-                    options={getOfficeOptions(
-                      [
-                        'Відділеня 23, проспект Перемоги 1',
-                        'Відділеня 11, вул. Вербицького 14',
-                        'Відділеня 4, Харківське шосе 3',
-                      ],
-                      ['23', '11', '4'],
+                {delivery?.post && (
+                  <label>
+                    Країна
+                    <StyledSelect
+                      className="react-select-container"
+                      classNamePrefix="rs"
+                      name={'country'}
+                      placeholder={'Оберіть країну'}
+                      options={getOptions(['Україна', 'Польща'])}
+                      styles={reactSelectStyle}
+                      required
+                      onChange={(e) => saveValue(e as object, 'country')}
+                      value={delivery?.country ? delivery?.country : undefined}
+                    />
+                  </label>
+                )}
+                {delivery?.country && (
+                  <label>
+                    Регіон
+                    <StyledSelect
+                      className="react-select-container"
+                      classNamePrefix="rs"
+                      name={'oblast'}
+                      placeholder={'Оберіть регіон'}
+                      options={
+                        delivery?.country?.value === 'Україна'
+                          ? getOptions(
+                              areasUkr?.map((el: { Description: string }) => {
+                                return el.Description;
+                              }),
+                            )
+                          : []
+                      }
+                      styles={reactSelectStyle}
+                      required
+                      onChange={(e) => saveValue(e as object, 'oblast')}
+                      value={delivery?.oblast ? delivery?.oblast : undefined}
+                    />
+                  </label>
+                )}
+                {delivery?.oblast && (
+                  <>
+                    <label>
+                      Місто
+                      <StyledSelect
+                        className="react-select-container"
+                        classNamePrefix="rs"
+                        name={'city'}
+                        placeholder={'Оберіть місто'}
+                        options={
+                          delivery?.oblast?.value
+                            ? getOptions(
+                                settlements?.map(
+                                  (el: { Description: string }) => {
+                                    return el.Description;
+                                  },
+                                ),
+                              )
+                            : []
+                        }
+                        styles={reactSelectStyle}
+                        required
+                        onChange={(e) => saveValue(e as object, 'city')}
+                        value={delivery?.city ? delivery?.city : undefined}
+                      />
+                    </label>
+                    {delivery?.city && warehouses[0] === 404 && (
+                      <p className="error">
+                        Оберіть населений пункт, в якому є відділення Нової
+                        Пошти
+                      </p>
                     )}
-                    styles={reactSelectStyle}
-                    required
-                    onChange={(e) => {
-                      const el = e as { value: string };
-                      saveValue(el.value as string, 'office');
-                    }}
-                    value={getOfficeValue()}
-                  />
-                </label>
+                  </>
+                )}
+                {delivery?.city && (
+                  <label>
+                    Номер відділення
+                    <StyledSelect
+                      className="react-select-container"
+                      classNamePrefix="rs"
+                      name={'office'}
+                      placeholder={
+                        warehouses[0] === 404
+                          ? warehouseError
+                          : 'Оберіть номер відділення'
+                      }
+                      options={
+                        delivery?.post?.value === 'novaposhta' &&
+                        warehouses[0] !== 404
+                          ? getOfficeOptions(
+                              warehouses?.map((el: { Description: string }) => {
+                                return el.Description;
+                              }),
+                            )
+                          : []
+                      }
+                      styles={reactSelectStyle}
+                      required
+                      onChange={(e: { value: string; label: string }) =>
+                        saveValue(
+                          { value: e.value, label: e.value } as object,
+                          'office',
+                        )
+                      }
+                      value={
+                        typeof warehouses === 'string'
+                          ? { value: warehouses, label: warehouses }
+                          : delivery?.office && typeof warehouses !== 'number'
+                          ? delivery?.office
+                          : undefined
+                      }
+                      isDisabled={!delivery?.city || warehouses[0] === 404}
+                    />
+                  </label>
+                )}
+
                 <label>
                   Вид оплати
                   <StyledSelect

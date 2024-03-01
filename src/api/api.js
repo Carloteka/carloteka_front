@@ -73,3 +73,42 @@ export const fetchFilteredGoods = async (search) => {
     console.log(error);
   }
 };
+
+// ------  nova poshta -------------
+
+export const fetchNPAreas = async () => {
+  try {
+    const response = await axios.get('/shop/np/areas/');
+    const arrayData = response.data;
+    return arrayData;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchNPSettlements = async (Ref) => {
+  const params = { Ref };
+
+  try {
+    const response = await axios.get('/shop/np/settlements/', { params });
+    const arrayData = response.data;
+    return arrayData;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchNPWarehouses = async (SettlementRef) => {
+  const params = { SettlementRef };
+
+  try {
+    const response = await axios.get('/shop/np/warehouses/', { params });
+    const arrayData = response.data;
+    return arrayData.length === 0
+      ? 'У вибраному населенному пункті не має відділень'
+      : arrayData;
+  } catch (error) {
+    console.log(error);
+    return error.response.status;
+  }
+};

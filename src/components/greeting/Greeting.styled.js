@@ -51,10 +51,12 @@ export const ImgAside = styled.picture`
 `;
 export const Title = styled.h1`
   @media screen and (max-width: 1439px) {
+    padding-top: 66px;
     width: 288px;
     font-size: 35px;
     line-height: calc(46 / 35);
   }
+  padding-top: 112px;
   width: 640px;
 `;
 

@@ -33,6 +33,7 @@ body {
 main {
   background-color: white;
   overflow-x: hidden;
+  min-height: 80vh;
 }
 
 ul {

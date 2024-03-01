@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+  padding-top: 66px;
   width: 100%;
-  min-height: 78px;
+  min-height: 144px;
   display: flex;
   align-items: center;
   justify-content: center;
 
   background-color: #dad4c8;
   @media screen and (min-width: 1440px) {
-    height: 224px;
+    padding-top: 112px;
+    height: 336px;
   }
 `;
 

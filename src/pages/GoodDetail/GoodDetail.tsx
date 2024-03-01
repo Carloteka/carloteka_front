@@ -1,5 +1,5 @@
 import { Suspense, useState, useEffect, useContext } from 'react';
-import { CartContext } from '../../components/Layout';
+import { CartContext, FavoritesContext } from '../../components/Layout';
 import { Outlet, useParams, Link, NavLink } from 'react-router-dom';
 import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { Loader } from '../../components/Loader/Loader';
@@ -28,16 +28,21 @@ const GoodDetail = () => {
   const { goodId } = useParams();
 
   const { setAmountInCart } = useContext(CartContext);
+  const { setAmountInFavorites } = useContext(FavoritesContext);
 
   const [good, setGood] = useState<Good>({} as Good);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function getGoodDetail() {
       try {
+        setIsLoading(true);
         const data = await fetchItemDetails(goodId);
         setArray(data.image_set);
         setGood(data);
         setIsFavorite(favoriteArray.includes(data.id));
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -92,6 +97,9 @@ const GoodDetail = () => {
   function toggleFavorite() {
     toggleLocalStorage(isFavorite, 'favorite', good.id);
     setIsFavorite((prev) => !prev);
+    setAmountInFavorites((amountInFavorites: number) =>
+      isFavorite ? amountInFavorites - 1 : amountInFavorites + 1,
+    );
   }
 
   function toggleCart() {
@@ -104,6 +112,7 @@ const GoodDetail = () => {
   return (
     good && (
       <>
+        {isLoading && <Loader />}
         <PageTitle>{good.name}</PageTitle>
         <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'56px'}>
           <SectionInfo>

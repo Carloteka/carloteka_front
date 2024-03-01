@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { Loader } from '../../components/Loader/Loader';
 import { PageTitle } from '../../components/pageTitle/PageTitle.tsx';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter.tsx';
 import { Paginator } from '../../components/Paginator/Paginator.tsx';
@@ -41,6 +42,8 @@ const Catalog = () => {
   const [selectValue, setSelectValue] = useState(getSortingValue());
   const [showSelectMenu, setShowSelectMenu] = useState(false);
   const [showFilters, setShowFilters] = useState(true);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   function isChecked(field, value) {
     const temp = params[field];
@@ -94,10 +97,11 @@ const Catalog = () => {
 
     async function getAllGoods() {
       try {
+        setIsLoading(true);
         const data = await fetchAllGoods(12);
-
         setQuantity(data.count);
         setCatalog(data.data);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -238,10 +242,11 @@ const Catalog = () => {
 
   async function getFilteredCategories(filter) {
     try {
+      setIsLoading(true);
       const data = await fetchFilteredGoods(filter);
-
       setQuantity(data.count);
       setCatalog(data.data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -337,24 +342,6 @@ const Catalog = () => {
     }
   }
 
-  // const sortedByStock = catalog.sort((a, b) => {
-  //   if (a.stock === 'IN_STOCK' && b.stock === 'IN_STOCK') {
-  //     return 0;
-  //   } else if (a.stock === 'IN_STOCK') {
-  //     return -1;
-  //   } else if (b.stock === 'IN_STOCK') {
-  //     return 1;
-  //   } else if (a.stock === 'BACKORDER' && b.stock === 'BACKORDER') {
-  //     return 0;
-  //   } else if (a.stock === 'BACKORDER') {
-  //     return -1;
-  //   } else if (b.stock === 'BACKORDER') {
-  //     return 1;
-  //   } else {
-  //     return a.stock - b.stock;
-  //   }
-  // });
-
   function getSortedGoods() {
     if (params.order_by) {
       return catalog;
@@ -383,6 +370,7 @@ const Catalog = () => {
 
   return (
     <>
+      {isLoading && <Loader />}
       <PageTitle>Каталог</PageTitle>
       <ContainerLimiter paddingTopMob={'16px'} paddingTopDesc={'56px'}>
         <FlexContainer>

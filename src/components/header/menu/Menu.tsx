@@ -33,11 +33,7 @@ export const Menu = ({ onClickHandle, showMenu }: MenuProps) => {
         onClick={() => onClickHandle()}
         style={{ display: showMenu ? 'flex' : 'none' }}
       ></Backdrop>
-      <MenuContainer
-        style={{
-          right: showMenu ? '0' : '-1400px',
-        }}
-      >
+      <MenuContainer $showMenu={showMenu}>
         <CloseButton onClick={() => onClickHandle()}>
           <svg width={24} height={24}>
             <use href={`${sprite}#close`} />
