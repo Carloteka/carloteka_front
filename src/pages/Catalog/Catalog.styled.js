@@ -74,6 +74,7 @@ export const Form = styled.form`
     gap: 16px;
     width: 100%;
     min-height: 25px;
+    cursor: pointer;
   }
   label:lastchild {
     margin-bottom: 0;
@@ -81,10 +82,13 @@ export const Form = styled.form`
   input {
     width: 18px;
     height: 18px;
+    cursor: pointer;
   }
 `;
 
-export const Checkbox = styled.input``;
+export const Checkbox = styled.input`
+  cursor: pointer;
+`;
 
 export const Price = styled.fieldset`
   div {

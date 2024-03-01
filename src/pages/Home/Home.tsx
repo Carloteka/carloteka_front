@@ -5,15 +5,7 @@ import { PopularGoods } from '../../components/popularGoods';
 // import categoryData from 'src/mockdata/categories.json';
 import { CategorySection, List, Category } from './Home.styled';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
-
-type Categories = {
-  mini_image: string;
-  images: [{ image: string }];
-  name: string;
-  price: number;
-  id_name: string;
-  description: string;
-};
+import { Categories } from '../../../@types/custom';
 
 const Home = () => {
   const [categories, setCategories] = useState<[] | Categories[]>([]);
@@ -35,7 +27,7 @@ const Home = () => {
         <CategorySection>
           <List>
             {categories?.map((el: Categories) => (
-              <Category key={el.id_name}>
+              <Category key={el.id}>
                 <CategoryCard category={el} />
               </Category>
             ))}

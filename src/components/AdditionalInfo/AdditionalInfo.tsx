@@ -7,6 +7,7 @@ import sprite from '../../images/sprite.svg';
 type Good = {
   height: number;
   width: number;
+  length: number;
 };
 
 const AdditionalInfo = () => {
@@ -18,6 +19,7 @@ const AdditionalInfo = () => {
     async function getGoodDetail() {
       try {
         const data = await fetchItemDetails(goodId);
+        console.log(data);
         setGood(data);
       } catch (error) {
         console.log(error);
@@ -35,14 +37,25 @@ const AdditionalInfo = () => {
               <td>Матеріал</td>
               <td>Дерево, вкрите коричневим лаком, найвищого рівня якості</td>
             </tr>
-            <tr>
-              <td>Висота</td>
-              <td>{good.height} см</td>
-            </tr>
-            <tr>
-              <td>Діаметр</td>
-              <td>{good.width} см</td>
-            </tr>
+            {good.length && (
+              <tr>
+                <td>Довжина</td>
+                <td>{Math.floor(good.length)} см</td>
+              </tr>
+            )}
+            {good.height && (
+              <tr>
+                <td>Висота</td>
+                <td>{Math.floor(good.height)} см</td>
+              </tr>
+            )}
+            {good.width && (
+              <tr>
+                <td>Діаметр</td>
+                <td>{Math.floor(good.width)} см</td>
+              </tr>
+            )}
+
             <tr>
               <td>Країна-виробник товару</td>
               <td>Україна</td>

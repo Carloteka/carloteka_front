@@ -1,26 +1,45 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const Search = styled.form`
+export const SearchBox = styled.div`
+  position: relative;
+  margin-right: 22px;
+  display: flex;
+  @media screen and (min-width: 1440px) {
+    margin-right: 142px;
+  }
+
+  search {
+    @media screen and (max-width: 1439px) {
+      width: 170px;
+    }
+  }
+`;
+
+export const Form = styled.form`
   @media screen and (max-width: 1439px) {
-    order: 2;
-    margin-right: 0;
-    padding: 0 0 0 16px;
-    width: 100%;
+    padding: 0;
+
     height: 25px;
     justify-content: space-between;
   }
-  margin-right: 142px;
   padding: 0 16px;
-  position: relative;
+
   height: 32px;
   display: flex;
   align-items: center;
+
+  svg {
+    @media screen and (min-width: 1440px) {
+      width: 24px;
+      height: 24px;
+    }
+  }
 `;
 
 export const Input = styled.input`
   padding: 0;
-  width: 240px;
+  width: 126px;
   border: none;
   border-radius: 0;
   background-color: inherit;
@@ -52,12 +71,13 @@ export const Backdrop = styled.div`
 export const SearchResultDiv = styled.div`
   position: absolute;
   top: 28px;
-  left: 0;
-  width: 100%;
-  align-items: center;
+  left: -33%;
+  width: 170%;
   background-color: white;
   @media screen and (min-width: 1440px) {
+    width: 100%;
     top: 38px;
+    left: 0;
   }
 
   p:first-child {
@@ -106,11 +126,25 @@ export const GoodListResult = styled.li`
   }
   li {
     border-bottom: 0.5px solid #cccbc7;
+    justify-content: space-between;
+    width: 100%;
     a {
+      padding-right: 4px;
       width: 160px;
+      font-size: 13px;
+      overflow-y: hidden;
       @media screen and (min-width: 1440px) {
+        font-size: 18px;
         width: 220px;
       }
+    }
+  }
+
+  span {
+    text-align: right;
+    text-wrap: nowrap;
+    @media screen and (max-width: 1439px) {
+      font-size: 13px;
     }
   }
 `;

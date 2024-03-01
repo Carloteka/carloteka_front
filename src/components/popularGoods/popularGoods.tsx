@@ -2,16 +2,7 @@ import { useState, useEffect } from 'react';
 import { Section, Title } from './popularGoods.styled';
 import { fetchPopularGoods } from '../../api/api';
 import { SliderPopulars } from './sliderPopulars/SliderPopulars';
-
-type Popular = {
-  category__id_name: string;
-  id: string;
-  mini_image: string;
-  name: string;
-  price: number;
-  id_name: string;
-  in_stock: number;
-};
+import { Good as Popular } from '../../../@types/custom';
 
 interface PopularGoodsProps {
   width: number;

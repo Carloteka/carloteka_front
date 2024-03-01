@@ -4,13 +4,13 @@ import {
   Total,
   PolicyLink,
 } from './InvoiceInfo.styled';
-
-type Good = {
-  name: string;
-  price: number;
-  id_name: string;
-  quantity: number;
-};
+import { Good } from '../../../@types/custom';
+// type Good = {
+//   name: string;
+//   price: number;
+//   id_name: string;
+//   quantity: number;
+// };
 
 interface InvoiceInfoProps {
   inCart: Good[];
@@ -35,7 +35,7 @@ export const InvoiceInfo = ({ inCart }: InvoiceInfoProps) => {
 
       <ul>
         {inCart?.map((el) => (
-          <li key={el.id_name}>
+          <li key={el.id}>
             <div>
               <p>
                 {el.name}

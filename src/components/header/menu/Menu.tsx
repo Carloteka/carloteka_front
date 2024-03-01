@@ -1,4 +1,5 @@
 import {
+  Backdrop,
   MenuContainer,
   CloseButton,
   List,
@@ -13,98 +14,99 @@ import sprite from '../../../images/sprite.svg';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { socialLinks } from '../../../socialLinks';
-
-type Categories = {
-  mini_image: string;
-  images: [{ image: string }];
-  name: string;
-  price: number;
-  id_name: string;
-  description: string;
-};
+import { Categories } from '../../../../@types/custom';
 
 interface MenuProps {
   onClickHandle: () => void;
+  showMenu: boolean;
 }
 
-export const Menu = ({ onClickHandle }: MenuProps) => {
+export const Menu = ({ onClickHandle, showMenu }: MenuProps) => {
   const tempString = localStorage.getItem('categories') as string;
   const categories: Categories[] = JSON.parse(tempString);
 
   const [showList, setShowList] = useState<boolean>();
 
   return (
-    <MenuContainer>
-      <CloseButton onClick={() => onClickHandle()}>
-        <svg width={24} height={24}>
-          <use href={`${sprite}#close`} />
-        </svg>
-      </CloseButton>
-      <nav>
-        <List>
-          <li>
-            <FlexCatalogContainer onClick={() => setShowList((prev) => !prev)}>
-              <h3>Каталог</h3>
-              <svg
-                width={24}
-                height={24}
-                style={{
-                  transform: showList ? 'rotate(90deg)' : 'rotate(270deg)',
-                }}
+    <>
+      <Backdrop
+        onClick={() => onClickHandle()}
+        style={{ display: showMenu ? 'flex' : 'none' }}
+      ></Backdrop>
+      <MenuContainer $showMenu={showMenu}>
+        <CloseButton onClick={() => onClickHandle()}>
+          <svg width={24} height={24}>
+            <use href={`${sprite}#close`} />
+          </svg>
+        </CloseButton>
+        <nav>
+          <List>
+            <li>
+              <FlexCatalogContainer
+                onClick={() => setShowList((prev) => !prev)}
               >
-                <use href={`${sprite}#chevron`} />
-              </svg>
-            </FlexCatalogContainer>
-            {showList && (
-              <CategoriesList>
-                {categories.map((el) => (
-                  <li key={el.id_name}>
-                    <Link
-                      to={`/catalog?category-id-name=${el.id_name}`}
-                      onClick={() => onClickHandle()}
-                    >
-                      {el.name}
-                    </Link>
+                <h3>Каталог</h3>
+                <svg
+                  width={24}
+                  height={24}
+                  style={{
+                    transform: showList ? 'rotate(90deg)' : 'rotate(270deg)',
+                  }}
+                >
+                  <use href={`${sprite}#chevron`} />
+                </svg>
+              </FlexCatalogContainer>
+              {showList && (
+                <CategoriesList>
+                  {categories.map((el) => (
+                    <li key={el.id}>
+                      <Link
+                        to={`/catalog?category__id=${el.id}`}
+                        onClick={() => onClickHandle()}
+                      >
+                        {el.name}
+                      </Link>
+                    </li>
+                  ))}
+                </CategoriesList>
+              )}
+            </li>
+            <li>
+              <LinkLarge to={'/about'} onClick={() => onClickHandle()}>
+                Про нас
+              </LinkLarge>
+            </li>
+            <li>
+              <LinkLarge to={'/aboutPayment'} onClick={() => onClickHandle()}>
+                Оплата & Доставка
+              </LinkLarge>
+            </li>
+          </List>
+        </nav>
+        <Contacts>
+          <h3>Зв’язатись з нами</h3>
+          <address>
+            <ul>
+              <Tel>
+                <a href="tel:+380955810075" title="Call +380955810075">
+                  +380 (95) 581-00-75
+                </a>
+              </Tel>
+              <Socials>
+                {socialLinks.map((el) => (
+                  <li key={el.social}>
+                    <a href={el.href} target="_blank" rel="noopener noreferrer">
+                      <svg width={24} height={24}>
+                        <use href={`${sprite}#${el.social}`} />
+                      </svg>
+                    </a>
                   </li>
                 ))}
-              </CategoriesList>
-            )}
-          </li>
-          <li>
-            <LinkLarge to={'/about'} onClick={() => onClickHandle()}>
-              Про нас
-            </LinkLarge>
-          </li>
-          <li>
-            <LinkLarge to={'/aboutPayment'} onClick={() => onClickHandle()}>
-              Оплата & Доставка
-            </LinkLarge>
-          </li>
-        </List>
-      </nav>
-      <Contacts>
-        <h3>Зв’язатись з нами</h3>
-        <address>
-          <ul>
-            <Tel>
-              <a href="tel:+380955810075" title="Call +380955810075">
-                +380 (95) 581-00-75
-              </a>
-            </Tel>
-            <Socials>
-              {socialLinks.map((el) => (
-                <li key={el.social}>
-                  <a href={el.href} target="_blank" rel="noopener noreferrer">
-                    <svg width={24} height={24}>
-                      <use href={`${sprite}#${el.social}`} />
-                    </svg>
-                  </a>
-                </li>
-              ))}
-            </Socials>
-          </ul>
-        </address>
-      </Contacts>
-    </MenuContainer>
+              </Socials>
+            </ul>
+          </address>
+        </Contacts>
+      </MenuContainer>
+    </>
   );
 };

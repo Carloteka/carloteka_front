@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { FavoritesContext } from '../../components/Layout';
 import { PageTitle } from 'src/components/pageTitle/PageTitle';
 import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter.tsx';
 import {
@@ -16,6 +17,8 @@ import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
 import sprite from '../../images/sprite.svg';
 
 const Favorites = () => {
+  const { setAmountInFavorites } = useContext(FavoritesContext);
+
   let favoritesIds = [];
 
   if (localStorage.getItem('favorite')) {
@@ -29,20 +32,21 @@ const Favorites = () => {
   }
 
   let favoriteGoodsArray = goods.filter((el) =>
-    favoritesIds.some((id) => el.id_name === id),
+    favoritesIds.some((id) => el.id === id),
   );
 
   const [favorites, setFavorites] = useState(
-    favoriteGoodsArray.filter((el) => el.length !== 0),
+    favoriteGoodsArray.filter((el) => el.id !== 0),
   );
 
   function clearFavorites() {
     localStorage.favorite = [];
     setFavorites([]);
+    setAmountInFavorites(0);
   }
 
   function delFromFavorite(id) {
-    const newArray = favoriteGoodsArray.filter((el) => el.id_name !== id);
+    const newArray = favoriteGoodsArray.filter((el) => el.id !== id);
     toggleLocalStorage(true, 'favorite', id);
     setFavorites(newArray);
   }
@@ -58,7 +62,7 @@ const Favorites = () => {
         </ListHeaderWrapper>
         <FavoritesList>
           {favorites?.map((el) => (
-            <Card key={el.id_name}>
+            <Card key={el.id}>
               <FavoritesCard good={el} onClickDelete={delFromFavorite} />
             </Card>
           ))}

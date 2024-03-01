@@ -27,6 +27,12 @@ export const DeliveryBox = styled.section`
     flex-direction: row;
     gap: 32px;
   }
+
+  .error {
+    margin: -20px 0;
+    color: red;
+    font-size: 0.9rem;
+  }
 `;
 
 export const Form = styled.form`

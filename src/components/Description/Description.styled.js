@@ -11,5 +11,9 @@ export const SectionDescription = styled.section`
 
   @media screen and (min-width: 1440px) {
     flex-direction: row;
+
+    & > div > div {
+      width: 752px;
+    }
   }
 `;

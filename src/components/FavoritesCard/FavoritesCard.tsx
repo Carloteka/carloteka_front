@@ -13,28 +13,21 @@ import {
 } from './FavoritesCard.styled';
 import sprite from '../../images/sprite.svg';
 import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
-
-type Good = {
-  images: [{ image: string }];
-  name: string;
-  price: number;
-  id_name: string;
-  quantity: number;
-};
+import { Good } from '../../../@types/custom';
 
 interface FavoritesCardProps {
   good: Good;
-  onClickDelete: (id: string) => void;
+  onClickDelete: (id: number) => void;
 }
 
 export const FavoritesCard = ({ good, onClickDelete }: FavoritesCardProps) => {
-  const { images, name, price, id_name } = good;
+  const { image_set, name, price, id, stars } = good;
 
   const { setAmountInCart } = useContext(CartContext);
   // const [quantity, setQuantity] = useState(1);
 
   function buyBtnHandle() {
-    toggleCartInLocalStorage(false, id_name);
+    toggleCartInLocalStorage(false, id);
     setAmountInCart((amountInCart: number) => amountInCart + 1);
   }
 
@@ -59,8 +52,8 @@ export const FavoritesCard = ({ good, onClickDelete }: FavoritesCardProps) => {
       <Img
         src={
           import.meta.env.PROD
-            ? `http://carloteka.com/${images[0].image}`
-            : `http://localhost:8000/${images[0].image}`
+            ? `http://carloteka.com/${image_set[0].image}`
+            : `http://localhost:8000/${image_set[0].image}`
         }
         width={60}
         height={82}
@@ -73,13 +66,15 @@ export const FavoritesCard = ({ good, onClickDelete }: FavoritesCardProps) => {
           <ul>
             {[0, 1, 2, 3, 4].map((index) => (
               <li key={index}>
-                <Star style={{ fill: index <= 3 ? '#5B5B59' : 'transparent' }}>
+                <Star
+                  style={{ fill: index <= stars ? '#5B5B59' : 'transparent' }}
+                >
                   <use href={`${sprite}#star`} />
                 </Star>
               </li>
             ))}
           </ul>
-          8
+          {stars}
         </FlexContainer>
 
         <Price>₴ {price}</Price>
@@ -96,7 +91,7 @@ export const FavoritesCard = ({ good, onClickDelete }: FavoritesCardProps) => {
           type="button"
           onClick={() => {
             setAmountInCart((amountInCart: number) => amountInCart - 1);
-            onClickDelete(id_name);
+            onClickDelete(id);
           }}
         >
           <svg width={8} height={8}>

@@ -1,15 +1,7 @@
 import { TextContainer, Title, LinkBtn } from './CategoryCard.styled';
 import { Slider } from './slider/Slider';
 import { useState } from 'react';
-
-type Categories = {
-  mini_image: string;
-  images: [{ image: string }];
-  name: string;
-  price: number;
-  id_name: string;
-  description: string;
-};
+import { Categories } from '../../../@types/custom';
 
 type Image = { image: string };
 
@@ -18,9 +10,9 @@ interface CategoryCardProps {
 }
 
 export const CategoryCard = ({ category }: CategoryCardProps) => {
-  const { name, description, images } = category;
+  const { name, description, image_set } = category;
 
-  const [array, setArray] = useState<Image[]>(images);
+  const [array, setArray] = useState<Image[]>(image_set);
   const width: number = 1;
 
   const arrayToRender: Image[] = array.slice(0, width);
@@ -51,15 +43,23 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
   // }
   return (
     <>
-      <Slider arrayToRender={arrayToRender} sliderHandler={sliderHandler} />
+      <Slider
+        arrayToRender={arrayToRender}
+        sliderHandler={sliderHandler}
+        description={name}
+      />
 
       <TextContainer>
         <Title>{name}</Title>
-        <Slider arrayToRender={arrayToRender} sliderHandler={sliderHandler} />
+        <Slider
+          arrayToRender={arrayToRender}
+          sliderHandler={sliderHandler}
+          description={name}
+        />
         <p>{description}</p>
         <LinkBtn
           className="secondaryBtn"
-          to={`/catalog?category-id-name=${category.id_name}`}
+          to={`/catalog?category__id=${category.id}`}
         >
           Переглянути
         </LinkBtn>

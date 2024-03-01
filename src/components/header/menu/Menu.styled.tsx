@@ -1,9 +1,21 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const MenuContainer = styled.div`
+export const Backdrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f0ec50;
+  z-index: 28;
+`;
+
+export const MenuContainer = styled.div<{ $showMenu: boolean }>`
   padding: 120px 16px 120px;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   width: 100%;
@@ -11,7 +23,10 @@ export const MenuContainer = styled.div`
   flex-direction: column;
   gap: 40px;
   background-color: white;
-  z-index: 2;
+  z-index: 30;
+  transition: right 0.25s ease-out;
+  right: ${({ $showMenu }) => ($showMenu ? '0' : '-1400px')};
+
   @media screen and (min-width: 1440px) {
     padding: 112px;
     gap: 72px;

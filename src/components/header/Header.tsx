@@ -7,23 +7,27 @@ import {
   NavigationLink,
   CartMenuBtn,
   BurgerMenuBtn,
-  CartCounter,
+  Counter,
 } from './Header.styled';
 import sprite from '../../images/sprite.svg';
 import { SearchBar } from './SearchBar/SearchBar';
-import { Menu } from './menu/Menu';
-import { MenuCart } from './menu/MenuCart';
 import { useState, useEffect, useContext } from 'react';
-import { CartContext } from '../Layout';
+import { CartContext, FavoritesContext } from '../Layout';
 
-export const Header = () => {
+interface HeaderProps {
+  setShowMenu: (arg0: boolean) => void;
+  setShowCartMenu: (arg0: boolean) => void;
+}
+
+export const Header = ({ setShowCartMenu, setShowMenu }: HeaderProps) => {
   const { amountInCart } = useContext(CartContext);
+  const { amountInFavorites } = useContext(FavoritesContext);
 
-  const [showMenu, setShowMenu] = useState(false);
-  const [showCartMenu, setShowCartMenu] = useState(false);
-  const [inCart, setInCart] = useState<string[]>([]);
+  const [inCart, setInCart] = useState<object[]>([]);
+  const [inFavorites, setInFavorites] = useState<number[]>([]);
 
-  let goodsInCart: string[] = [];
+  let goodsInCart: object[] = [];
+  let goodsInFavorites: number[] = [];
 
   useEffect(() => {
     if (localStorage.getItem('cart')) {
@@ -32,24 +36,34 @@ export const Header = () => {
     if (inCart.length === goodsInCart.length) {
       return;
     }
+
     setInCart(goodsInCart);
   }, [setInCart, inCart, goodsInCart]);
 
-  function burgerMenuHandler() {
-    document.body.style.overflowY = 'hidden';
-    setShowMenu(true);
-  }
+  useEffect(() => {
+    if (localStorage.getItem('favorite')) {
+      goodsInFavorites = JSON.parse(localStorage.getItem('favorite') as string);
+    }
+    if (inFavorites.length === goodsInFavorites.length) {
+      return;
+    }
 
-  function onClose() {
-    document.body.style.overflowY = 'auto';
-    setShowMenu(false);
+    setInFavorites(goodsInFavorites);
+  }, [setInFavorites, inFavorites, goodsInFavorites]);
+
+  function openMenu() {
+    document.body.style.overflowY = 'hidden';
+  }
+  function openCartMenu() {
+    openMenu();
+    setShowCartMenu(true);
   }
 
   return (
     <HeaderContainer>
       <LimiterConatiner>
         <Logo to={'/'}>Brand Logo</Logo>
-        <Catalog to={'/catalog'} title="На стрінку Товарів">
+        <Catalog to={'/catalog'} title="На сторінку Товарів">
           Каталог
         </Catalog>
         <SearchBar />
@@ -58,29 +72,31 @@ export const Header = () => {
             <svg width={24} height={24}>
               <use href={`${sprite}#favorite`} />
             </svg>
+            {inFavorites?.length > 0 && <Counter>{amountInFavorites}</Counter>}
           </NavigationLink>
           <CartMenuBtn
-            onClick={() => inCart?.length > 0 && setShowCartMenu(true)}
+            onClick={() => inCart?.length > 0 && openCartMenu()}
             title={inCart?.length > 0 ? 'Меню Кошика' : 'Кошик пустий'}
           >
             <svg width={24} height={24}>
               <use href={`${sprite}#cart`} />
             </svg>
-            {inCart?.length > 0 && <CartCounter>{amountInCart}</CartCounter>}
+            {inCart?.length > 0 && <Counter>{amountInCart}</Counter>}
           </CartMenuBtn>
 
           <BurgerMenuBtn
             type="button"
             title="Меню"
-            onClick={() => burgerMenuHandler()}
+            onClick={() => {
+              openMenu();
+              setShowMenu(true);
+            }}
           >
             <svg width={18} height={12}>
               <use href={`${sprite}#burger-menu`} />
             </svg>
           </BurgerMenuBtn>
         </Actions>
-        {showMenu && <Menu onClickHandle={onClose} />}
-        {showCartMenu && <MenuCart onClickHandle={setShowCartMenu} />}
       </LimiterConatiner>
     </HeaderContainer>
   );

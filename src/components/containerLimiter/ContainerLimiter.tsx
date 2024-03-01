@@ -7,8 +7,8 @@ interface ContainerLimiterProps {
 }
 
 type StyleProp = {
-  paddingmob?: string;
-  paddingdesc?: string;
+  $paddingmob?: string;
+  $paddingdesc?: string;
 };
 
 export const ContainerLimiter = ({
@@ -17,7 +17,7 @@ export const ContainerLimiter = ({
   children,
 }: ContainerLimiterProps) => {
   return (
-    <Limiter paddingmob={paddingTopMob} paddingdesc={paddingTopDesc}>
+    <Limiter $paddingmob={paddingTopMob} $paddingdesc={paddingTopDesc}>
       {children}
     </Limiter>
   );
@@ -25,7 +25,7 @@ export const ContainerLimiter = ({
 
 export const Limiter = styled.div<StyleProp>`
   margin: 0 auto;
-  padding: ${({ paddingmob }) => `${paddingmob} 0 72px`};
+  padding: ${({ $paddingmob }) => `${$paddingmob} 0 72px`};
   width: 288px;
   text-align: center;
 
@@ -35,7 +35,7 @@ export const Limiter = styled.div<StyleProp>`
   }
 
   @media screen and (min-width: 1440px) {
-    padding: ${({ paddingdesc }) => `${paddingdesc} 0 112px`};
+    padding: ${({ $paddingdesc }) => `${$paddingdesc} 0 112px`};
     text-align: start;
     width: 1312px;
   }

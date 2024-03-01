@@ -6,6 +6,7 @@ import {
 } from './AboutPaymentAndDelivery.styled';
 import sprite from '../../images/sprite.svg';
 import paymentImgJpg from '../../images/high-view-laptop-black-shopping-card-1x.jpg';
+
 const AboutPaymentAndDelivery = () => {
   return (
     <>

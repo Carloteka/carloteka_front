@@ -1,14 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchItemDetails } from '../../api/api';
 import { SectionDescription } from './Description.styled';
 import { marked } from 'marked';
-
-type Good = { images: [{ image: string }]; name: string; description: string };
+import { Good } from '../../../@types/custom';
 
 const Description = () => {
   const { goodId } = useParams();
-  const description = useRef<HTMLDivElement>(null);
   const [good, setGood] = useState<Good>();
 
   useEffect(() => {
@@ -16,7 +14,6 @@ const Description = () => {
       try {
         const data = await fetchItemDetails(goodId);
         setGood(data);
-        getDescription(data.description);
       } catch (error) {
         console.log(error);
       }
@@ -24,35 +21,23 @@ const Description = () => {
     getGoodDetail();
   }, [goodId]);
 
-  function getDescription(markdown: string) {
-    const target = description.current;
-    if (target) {
-      target.innerHTML = marked.parse(markdown) as string;
-    }
+  function createMarkup() {
+    return { __html: marked.parse(good?.description as string) as string };
   }
 
   return (
     good && (
-      <SectionDescription
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '32px',
-          borderTop: '1px solid #A7A5A3',
-          paddingTop: '40px',
-          color: '#000',
-        }}
-      >
+      <SectionDescription>
         <div>
           <h4 style={{ marginBottom: '12px' }}>{good.name}</h4>
 
-          <div ref={description}></div>
+          <div dangerouslySetInnerHTML={createMarkup()}></div>
         </div>
         <img
           src={
             import.meta.env.PROD
-              ? `http://carloteka.com/${good.images[0].image}`
-              : `http://localhost:8000/${good.images[0].image}`
+              ? `http://carloteka.com/${good.image_set[0].image}`
+              : `http://localhost:8000/${good.image_set[0].image}`
           }
           alt={good.name}
           width={528}

@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { Loader } from '../../components/Loader/Loader';
 import { PageTitle } from '../../components/pageTitle/PageTitle.tsx';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter.tsx';
 import { Paginator } from '../../components/Paginator/Paginator.tsx';
@@ -42,6 +43,8 @@ const Catalog = () => {
   const [showSelectMenu, setShowSelectMenu] = useState(false);
   const [showFilters, setShowFilters] = useState(true);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   function isChecked(field, value) {
     const temp = params[field];
 
@@ -51,17 +54,17 @@ const Catalog = () => {
   function getPriceValue(field) {
     const temp = params[field];
 
-    return temp ? temp : field === 'price-to' ? 10000 : 0;
+    return temp ? temp : field === 'price_max' ? 10000 : 0;
   }
 
   function getSortingValue() {
     let sortBy = 'За популярністю';
-    switch (params['sort-by']) {
-      case 'price-up':
+    switch (params['order_by']) {
+      case 'price':
         sortBy = 'Від дешевих до дорогих';
         break;
 
-      case 'price-down':
+      case '-price':
         sortBy = 'Від дорогих до дешевих';
         break;
     }
@@ -75,6 +78,7 @@ const Catalog = () => {
   }
 
   const [catalog, setCatalog] = useState([]);
+
   const [quantity, setQuantity] = useState(catalog?.length);
   const [limit] = useState(12);
   const [tags, setTags] = useState([]);
@@ -93,9 +97,11 @@ const Catalog = () => {
 
     async function getAllGoods() {
       try {
+        setIsLoading(true);
         const data = await fetchAllGoods(12);
-        setQuantity(data.length);
-        setCatalog(data);
+        setQuantity(data.count);
+        setCatalog(data.data);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -117,31 +123,30 @@ const Catalog = () => {
   function getTags() {
     const tagsList = [];
     category.forEach((el) => {
-      if (isChecked('category-id-name', el.id_name)) {
+      if (isChecked('category__id', el.id)) {
         tagsList.push({
-          field: 'category-id-name',
-          value: el.id_name,
+          field: 'category__id',
+          value: el.id,
           tag: el.name,
         });
       }
     });
 
-    const availability = 'in-stock';
-    params[availability] &&
-      tagsList.push({ field: 'in-stock', value: 'True', tag: 'В наявності' });
-
-    const backorder = 'specific-order';
-    params[backorder] &&
+    if (isChecked('stock', 'IN_STOCK')) {
+      tagsList.push({ field: 'stock', value: 'IN_STOCK', tag: 'В наявності' });
+    }
+    if (isChecked('stock', 'SPECIFIC_ORDER')) {
       tagsList.push({
-        field: 'specific-order',
-        value: 'True',
+        field: 'stock',
+        value: 'SPECIFIC_ORDER',
         tag: 'Під замовлення',
       });
+    }
 
-    const priceFrom = 'price-from';
-    const priceTo = 'price-to';
-    const price = `₴${params[priceFrom] ? getPriceValue('price-from') : 0} - ₴${
-      params[priceTo] && getPriceValue('price-to')
+    const priceFrom = 'price_min';
+    const priceTo = 'price_max';
+    const price = `₴${params[priceFrom] ? getPriceValue('price_min') : 0} - ₴${
+      params[priceTo] && getPriceValue('price_max')
     }`;
 
     if (params[priceTo] || params[priceFrom]) {
@@ -160,17 +165,13 @@ const Catalog = () => {
       return;
     }
     let range = '';
-    if (!params.page) {
+    if (!params.offset) {
       range = `1-${catalog.length}`;
     } else {
-      range = `${(params.page - 1) * limit + 1}-${
-        (params.page - 1) * limit + catalog.length
-      }`;
+      range = `${+params.offset + 1}-${+params.offset + catalog.length}`;
     }
     if (catalog.length === 1) {
-      range = !params.page
-        ? '1'
-        : `${(params.page - 1) * limit + catalog.length}-й`;
+      range = !params.offset ? '1' : `${+params.offset + catalog.length}-й`;
     }
     return range;
   }
@@ -179,7 +180,7 @@ const Catalog = () => {
     if (!catalog || catalog?.length === 0) {
       return;
     }
-    const amount = catalog.filter((el) => el.in_stock === 1);
+    const amount = catalog.filter((el) => el.stock === 'IN_STOCK');
     return amount.length;
   }
 
@@ -187,7 +188,7 @@ const Catalog = () => {
     if (catalog === undefined) {
       return;
     }
-    const amount = catalog.filter((el) => el.in_stock === 3);
+    const amount = catalog.filter((el) => el.stock === 'SPECIFIC_ORDER');
     return amount.length;
   }
 
@@ -195,28 +196,23 @@ const Catalog = () => {
     let newparams = {};
     let temp = params[field];
 
-    if (field === 'price') {
-      const priceTo = 'price-to';
-      const priceFrom = 'price-from';
-
-      newparams = {
-        ...params,
-      };
-
-      delete newparams[priceTo];
-      delete newparams[priceFrom];
-
-      setSearchParams(newparams);
-      return;
-    }
-
-    if (field === 'price-from' || field === 'price-to' || field === 'sort-by') {
+    if (
+      field === 'price_min' ||
+      field === 'price_max' ||
+      field === 'order_by'
+    ) {
       newparams = {
         ...params,
         [field]: value,
       };
 
       setSearchParams(newparams);
+
+      if (field === 'order_by') {
+        let s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
+        getFilteredCategories(s);
+      }
+
       return;
     }
 
@@ -238,18 +234,44 @@ const Catalog = () => {
         [field]: temp ? temp + `&${field}=` + value : value,
       };
     }
+
     setSearchParams(newparams);
+    let s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
+    getFilteredCategories(s);
+  }
+
+  async function getFilteredCategories(filter) {
+    try {
+      setIsLoading(true);
+      const data = await fetchFilteredGoods(filter);
+      setQuantity(data.count);
+      setCatalog(data.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const handleSubmit = (e) => {
     e?.preventDefault();
 
+    let tempPrice = {};
+    if (minValue !== 0) {
+      tempPrice.price_min = minValue;
+    }
+    if (maxValue !== 10000) {
+      tempPrice.price_max = maxValue;
+    }
+
+    setSearchParams({ ...params, ...tempPrice });
+
     let newparams = {};
     newparams = {
       ...params,
     };
-    const priceTo = 'price-to';
-    const priceFrom = 'price-from';
+
+    const priceTo = 'price_max';
+    const priceFrom = 'price_min';
     if (newparams[priceTo] || newparams[priceFrom]) {
       newparams[priceTo] = maxValue;
       newparams[priceFrom] = minValue;
@@ -257,18 +279,7 @@ const Catalog = () => {
     }
 
     let s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
-
-    async function getFilteredCategories() {
-      try {
-        const data = await fetchFilteredGoods(s);
-        setQuantity(data.count);
-        setCatalog(data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    getFilteredCategories();
+    getFilteredCategories(s);
   };
 
   function toggleSelectMenu(e) {
@@ -284,41 +295,82 @@ const Catalog = () => {
     );
 
     setTags(newTags);
-    onChangeHandler(field, value);
 
+    if (field === 'price') {
+      setMaxValue(10000);
+      setMinValue(0);
+      let newparams = {};
+      newparams = {
+        ...params,
+      };
+
+      delete newparams.price_min;
+      delete newparams.price_max;
+
+      setSearchParams(newparams);
+      let s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
+      getFilteredCategories(s);
+      return;
+    }
+
+    onChangeHandler(field, value);
     handleSubmit();
   }
 
   function pageChanger(page) {
-    const newparams = { ...params, page };
-    setSearchParams(newparams);
+    console.log(page, 'page');
+    const offset = (page - 1) * limit;
+    let newparams = {};
+    if (offset !== 0) {
+      newparams = { ...params, offset };
+    } else {
+      newparams = { ...params };
+      delete newparams.offset;
+    }
 
-    handleSubmit();
+    setSearchParams(newparams);
+    let s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
+    getFilteredCategories(s);
+    // handleSubmit();
   }
 
-  const sortedByStock = catalog.toSorted((a, b) => {
-    if (a.in_stock === 1 && b.in_stock === 1) {
-      return 0;
-    } else if (a.in_stock === 1) {
-      return -1;
-    } else if (b.in_stock === 1) {
-      return 1;
-    } else if (a.in_stock === 2 && b.in_stock === 2) {
-      return 0;
-    } else if (a.in_stock === 2) {
-      return -1;
-    } else if (b.in_stock === 2) {
-      return 1;
-    } else {
-      return a.in_stock - b.in_stock;
+  function clearOffset() {
+    if (params.offset) {
+      const newparams = { ...params };
+      delete newparams.offset;
+      setSearchParams(newparams);
     }
-  });
+  }
 
-  const [minValue, setMinValue] = useState(getPriceValue('price-from'));
-  const [maxValue, setMaxValue] = useState(getPriceValue('price-to'));
+  function getSortedGoods() {
+    if (params.order_by) {
+      return catalog;
+    }
+    return catalog.sort((a, b) => {
+      if (a.stock === 'IN_STOCK' && b.stock === 'IN_STOCK') {
+        return 0;
+      } else if (a.stock === 'IN_STOCK') {
+        return -1;
+      } else if (b.stock === 'IN_STOCK') {
+        return 1;
+      } else if (a.stock === 'BACKORDER' && b.stock === 'BACKORDER') {
+        return 0;
+      } else if (a.stock === 'BACKORDER') {
+        return -1;
+      } else if (b.stock === 'BACKORDER') {
+        return 1;
+      } else {
+        return a.stock - b.stock;
+      }
+    });
+  }
+
+  const [minValue, setMinValue] = useState(getPriceValue('price_min'));
+  const [maxValue, setMaxValue] = useState(getPriceValue('price_max'));
 
   return (
     <>
+      {isLoading && <Loader />}
       <PageTitle>Каталог</PageTitle>
       <ContainerLimiter paddingTopMob={'16px'} paddingTopDesc={'56px'}>
         <FlexContainer>
@@ -334,15 +386,13 @@ const Catalog = () => {
               <fieldset>
                 <legend>Категорії товарів</legend>
                 {category?.map((el) => (
-                  <label key={el.id_name}>
+                  <label key={el.id}>
                     <Checkbox
                       type="checkbox"
                       name="cat"
-                      value={el.id_name}
-                      checked={isChecked('category-id-name', el.id_name)}
-                      onChange={() =>
-                        onChangeHandler('category-id-name', el.id_name)
-                      }
+                      value={el.id}
+                      checked={isChecked('category__id', el.id)}
+                      onChange={() => onChangeHandler('category__id', el.id)}
                     />
                     {el.name}
                   </label>
@@ -356,9 +406,9 @@ const Catalog = () => {
                   <Checkbox
                     type="checkbox"
                     name="stock"
-                    value="True"
-                    checked={isChecked('in-stock', 'True')}
-                    onChange={() => onChangeHandler('in-stock', 'True')}
+                    value="IN_STOCK"
+                    checked={isChecked('stock', 'IN_STOCK')}
+                    onChange={() => onChangeHandler('stock', 'IN_STOCK')}
                   />
                   В наявності ({getGoodsInStock()})
                 </label>
@@ -367,9 +417,9 @@ const Catalog = () => {
                   <Checkbox
                     type="checkbox"
                     name="stock"
-                    value="True"
-                    checked={isChecked('specific-order', 'True')}
-                    onChange={() => onChangeHandler('specific-order', 'True')}
+                    value="SPECIFIC_ORDER"
+                    checked={isChecked('stock', 'SPECIFIC_ORDER')}
+                    onChange={() => onChangeHandler('stock', 'SPECIFIC_ORDER')}
                   />
                   Під замовлення ({getGoodsToOrder()})
                 </label>
@@ -412,12 +462,13 @@ const Catalog = () => {
                   <label>
                     <input
                       type="number"
-                      name="price-from"
+                      name="price_min"
                       max={maxValue}
                       value={minValue}
                       onChange={(e) => {
+                        if (e.target.value > maxValue) return;
                         setMinValue(e.target.value);
-                        onChangeHandler('price-from', e.target.value);
+                        onChangeHandler('price_min', e.target.value);
                       }}
                       placeholder="0"
                       min="0"
@@ -426,11 +477,12 @@ const Catalog = () => {
                   <label>
                     <input
                       type="number"
-                      name="price-to"
+                      name="price_max"
                       value={maxValue}
                       onChange={(e) => {
+                        if (e.target.value < minValue) return;
                         setMaxValue(e.target.value);
-                        onChangeHandler('price-to', e.target.value);
+                        onChangeHandler('price_max', e.target.value);
                       }}
                       placeholder="10000"
                       min={minValue}
@@ -439,7 +491,11 @@ const Catalog = () => {
                   </label>
                 </div>
               </Price>
-              <button type="submit" className="primaryBtn">
+              <button
+                type="submit"
+                className="primaryBtn"
+                onClick={() => clearOffset()}
+              >
                 Застосувати
               </button>
             </Form>
@@ -510,10 +566,10 @@ const Catalog = () => {
                   <Menu $show={showSelectMenu}>
                     {[
                       { label: 'За популярністю', value: 'rating' },
-                      { label: 'Від дешевих до дорогих', value: 'price-up' },
+                      { label: 'Від дешевих до дорогих', value: 'price' },
                       {
                         label: 'Від дорогих до дешевих',
-                        value: 'price-down',
+                        value: '-price',
                       },
                     ].map((el) => (
                       <SelectItem
@@ -521,7 +577,7 @@ const Catalog = () => {
                         key={el.value}
                         onClick={() => {
                           setSelectValue(el.label);
-                          onChangeHandler('sort-by', el.value);
+                          onChangeHandler('order_by', el.value);
                         }}
                       >
                         {(showSelectMenu || el.label === selectValue) && (
@@ -547,22 +603,24 @@ const Catalog = () => {
               </FlexDiv>
 
               <GoodsList>
-                {sortedByStock?.map((el) => (
-                  <li key={el.id_name}>
+                {getSortedGoods()?.map((el) => (
+                  <li key={el.id}>
                     <CatalogCard item={el} />
                   </li>
                 ))}
               </GoodsList>
               <Paginator
                 setCurrentPage={pageChanger}
-                currentPage={params.page || 1}
+                currentPage={
+                  params.offset ? Math.ceil(+params.offset / limit + 1) : 1
+                }
                 pageCount={limit !== 12 ? 0 : Math.ceil(quantity / limit)}
               />
             </div>
           ) : (
             <NoResultBox>
               <NoResult>
-                <p>За запитом “{query}” нічого не знайдено</p>
+                <p>За запитом {query ? `'${query}'` : ''} нічого не знайдено</p>
                 <ul>
                   <li>Спробуйте ввести назву товару або категорії</li>
                   <li>Переконайтеся, що в назвах немає граматичних помилок</li>
