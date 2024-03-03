@@ -75,51 +75,50 @@ const AboutUs = () => {
               ducimus in velit, quo rem impedit reprehenderit.
             </p>
           </div>
-          <div>
-            <Table>
-              <div>
-                <p>Назва компанії</p>
-                <p className="companyTitle">Карлотека</p>
-              </div>
-              <div>
-                <p>Власник</p>
-                <p>Зайцева Наталія</p>
-              </div>
-              <div>
-                <p>Адреса</p>
-                <p>
-                  вул. А.Фарба 4б,<br></br> Дніпро, Україна
-                </p>
-              </div>
-              <div>
-                <p className="telNo">Номер телефону</p>
-                <p>
-                  <a href="tel:+380955810075" title="Call +380955810075">
-                    +380 (95) 581-00-75
-                  </a>
-                </p>
-              </div>
-              <div>
-                <p style={{ position: 'absolute', width: '71px' }}>
-                  Відділ продажу
-                </p>
-                <p style={{ marginLeft: 'auto' }}>
-                  <a href="tel:+380955810075" title="Call +380955810075">
-                    +380955810075
-                  </a>
-                  <a href="tel:+380955810075" title="Call +380955810075">
-                    +380955810075
-                  </a>
-                  <a
-                    href="mailto:info.carloteka@gmail.com"
-                    title="mail to info.carloteka@gmail.com"
-                  >
-                    info.carloteka@gmail.com
-                  </a>
-                </p>
-              </div>
-            </Table>
-          </div>
+
+          <Table>
+            <div>
+              <p>Назва компанії</p>
+              <p className="companyTitle">Карлотека</p>
+            </div>
+            <div>
+              <p>Власник</p>
+              <p>Зайцева Наталія</p>
+            </div>
+            <div>
+              <p>Адреса</p>
+              <p>
+                вул. А.Фарба 4б,<br></br> Дніпро, Україна
+              </p>
+            </div>
+            <div>
+              <p className="telNo">Номер телефону</p>
+              <p>
+                <a href="tel:+380955810075" title="Call +380955810075">
+                  +380 (95) 581-00-75
+                </a>
+              </p>
+            </div>
+            <div>
+              <p style={{ position: 'absolute', width: '71px' }}>
+                Відділ продажу
+              </p>
+              <p style={{ marginLeft: 'auto' }}>
+                <a href="tel:+380955810075" title="Call +380955810075">
+                  +380955810075
+                </a>
+                <a href="tel:+380955810075" title="Call +380955810075">
+                  +380955810075
+                </a>
+                <a
+                  href="mailto:info.carloteka@gmail.com"
+                  title="mail to info.carloteka@gmail.com"
+                >
+                  info.carloteka@gmail.com
+                </a>
+              </p>
+            </div>
+          </Table>
         </SectionAboutBrand>
         <SectionAboutShop>
           <div>

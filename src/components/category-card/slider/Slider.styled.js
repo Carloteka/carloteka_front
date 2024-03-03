@@ -45,8 +45,15 @@ export const SliderContainer = styled.div`
 
   img {
     object-fit: cover;
-    @media screen and (max-width: 1439px) {
-      height: 224px;
+    min-height: 350px;
+
+    @media screen and (min-width: 834px) {
+      width: 328px;
+      // height: 379px;
+    }
+    @media screen and (min-width: 1440px) {
+      width: 640px;
+      // height: 745px;
     }
   }
 `;

@@ -3,34 +3,40 @@ import { Link } from 'react-router-dom';
 
 export const SearchBox = styled.div`
   position: relative;
-  margin-right: 22px;
+  margin-right: 0;
+  width: 100%;
   display: flex;
+
+  @media screen and (min-width: 834px) {
+    width: auto;
+  }
   @media screen and (min-width: 1440px) {
     margin-right: 142px;
   }
 
   search {
-    @media screen and (max-width: 1439px) {
-      width: 170px;
+    min-width: 208px;
+    width: 100%;
+    @media screen and (min-width: 834px) {
+      width: 398px;
     }
   }
 `;
 
 export const Form = styled.form`
-  @media screen and (max-width: 1439px) {
-    padding: 0;
-
-    height: 25px;
-    justify-content: space-between;
-  }
-  padding: 0 16px;
-
-  height: 32px;
+  padding: 8px;
+  height: 41px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 
+  @media screen and (min-width: 834px) {
+    padding: 0 16px;
+    height: 57px;
+  }
+
   svg {
-    @media screen and (min-width: 1440px) {
+    @media screen and (min-width: 834px) {
       width: 24px;
       height: 24px;
     }
@@ -39,15 +45,27 @@ export const Form = styled.form`
 
 export const Input = styled.input`
   padding: 0;
-  width: 126px;
+  width: 176px;
+  width: 92%;
   border: none;
   border-radius: 0;
   background-color: inherit;
   color: #101010;
   text-indent: 0px;
+
+  @media screen and (min-width: 834px) {
+    width: 342px;
+  }
+
   @media screen and (min-width: 1440px) {
     padding: 0 16px 0;
     width: 366px;
+  }
+
+  &::placeholder {
+    font-size: 24px;
+    line-height: calc(25 / 24);
+    letter-spacing: -0.06rem;
   }
 
   &:focus {

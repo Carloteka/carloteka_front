@@ -29,7 +29,7 @@ const Description = () => {
     good && (
       <SectionDescription>
         <div>
-          <h4 style={{ marginBottom: '12px' }}>{good.name}</h4>
+          <h4>{good.name}</h4>
 
           <div dangerouslySetInnerHTML={createMarkup()}></div>
         </div>
@@ -40,8 +40,8 @@ const Description = () => {
               : `http://localhost:8000/${good.image_set[0].image}`
           }
           alt={good.name}
-          width={528}
-          height={528}
+          width={288}
+          height={350}
         ></img>
       </SectionDescription>
     )

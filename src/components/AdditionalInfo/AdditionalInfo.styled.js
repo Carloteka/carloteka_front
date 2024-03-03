@@ -2,14 +2,15 @@ import styled from 'styled-components';
 
 export const SectionAdditionalInfo = styled.section`
   padding-top: 0px;
-  min-height: 211px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 32px;
 
   color: #000;
 
   @media screen and (min-width: 1440px) {
     padding-top: 8px;
+    flex-direction: row;
   }
 
   & > table {
@@ -21,7 +22,7 @@ export const SectionAdditionalInfo = styled.section`
     border-collapse: separate;
     border-spacing: 0 0px;
 
-    @media screen and (min-width: 1440px) {
+    @media screen and (min-width: 834px) {
       width: 640px;
       min-height: 186px;
     }
@@ -50,21 +51,33 @@ export const SectionAdditionalInfo = styled.section`
   & > details {
     display: none;
 
-    @media screen and (min-width: 1440px) {
+    @media screen and (min-width: 834px) {
+      width: 100%;
+      display: block;
       padding: 32px;
       height: clamp(95px, 95px, 211px);
       background-color: #dad4c8;
+    }
+    @media screen and (min-width: 1440px) {
+      width: 639px;
     }
   }
 
   & > details table {
     margin-top: 16px;
-    width: 575px;
+    width: 648px;
     height: 93px;
+
+    @media screen and (min-width: 1440px) {
+      width: 528px;
+    }
+
+    & td:last-child {
+      text-align: right;
+    }
   }
 
   details > summary {
-    width: 575px;
     display: flex;
     align-items: center;
     justify-content: space-between;

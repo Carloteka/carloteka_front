@@ -8,9 +8,14 @@ export const HeaderContainer = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  height: 66px;
+  height: 73px;
   background-color: #dad4c8;
   z-index: 20;
+
+  @media screen and (min-width: 834px) {
+    padding: 0 32px;
+    height: 96px;
+  }
 
   @media screen and (min-width: 1440px) {
     padding: 0 64px;
@@ -20,14 +25,16 @@ export const HeaderContainer = styled.header`
 
 export const LimiterConatiner = styled.div`
   margin: 0 auto;
-  width: 288px;
+  min-width: 288px;
   height: 100%;
   display: flex;
   align-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 5px;
 
-  @media screen and (min-width: 1024px) {
-    width: 960px;
+  @media screen and (min-width: 834px) {
+    width: 768px;
   }
 
   @media screen and (min-width: 1440px) {
@@ -36,7 +43,7 @@ export const LimiterConatiner = styled.div`
 `;
 
 export const Logo = styled(Link)`
-  margin-right: 22px;
+  margin-right: 0;
   background: #2d3f24;
   min-width: 34px;
   max-width: 34px;
@@ -50,6 +57,16 @@ export const Logo = styled(Link)`
   font-size: 10px;
   line-height: calc(14 / 10);
   letter-spacing: 0;
+
+  @media screen and (min-width: 834px) {
+    min-width: 64px;
+    max-width: 64px;
+    height: 64px;
+    font-size: 13px;
+    line-height: calc(20 / 13);
+    text-wrap: nowrap;
+  }
+
   @media screen and (min-width: 1440px) {
     margin-right: 182px;
     min-width: 80px;
@@ -64,29 +81,40 @@ export const Logo = styled(Link)`
 `;
 
 export const Catalog = styled(NavLink)`
-  @media screen and (max-width: 1439px) {
+  @media screen and (max-width: 833px) {
     ${visuallyHidden};
   }
-  margin-right: 80px;
   color: #101010;
+  @media screen and (min-width: 834px) {
+    margin-right: 0;
+  }
+  @media screen and (min-width: 1440px) {
+    margin-right: 80px;
+  }
 `;
 
 export const Actions = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
 
   button {
-    width: 40px;
-    height: 40px;
-    @media screen and (max-width: 1439px) {
+    @media screen and (max-width: 833px) {
       width: 16px;
       height: 16px;
+    }
+    @media screen and (min-width: 1440px) {
+      width: 40px;
+      height: 40px;
     }
   }
 
   svg {
     fill: #101010;
+  }
+
+  @media screen and (min-width: 834px) {
+    gap: 32px;
   }
 
   @media screen and (min-width: 1440px) {
@@ -98,15 +126,19 @@ export const Actions = styled.div`
 
 export const NavigationLink = styled(NavLink)`
   position: relative;
-  width: 40px;
-  height: 40px;
-  @media screen and (max-width: 1439px) {
+
+  @media screen and (min-width: 1440px) {
+    width: 40px;
+    height: 40px;
+  }
+
+  @media screen and (max-width: 833px) {
     ${visuallyHidden};
   }
 `;
 
 export const BurgerMenuBtn = styled.button`
-  @media screen and (max-width: 1439px) {
+  @media screen and (max-width: 833px) {
     justify-content: flex-end;
 
     svg {

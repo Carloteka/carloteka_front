@@ -10,11 +10,11 @@ import {
   Tel,
   Socials,
 } from './Menu.styled';
-import sprite from '../../../images/sprite.svg';
+import sprite from '../../images/sprite.svg';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { socialLinks } from '../../../socialLinks';
-import { Categories } from '../../../../@types/custom';
+import { socialLinks } from '../../socialLinks';
+import { Categories } from '../../../@types/custom'; 
 
 interface MenuProps {
   onClickHandle: () => void;
@@ -23,7 +23,7 @@ interface MenuProps {
 
 export const Menu = ({ onClickHandle, showMenu }: MenuProps) => {
   const tempString = localStorage.getItem('categories') as string;
-  const categories: Categories[] = JSON.parse(tempString);
+  const categories: Categories[] = tempString ? JSON.parse(tempString) : [];
 
   const [showList, setShowList] = useState<boolean>();
 
@@ -34,7 +34,7 @@ export const Menu = ({ onClickHandle, showMenu }: MenuProps) => {
         style={{ display: showMenu ? 'flex' : 'none' }}
       ></Backdrop>
       <MenuContainer $showMenu={showMenu}>
-        <CloseButton onClick={() => onClickHandle()}>
+        <CloseButton onClick={() => onClickHandle()} title="Close menu">
           <svg width={24} height={24}>
             <use href={`${sprite}#close`} />
           </svg>
@@ -92,18 +92,23 @@ export const Menu = ({ onClickHandle, showMenu }: MenuProps) => {
                   +380 (95) 581-00-75
                 </a>
               </Tel>
-              <Socials>
-                {socialLinks.map((el) => (
-                  <li key={el.social}>
-                    <a href={el.href} target="_blank" rel="noopener noreferrer">
-                      <svg width={24} height={24}>
-                        <use href={`${sprite}#${el.social}`} />
-                      </svg>
-                    </a>
-                  </li>
-                ))}
-              </Socials>
             </ul>
+            <Socials>
+              {socialLinks.map((el) => (
+                <li key={el.social}>
+                  <a
+                    href={el.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={el.social}
+                  >
+                    <svg width={24} height={24}>
+                      <use href={`${sprite}#${el.social}`} />
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </Socials>
           </address>
         </Contacts>
       </MenuContainer>

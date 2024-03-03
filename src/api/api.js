@@ -74,6 +74,20 @@ export const fetchFilteredGoods = async (search) => {
   }
 };
 
+export const postReview = async (slug, body) => {
+  try {
+    const response = await axios.post(
+      `/shop/items/${slug}/reviews/create/`,
+      body,
+    );
+    console.log(response);
+    const arrayData = response.data.results;
+    return { count: response.data.count, data: arrayData };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // ------  nova poshta -------------
 
 export const fetchNPAreas = async () => {

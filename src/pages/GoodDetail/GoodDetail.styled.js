@@ -2,24 +2,65 @@ import styled from 'styled-components';
 
 export const SectionInfo = styled.section`
   margin-bottom: 56px;
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 22px;
+  row-gap: 22px;
 
-  @media screen and (min-width: 1440px) {
+  & .btn_left,
+  & .btn_right {
+    border-radius: 0;
+    height: 27px;
+
+    svg {
+      width: 6px;
+      height: 9px;
+    }
+  }
+
+  @media screen and (min-width: 834px) {
     margin-bottom: 88px;
     flex-direction: row;
-    gap: 32px;
+    column-gap: 24px;
+
+    & .btn_left {
+      left: 0px;
+    }
+    & .btn_right {
+      right: 0px;
+    }
+    & .btn_left,
+    & .btn_right {
+      width: 23px;
+      height: 28px;
+    }
+  }
+  @media screen and (min-width: 1440px) {
+    column-gap: 32px;
+
+    & .btn_left,
+    & .btn_right {
+      width: 44px;
+      height: 55px;
+      svg {
+        width: 11px;
+        height: 17px;
+      }
+    }
   }
 
   & > div:first-child {
-    width: 288px;
-    height: 350px;
+    min-width: 288px;
+    min-height: 350px;
 
+    @media screen and (min-width: 834px) {
+      min-width: 328px;
+      min-height: 379px;
+    }
     @media screen and (min-width: 1440px) {
-      width: 640px;
-      height: 745px;
+      min-width: 640px;
+      min-height: 745px;
     }
   }
 `;
@@ -31,14 +72,14 @@ export const SellDiv = styled.div`
   }
 
   & > div {
-    margin-bottom: 16px;
+    margin-bottom: 3px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 16px;
 
-    @media screen and (min-width: 1440px) {
-      margin-bottom: 40px;
+    @media screen and (min-width: 834px) {
+      margin-bottom: 32px;
     }
   }
 
@@ -71,7 +112,7 @@ export const SellDiv = styled.div`
 
   p:first-of-type {
     text-align: center;
-    @media screen and (min-width: 1440px) {
+    @media screen and (min-width: 834px) {
       text-align: left;
     }
   }
@@ -79,21 +120,27 @@ export const SellDiv = styled.div`
 
 export const Price = styled.p`
   margin: 16px 0 48px;
-  @media screen and (min-width: 1440px) {
-    margin: 16px 0 40px;
+  @media screen and (min-width: 834px) {
+    margin: 32px 0;
   }
 `;
 
 export const Material = styled.p`
-  margin: 24px 0 40px;
+  margin: 24px 0 15px;
+  @media screen and (min-width: 834px) {
+    margin: 32px 0;
+  }
 `;
 
 export const AddToCartBtn = styled.button`
   order: 5;
 
+  @media screen and (min-width: 834px) {
+    width: 152px;
+    order: 3;
+  }
   @media screen and (min-width: 1440px) {
     width: 251px;
-    order: 3;
   }
 `;
 export const AddToFavoriteBtn = styled.button`
@@ -110,8 +157,8 @@ export const AdditionalNavigation = styled.ul`
   flex-direction: column;
   gap: 16px;
 
-  @media screen and (min-width: 1440px) {
-    margin-bottom: 24px;
+  @media screen and (min-width: 834px) {
+    margin-bottom: 32px;
     flex-direction: row;
     gap: 14px;
   }

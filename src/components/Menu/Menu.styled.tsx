@@ -19,6 +19,7 @@ export const MenuContainer = styled.div<{ $showMenu: boolean }>`
   top: 0;
   right: 0;
   width: 100%;
+  min-height: 1024px;
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -27,11 +28,10 @@ export const MenuContainer = styled.div<{ $showMenu: boolean }>`
   transition: right 0.25s ease-out;
   right: ${({ $showMenu }) => ($showMenu ? '0' : '-1400px')};
 
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
     padding: 112px;
     gap: 72px;
     width: 592px;
-    min-height: 1024px;
   }
   a {
     justify-content: flex-start;
@@ -107,13 +107,18 @@ export const Contacts = styled.div`
   h3 {
     margin-bottom: 10px;
   }
+  ul:first-child {
+    margin-bottom: 13px;
+  }
   li {
     margin-bottom: 9px;
+  }
+  li:last-child {
+    margin-bottom: 0;
   }
 `;
 
 export const Tel = styled.li`
-  margin-bottom: 13px;
   color: #2d3f24;
   a {
     font-weight: 400;

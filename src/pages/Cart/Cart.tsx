@@ -163,7 +163,7 @@ const Cart = () => {
                 </div>
               </div>
 
-              <GoToPayment to={'/payment'} className="primaryBtn">
+              <GoToPayment to={'/delivery'} className="primaryBtn">
                 перейти до оплати
                 <svg width={14} height={9}>
                   <use href={`${sprite}#arrow-right`} />

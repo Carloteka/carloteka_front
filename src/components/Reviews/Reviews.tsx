@@ -7,7 +7,7 @@ import {
 } from './Reviews.styled';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchItemDetails } from '../../api/api';
+import { fetchItemDetails, postReview } from '../../api/api';
 import sprite from '../../images/sprite.svg';
 
 type Good = {
@@ -47,23 +47,27 @@ const Reviews = () => {
     };
 
     const data: dataObject = {
-      rate: 3.5,
+      stars: 3.5,
+      last_name: 'last name',
+      text: '',
     };
 
     elements.map((el) => (data[el.name] = el.value));
-    data.rate = rate;
+    data.stars = rate;
+
     console.log('send to backend', data);
+    postReview(goodId, data);
   }
 
   return (
     good && (
       <SectionReviews>
         <Form onSubmit={submitHandle}>
-          <p>Будьте першим, хто залишив відгук про "{good.name}"</p>
+          <p>Будьте першим, хто залишив відгук про &quot;{good.name}&quot;</p>
           <div>
             <label>
               Ваш рейтинг
-              <input type="range" name="rate" min={0} max={5} step={1} />
+              <input type="range" name="stars" min={0} max={5} step={1} />
             </label>
             <ul>
               <li>
@@ -91,14 +95,15 @@ const Reviews = () => {
           </div>
           <FlexContainer>
             <TextAreaLabel>
-              Ваш відгук *<textarea name="review" rows={6} required></textarea>
+              Ваш відгук *<textarea name="text" rows={6}></textarea>
             </TextAreaLabel>
             <label>
-              Ім'я *;
-              <input type="text" name="name" required />
+              Ім&apos;я *;
+              <input type="text" name="first_name" maxLength={50} required />
             </label>
             <label>
-              Електронна пошта *<input type="email" name="email" required />
+              Електронна пошта *
+              <input type="email" name="email" maxLength={255} required />
             </label>
           </FlexContainer>
           <button

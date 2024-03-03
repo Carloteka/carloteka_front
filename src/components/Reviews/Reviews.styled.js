@@ -13,7 +13,7 @@ export const SectionReviews = styled.section`
   font-size: 20px;
   line-height: calc(27 / 20);  
 
-    @media screen and (min-width: 1440px) {    
+    @media screen and (min-width: 834px) {    
     font-size: 24px;
     line-height: calc(31 / 24);
     }
@@ -47,11 +47,11 @@ export const Form = styled.form`
 
     label {
       align-items: center;
-      @media screen and (min-width: 1440px) {
+      @media screen and (min-width: 834px) {
         align-items: start;
       }
     }
-    @media screen and (min-width: 1440px) {
+    @media screen and (min-width: 834px) {
       align-items: start;
     }
   }
@@ -71,7 +71,7 @@ export const Form = styled.form`
   }
 
   button {
-    @media screen and (min-width: 1440px) {
+    @media screen and (min-width: 834px) {
       width: 231px;
     }
   }
@@ -106,15 +106,21 @@ export const FlexContainer = styled.div`
   column-gap: 32px;
   row-gap: 24px;
 
-  @media screen and (min-width: 1440px) {
-    margin: 40px 0 27px;
+  @media screen and (min-width: 834px) {
+    margin: 40px 0 24px;
     flex-direction: row;
     flex-wrap: wrap;
+  }
+  @media screen and (min-width: 1440px) {
+    margin: 40px 0 27px;
   }
 
   label {
     gap: 12px;
-    min-width: 48%;
+    min-width: 100%;
+    @media screen and (min-width: 1440px) {
+      min-width: 48%;
+    }
   }
 
   input,

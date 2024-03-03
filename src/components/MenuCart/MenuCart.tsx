@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { CartContext } from '../../Layout';
+import { CartContext } from '../Layout';
 import {
   Backdrop,
   MenuContainer,
@@ -9,10 +9,10 @@ import {
   Price,
   Total,
 } from './MenuCart.styled';
-import { toggleCartInLocalStorage } from '../../../utils/toggleCartInLocalStorage';
-import sprite from '../../../images/sprite.svg';
+import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
+import sprite from '../../images/sprite.svg';
 import { Link } from 'react-router-dom';
-import { Good } from '../../../../@types/custom';
+import { Good } from '../../../@types/custom';
 
 interface MenuCartProps {
   onClickHandle: () => void;
@@ -72,7 +72,7 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
       ></Backdrop>
       {inCart?.length > 0 && (
         <MenuContainer $showCartMenu={showCartMenu}>
-          <CloseButton onClick={() => onClickHandle()}>
+          <CloseButton onClick={() => onClickHandle()} title="Close menu">
             <svg width={24} height={24}>
               <use href={`${sprite}#close`} />
             </svg>
@@ -103,6 +103,7 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
                     setAmountInCart((amountInCart: number) => amountInCart - 1);
                     delFromCart(el.id);
                   }}
+                  title="Remove good from cart"
                 >
                   <svg width={9} height={8}>
                     <use href={`${sprite}#del-x`} />

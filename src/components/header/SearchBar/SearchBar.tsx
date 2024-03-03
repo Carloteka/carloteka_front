@@ -95,7 +95,7 @@ export const SearchBar = () => {
             onSubmit={handleSubmit}
             style={{
               boxShadow: query ? '1px 1px 7px 0 #c6b89e' : '',
-              background: query ? '#fff' : '',
+              background: query ? '#fff' : '#F2F0EC',
             }}
           >
             <Input
@@ -110,6 +110,7 @@ export const SearchBar = () => {
               onClick={() => {
                 return false;
               }}
+              title="Search"
             >
               <svg width={16} height={16}>
                 <use href={`${sprite}#search`} />

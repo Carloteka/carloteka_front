@@ -1,15 +1,21 @@
 import styled from 'styled-components';
 
 export const PaymentSection = styled.section`
-  margin-bottom: 56px;
-
+  margin-bottom: 47px;
   display: flex;
   flex-direction: column-reverse;
   gap: 32px;
 
+  @media screen and (min-width: 834px) {
+    margin-bottom: 56px;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+  }
+
   @media screen and (min-width: 1440px) {
     margin-bottom: 88px;
-    flex-direction: row;
+    gap: 32px;
   }
 
   div {
@@ -22,38 +28,43 @@ export const PaymentSection = styled.section`
     }
   }
 
-  ol {
-    list-style-position: outside;
+  ul {
+    padding-bottom: 1em;
+    padding-left: 36px;
+    list-style-type: disc;
   }
 
-  h4 {
-    display: inline;
+  h3 {
+    font-size: 24px;
+    line-height: calc(31 / 24);
   }
 
-  li {
-    margin-left: 26px;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: calc(23 / 18);
-  }
-
-  p {
-    display: inline;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: calc(25 / 18);
+  img {
+    width: 100%;
+    height: 426px;
+    @media screen and (min-width: 834px) {
+      width: 328px;
+      height: 354px;
+    }
+    @media screen and (min-width: 1440px) {
+      width: 640px;
+      height: 426px;
+    }
   }
 `;
 
 export const DeliverySection = styled.section`
+  margin-bottom: 56px;
   width: 100%;
   display: block;
   text-align: left;
 
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
     display: flex;
     flex-wrap: wrap;
-    row-gap: 24px;
+    gap: 24px;
+  }
+  @media screen and (min-width: 1440px) {
     column-gap: 32px;
   }
 
@@ -69,14 +80,26 @@ export const DeliverySection = styled.section`
 
   & > details {
     width: 100%;
+    @media screen and (min-width: 834px) {
+      width: 416px;
+
+      &:last-child {
+        width: 328px;
+        & ol::-webkit-scrollbar {
+          width: 0;
+        }
+      }
+    }
     @media screen and (min-width: 1440px) {
       width: 640px;
-      //   height: clamp(96px, 96px, 441px);
+      &:last-child {
+        width: 640px;
+      }
     }
   }
 
   & > details ol {
-    padding: 20px 0 44px 22px;
+    padding: 24px 10px 44px 48px;
     max-height: 345px;
     box-sizing: border-box;
     background-color: #dad4c8;
@@ -84,10 +107,14 @@ export const DeliverySection = styled.section`
     overflow-y: scroll;
     word-wrap: break-word;
 
-    @media screen and (min-width: 1440px) {
-      padding: 20px 20px 20px 46px;
-      height: 317px;
+    @media screen and (min-width: 834px) {
+      padding: 20px 0 0 32px;
+      max-height: 398px;
       background-color: inherit;
+    }
+    @media screen and (min-width: 1440px) {
+      padding: 20px 20px 20px 56px;
+      height: 317px;
     }
   }
 
@@ -102,7 +129,11 @@ export const DeliverySection = styled.section`
     cursor: pointer;
 
     p {
+      display: none;
       margin-left: auto;
+      @media screen and (min-width: 1440px) {
+        display: block;
+      }
     }
   }
   details > summary::-webkit-details-marker {
@@ -122,5 +153,14 @@ export const DeliverySection = styled.section`
   svg:first-child {
     stroke: #101010;
     fill: transparent;
+  }
+`;
+
+export const InfoSection = styled.section`
+  text-align: left;
+
+  h3 {
+    font-size: 24px;
+    line-height: calc(31 / 24);
   }
 `;

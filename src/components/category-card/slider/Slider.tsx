@@ -24,6 +24,7 @@ export const Slider = ({
         className="btn_left"
         type="button"
         onClick={() => sliderHandler(-1)}
+        title="To the previous image"
       >
         <ChevronIcon width={8} height={14}>
           <use href={`${sprite}#chevronCategory`} />
@@ -51,6 +52,7 @@ export const Slider = ({
         className="btn_right"
         type="button"
         onClick={() => sliderHandler(1)}
+        title="To the next image"
       >
         <ChevronIcon
           style={{ transform: 'rotate(180deg)' }}

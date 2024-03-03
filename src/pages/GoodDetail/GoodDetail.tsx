@@ -142,6 +142,7 @@ const GoodDetail = () => {
                   type="button"
                   onClick={() => toggleCart()}
                   className="secondaryBtn"
+                  title="Add to the cart"
                 >
                   Додати до кошика
                 </AddToCartBtn>
@@ -151,6 +152,7 @@ const GoodDetail = () => {
                     backgroundColor: isFavorite ? '#2D3F24' : 'transparent',
                   }}
                   onClick={() => toggleFavorite()}
+                  title="Add to favorites"
                 >
                   <svg
                     width={24}
@@ -162,7 +164,11 @@ const GoodDetail = () => {
                     <use href={`${sprite}#favorite`} />
                   </svg>
                 </AddToFavoriteBtn>
-                <Link to={'/cart'} className="primaryBtn">
+                <Link
+                  to={'/delivery'}
+                  className="primaryBtn"
+                  onClick={() => toggleCart()}
+                >
                   Купити в один клік
                 </Link>
               </div>

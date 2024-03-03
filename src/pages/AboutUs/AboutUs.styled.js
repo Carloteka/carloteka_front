@@ -5,31 +5,33 @@ export const SectionAboutBrand = styled.section`
   display: block;
   text-align: left;
 
+  @media screen and (min-width: 834px) {
+    margin: 45px 0;
+    display: flex;
+  }
+
   @media screen and (min-width: 1440px) {
     margin: 80px 0 72px;
-    display: flex;
   }
 
   & > div:first-child {
     margin-bottom: 24px;
     width: 100%;
 
-    @media screen and (min-width: 1440px) {
+    @media screen and (min-width: 834px) {
       margin-bottom: 0;
+      padding: 0 24px 0 0;
+    }
+
+    @media screen and (min-width: 1440px) {
       padding: 73.5px 112px 73.5px 0;
       width: 784px;
     }
   }
 
   & > div:last-child {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #dad4c8;
-
     @media screen and (min-width: 1440px) {
-      width: 528px;
+      // width: 528px;
     }
   }
 `;
@@ -43,11 +45,18 @@ export const Table = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 24px;
+  background-color: #dad4c8;
+
+  @media screen and (min-width: 834px) {
+    padding: 24px;
+    min-width: 416px;
+  }
 
   @media screen and (min-width: 1440px) {
-    padding: 80px 0;
-    width: 368px;
+    padding: 80px;
+    width: 528px;
     gap: 32px;
   }
 
@@ -66,7 +75,7 @@ export const Table = styled.div`
     // text-align: left;
     // position: absolute;
 
-    @media screen and (min-width: 1440px) {
+    @media screen and (min-width: 834px) {
       width: auto;
       font-size: 18px;
       line-height: calc(23 / 18);
@@ -82,7 +91,7 @@ export const Table = styled.div`
     text-align: right;
     color: #101010;
 
-    @media screen and (min-width: 1440px) {
+    @media screen and (min-width: 834px) {
       font-weight: 500;
       font-size: 19px;
       line-height: calc(23 / 19);
@@ -108,12 +117,16 @@ export const SectionAboutShop = styled.section`
   display: block;
   text-align: left;
 
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
     display: flex;
   }
 
   & > div:first-child {
     width: 100%;
+
+    @media screen and (min-width: 834px) {
+      padding: 0 24px 0 0;
+    }
 
     @media screen and (min-width: 1440px) {
       padding: 49px 32px 0 0;
@@ -126,8 +139,11 @@ export const SectionAboutShop = styled.section`
     padding: 0 48px 0 24px;
     position: relative;
 
-    @media screen and (min-width: 1440px) {
+    @media screen and (min-width: 834px) {
       margin: 40px 0 0;
+    }
+
+    @media screen and (min-width: 1440px) {
       width: 304px;
     }
   }
@@ -143,6 +159,12 @@ export const SectionAboutShop = styled.section`
     position: relative;
     width: 100%;
     height: 316px;
+
+    @media screen and (min-width: 834px) {
+      margin-top: 156px;
+      min-width: 416px;
+      height: 351px;
+    }
 
     @media screen and (min-width: 1440px) {
       width: 786px;
@@ -162,12 +184,17 @@ export const Img1 = styled.picture`
   height: 172.25px;
   z-index: 2;
 
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
     top: 96px;
     left: 0;
+    width: 162px;
+    height: 243px;
+    z-index: 0;
+  }
+
+  @media screen and (min-width: 1440px) {
     width: 229px;
     height: 343px;
-    z-index: 0;
   }
 `;
 export const Img3 = styled.picture`
@@ -178,8 +205,14 @@ export const Img3 = styled.picture`
   height: 138px;
   z-index: 1;
 
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
     top: 0;
+    left: 95px;
+    width: 190px;
+    height: 152px;
+    z-index: 0;
+  }
+  @media screen and (min-width: 1440px) {
     left: 205px;
     width: 345px;
     height: 276px;
@@ -192,6 +225,12 @@ export const Img2 = styled.picture`
   width: 173px;
   height: 115px;
 
+  @media screen and (min-width: 834px) {
+    top: 21px;
+    right: -42px;
+    width: 195px;
+    height: 130px;
+  }
   @media screen and (min-width: 1440px) {
     top: 24px;
     right: 0;
@@ -207,6 +246,12 @@ export const Img4 = styled.picture`
   height: 137.6px;
   z-index: 1;
 
+  @media screen and (min-width: 834px) {
+    right: 103px;
+    bottom: 44px;
+    width: 195px;
+    height: 155px;
+  }
   @media screen and (min-width: 1440px) {
     right: 261px;
     bottom: 45px;
@@ -221,6 +266,12 @@ export const Img5 = styled.picture`
   width: 137.6px;
   height: 172px;
 
+  @media screen and (min-width: 834px) {
+    right: -42px;
+    bottom: 0;
+    width: 177px;
+    height: 221px;
+  }
   @media screen and (min-width: 1440px) {
     right: 0px;
     bottom: 0;

@@ -25,13 +25,14 @@ export const ContainerLimiter = ({
 
 export const Limiter = styled.div<StyleProp>`
   margin: 0 auto;
-  padding: ${({ $paddingmob }) => `${$paddingmob} 0 72px`};
-  width: 288px;
+  padding: ${({ $paddingmob }) => `${$paddingmob} 16px 72px`};
+  min-width: 288px;
   text-align: center;
 
-  @media screen and (min-width: 1024px) {
-    padding: 64px 0;
-    width: 960px;
+  @media screen and (min-width: 834px) {
+    padding: 56px 0;
+    width: 768px;
+    text-align: left;
   }
 
   @media screen and (min-width: 1440px) {

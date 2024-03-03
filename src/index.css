@@ -20,7 +20,9 @@ body {
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
+  font-size: 24px;
   line-height: calc(25 / 18);
+  line-height: calc(25 / 24);
   letter-spacing: 0;
   color: #101010;
   background-color: white;
@@ -132,7 +134,7 @@ button {
 }
 
 img {
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   max-width: 100%;
   height: auto;
@@ -143,6 +145,10 @@ h1 {
   font-size: 35px;
   line-height: calc(46 / 35);
 
+  @media screen and (min-width: 834px) {
+    font-size: 50px;
+    line-height: calc(59 / 50);
+  }
   @media screen and (min-width: 1440px) {
     font-size: 55px;
     line-height: calc(63 / 55);
@@ -164,7 +170,8 @@ legend {
   font-weight: 700;
   font-size: 20px;
   line-height: calc(27 / 20);
-  @media screen and (min-width: 1440px) {
+
+  @media screen and (min-width: 834px) {
     font-size: 24px;
     line-height: calc(31 / 24);
   }

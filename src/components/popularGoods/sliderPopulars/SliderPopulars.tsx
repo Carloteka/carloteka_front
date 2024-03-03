@@ -23,6 +23,7 @@ export const SliderPopulars = ({
         className="btn_left"
         type="button"
         onClick={() => sliderHandler(-1)}
+        title="To the previous"
       >
         <ChevronIcon width={7.5} height={11}>
           <use href={`${sprite}#chevron`} />
@@ -41,6 +42,7 @@ export const SliderPopulars = ({
         className="btn_right"
         type="button"
         onClick={() => sliderHandler(1)}
+        title="To the next"
       >
         <ChevronIcon
           style={{ transform: 'rotate(180deg)' }}
