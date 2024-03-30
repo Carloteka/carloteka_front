@@ -95,20 +95,31 @@ export const fetchFilteredGoods = async (search) => {
   }
 };
 
-export const postReview = async (slug, body) => {
+// ------- review -----------------
+
+export const postReview = async (id, body) => {
   try {
     const response = await axios.post(
-      `/shop/items/${slug}/reviews/create/`,
+      `/shop/items/${id}/reviews/create/`,
       body,
     );
-    console.log(response);
-    const arrayData = response.data.results;
-    return { count: response.data.count, data: arrayData };
+    // console.log(response);
+    return response.status === 201 ? 201 : undefined;
   } catch (error) {
     console.log(error.response);
   }
 };
 
+export const fetchReview = async (id) => {
+  try {
+    const response = await axios.get(`/shop/items/${id}/reviews/`);
+    // console.log(response);
+    const arrayData = response.data.results;
+    return arrayData;
+  } catch (error) {
+    console.log(error.response);
+  }
+};
 // ------  nova poshta -------------
 
 export const fetchNPAreas = async () => {

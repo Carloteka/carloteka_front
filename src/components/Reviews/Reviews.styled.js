@@ -3,9 +3,9 @@ import styled from 'styled-components';
 export const SectionReviews = styled.section`
   padding-top: 8px;
   width:100%;
-  display: flex;
-  align-items: center;
-  gap: 32px;
+  // display: flex;
+  // align-items: center;
+  // gap: 32px;
 
   p:first-child {
     margin-bottom: 12px;
@@ -92,7 +92,7 @@ export const TextAreaLabel = styled.label`
     font-family: inherit;
     font-size: 18px;
     line-height: calc(25 / 18);
-    color: #000;
+    color: #101010;
     resize: none;
   }
 `;
@@ -133,5 +133,81 @@ export const FlexContainer = styled.div`
   input {
     text-indent: 24px;
     color: #101010;
+  }
+`;
+
+export const ReviewList = styled.ul`
+  margin-top: 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+
+  @media screen and (min-width: 834px) {
+    gap: 24px;
+  }
+
+  & article {
+    padding-bottom: 24px;
+    display: grid;
+    grid-template-columns: 15px 80px 1fr 15px;
+    grid-template-rows: auto auto auto auto;
+    border: 1px solid #101010;
+    @media screen and (min-width: 834px) {
+      grid-template-columns: 12px 80px 1fr 1fr 12px;
+      grid-template-rows: auto auto auto;
+    }
+
+    & > img {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      align-self: center;
+    }
+    & > ul {
+      margin-left: 16px;
+      padding-bottom: 22px;
+      display: flex;
+      grid-column: 3;
+      grid-row: 2;
+    }
+    & > h4 {
+      margin-left: 16px;
+      padding: 22px 0 12px;
+      grid-column: 3;
+      grid-row: 1;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: calc(23 / 18);
+    }
+    & > p:last-child {
+      padding: 24px 16px 0;
+      grid-column: 1 / spam 4;
+      grid-row: 4;
+      font-weight: 500;
+      border-top: 2px solid #101010;
+      @media screen and (min-width: 834px) {
+        grid-column: 1 / spam 5;
+        grid-row: 3;
+      }
+    }
+  }
+`;
+export const Date = styled.p`
+  margin-bottom: 12px;
+
+  grid-column: 2 / spam 2;
+  grid-row: 3;
+
+  font-size: 16px;
+  line-height: calc(23 / 16);
+  color: #d9d9d9;
+  text-align: center;
+
+  @media screen and (min-width: 834px) {
+    margin: 0;
+    grid-column: 4;
+    grid-row: 1 / span 2;
+    text-align: right;
+    align-self: center;
   }
 `;

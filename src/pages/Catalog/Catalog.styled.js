@@ -41,7 +41,7 @@ export const Form = styled.form`
   }
   @media screen and (min-width: 1440px) {
     width: 304px;
-    gap: 40px;
+    gap: 16px;
   }
 
   fieldset {
@@ -56,7 +56,7 @@ export const Form = styled.form`
       padding-bottom: 33px;
     }
     @media screen and (min-width: 1440px) {
-      padding-bottom: 40px;
+      padding-bottom: 16px;
     }
 
     legend {
@@ -67,7 +67,7 @@ export const Form = styled.form`
   legend {
     margin-bottom: 24px;
     @media screen and (min-width: 1440px) {
-      margin-bottom: 40px;
+      margin-bottom: 16px;
     }
   }
 
@@ -82,6 +82,7 @@ export const Form = styled.form`
     cursor: pointer;
 
     @media screen and (min-width: 1440px) {
+      margin-bottom: 8px;
       gap: 19px;
     }
   }
@@ -186,6 +187,7 @@ export const TagsContainer = styled.div`
     margin-bottom: 40px;
   }
   @media screen and (min-width: 1440px) {
+    margin-bottom: 24px;
     padding-right: 148px;
     order: 1;
   }
@@ -274,7 +276,7 @@ export const FlexDiv = styled.div`
     }
   }
 
-  margin-bottom: 40px;
+  margin-bottom: 24px;
   display: inline-flex;
   text-align: left;
   order: 2;
