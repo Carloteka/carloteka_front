@@ -22,9 +22,6 @@ export const Name = styled.h4`
   padding-left: 8px;
   grid-column: 2;
   grid-row: 1 / span 3;
-  // font-weight: 400;
-  // font-size: 13px;
-  // line-height: calc(20 / 13);
   text-align: left;
   align-self: center;
 
