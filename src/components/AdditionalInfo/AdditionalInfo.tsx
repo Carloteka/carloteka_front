@@ -1,32 +1,9 @@
 import { SectionAdditionalInfo } from './AdditionalInfo.styled';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { fetchItemDetails } from '../../api/api';
 import sprite from '../../images/sprite.svg';
-
-type Good = {
-  height: number;
-  width: number;
-  length: number;
-};
+import { useGood } from '../../pages/GoodDetail/GoodDetail';
 
 const AdditionalInfo = () => {
-  const { goodId } = useParams();
-
-  const [good, setGood] = useState<Good>();
-
-  useEffect(() => {
-    async function getGoodDetail() {
-      try {
-        const data = await fetchItemDetails(goodId);
-        console.log(data);
-        setGood(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getGoodDetail();
-  }, [goodId]);
+  const { good } = useGood();
 
   return (
     good && (

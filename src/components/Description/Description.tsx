@@ -1,25 +1,9 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { fetchItemDetails } from '../../api/api';
 import { SectionDescription } from './Description.styled';
 import { marked } from 'marked';
-import { Good } from '../../../@types/custom';
+import { useGood } from '../../pages/GoodDetail/GoodDetail';
 
 const Description = () => {
-  const { goodId } = useParams();
-  const [good, setGood] = useState<Good>();
-
-  useEffect(() => {
-    async function getGoodDetail() {
-      try {
-        const data = await fetchItemDetails(goodId);
-        setGood(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getGoodDetail();
-  }, [goodId]);
+  const { good } = useGood();
 
   function createMarkup() {
     return { __html: marked.parse(good?.description as string) as string };
