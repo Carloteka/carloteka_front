@@ -32,7 +32,6 @@ const Reviews = () => {
   const [rate, setRate] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [reviews, setReviews] = useState<Review[] | undefined>();
-  console.log(reviews);
 
   async function getGoodDetail() {
     try {
