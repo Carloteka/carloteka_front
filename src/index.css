@@ -164,24 +164,28 @@ h2 {
   }
 }
 
-h3,
-legend {
+h3 {
   font-weight: 700;
   font-size: 20px;
   line-height: calc(27 / 20);
 
-  @media screen and (min-width: 834px) {
-    font-size: 24px;
-    line-height: calc(31 / 24);
+  @media screen and (min-width: 1440px) {
+    font-size: 23px;
+    line-height: calc(31 / 23);
   }
 }
 legend {
-  font-size: 24px;
-  line-height: calc(31 / 24);
+  font-weight: 700;
+  font-size: 23px;
+  line-height: calc(31 / 23);
 
   @media screen and (min-width: 834px) {
     font-size: 22px;
     line-height: calc(26 / 22);
+  }
+  @media screen and (min-width: 1440px) {
+    font-size: 23px;
+    line-height: calc(31 / 23);
   }
 }
 

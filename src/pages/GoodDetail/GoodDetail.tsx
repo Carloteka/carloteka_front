@@ -1,6 +1,12 @@
 import { Suspense, useState, useEffect, useContext } from 'react';
 import { CartContext, FavoritesContext } from '../../components/Layout';
-import { Outlet, useParams, Link, NavLink } from 'react-router-dom';
+import {
+  Outlet,
+  useParams,
+  Link,
+  NavLink,
+  useOutletContext,
+} from 'react-router-dom';
 import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { Loader } from '../../components/Loader/Loader';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
@@ -25,6 +31,7 @@ import {
 } from '../../utils';
 import { Good } from '../../../@types/custom';
 
+type ContextType = { good: Good | null };
 type Image = { image: string };
 
 const GoodDetail = () => {
@@ -189,7 +196,7 @@ const GoodDetail = () => {
           </AdditionalNavigation>
 
           <Suspense fallback={<Loader />}>
-            <Outlet />
+            <Outlet context={{ good }} />
           </Suspense>
         </ContainerLimiter>
       </>
@@ -197,4 +204,7 @@ const GoodDetail = () => {
   );
 };
 
+export function useGood() {
+  return useOutletContext<ContextType>();
+}
 export default GoodDetail;

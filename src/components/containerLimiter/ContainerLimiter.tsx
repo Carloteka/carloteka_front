@@ -36,7 +36,7 @@ export const Limiter = styled.div<StyleProp>`
   }
 
   @media screen and (min-width: 1440px) {
-    padding: ${({ $paddingdesc }) => `${$paddingdesc} 0 112px`};
+    padding: ${({ $paddingdesc }) => `${$paddingdesc} 0 88px`};
     text-align: start;
     width: 1312px;
   }
