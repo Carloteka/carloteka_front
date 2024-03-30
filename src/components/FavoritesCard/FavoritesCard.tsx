@@ -4,10 +4,8 @@ import {
   FlexContainer,
   Img,
   Name,
-  Div,
   Price,
   Star,
-  BuyBtnDesc,
   DelBtn,
   BuyBtn,
 } from './FavoritesCard.styled';
@@ -67,46 +65,37 @@ export const FavoritesCard = ({ good, onClickDelete }: FavoritesCardProps) => {
         loading="lazy"
       />
       <Name>Декоративна ваза з натурального дерева</Name>
-      <Div>
-        <FlexContainer>
-          <ul>
-            {[0, 1, 2, 3, 4].map((index) => (
-              <li key={index}>
-                <Star
-                  style={{ fill: index <= stars ? '#5B5B59' : 'transparent' }}
-                >
-                  <use href={`${sprite}#star`} />
-                </Star>
-              </li>
-            ))}
-          </ul>
-          {stars}
-        </FlexContainer>
 
-        <Price>₴ {price}</Price>
+      <FlexContainer>
+        <ul>
+          {[0, 1, 2, 3, 4].map((index) => (
+            <li key={index}>
+              <Star
+                style={{ fill: index <= stars ? '#5B5B59' : 'transparent' }}
+              >
+                <use href={`${sprite}#star`} />
+              </Star>
+            </li>
+          ))}
+        </ul>
+        {stars}
+      </FlexContainer>
 
-        <BuyBtnDesc
-          type="button"
-          className="primaryBtn"
-          onClick={() => buyBtnHandle()}
-        >
-          Купити
-        </BuyBtnDesc>
+      <Price>₴ {price}</Price>
 
-        <DelBtn
-          type="button"
-          onClick={() => {
-            setAmountInFavorites(
-              (amountInFavorites: number) => amountInFavorites - 1,
-            );
-            onClickDelete(id);
-          }}
-        >
-          <svg width={8} height={8}>
-            <use href={`${sprite}#close`} />
-          </svg>
-        </DelBtn>
-      </Div>
+      <DelBtn
+        type="button"
+        onClick={() => {
+          setAmountInFavorites(
+            (amountInFavorites: number) => amountInFavorites - 1,
+          );
+          onClickDelete(id);
+        }}
+      >
+        <svg width={8} height={8}>
+          <use href={`${sprite}#close`} />
+        </svg>
+      </DelBtn>
 
       <BuyBtn
         type="button"
