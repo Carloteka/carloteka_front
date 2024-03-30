@@ -19,10 +19,8 @@ body {
   font-family: 'Rubik', sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
   font-size: 20px;
-  line-height: calc(25 / 24);
-  line-height: calc(20 / 20);
+  line-height: calc(25 / 20);
   letter-spacing: 0;
   color: #101010;
   background-color: white;
@@ -160,7 +158,7 @@ h2 {
   font-weight: 600;
   font-size: 23px;
   line-height: calc(34 / 23);
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
     font-size: 36px;
     line-height: calc(43 / 36);
   }
@@ -188,9 +186,15 @@ legend {
 }
 
 h4 {
-  font-weight: 700;
-  font-size: 18px;
-  line-height: calc(23 / 18);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: calc(20 / 13);
+
+  @media screen and (min-width: 834px) {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: calc(23 / 18);
+  }
 }
 
 input {

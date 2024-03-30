@@ -42,15 +42,19 @@ const Favorites = () => {
         <ListHeaderWrapper>
           <Name>Товар</Name>
           <Price>Ціна</Price>
-          <p>Рейтинг товару та відгуки</p>
+          <p className="mobVers">Рейтинг, відгуки та ціна товару</p>
+          <p className="tablVers">Рейтинг товару та відгуки</p>
         </ListHeaderWrapper>
-        <FavoritesList>
-          {favorites?.map((el) => (
-            <Card key={el.id}>
-              <FavoritesCard good={el} onClickDelete={delFromFavorite} />
-            </Card>
-          ))}
-        </FavoritesList>
+        {favorites.length > 0 && (
+          <FavoritesList>
+            {favorites?.map((el) => (
+              <Card key={el.id}>
+                <FavoritesCard good={el} onClickDelete={delFromFavorite} />
+              </Card>
+            ))}
+          </FavoritesList>
+        )}
+
         {favorites?.length > 0 ? (
           <Button
             className="secondaryBtn"
