@@ -377,7 +377,7 @@ const Delivery = () => {
     inCart.length > 0 && (
       <>
         {/* {isLoading && <Loader />} */}
-        <PageTitle>Доставка</PageTitle>
+        <PageTitle page={'delivery'}></PageTitle>
         <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'80px'}>
           <DeliveryBox>
             {serverError ? (

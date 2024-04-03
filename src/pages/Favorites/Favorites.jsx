@@ -37,7 +37,7 @@ const Favorites = () => {
 
   return (
     <>
-      <PageTitle>Список бажань</PageTitle>
+      <PageTitle page={'favorites'}></PageTitle>
       <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'56px'}>
         <ListHeaderWrapper>
           <Name>Товар</Name>

@@ -21,7 +21,7 @@ export const PrivacyPolicy = styled.div`
   text-align: left;
 
   @media screen and (min-width: 1440px) {
-    width: 975px;
+    min-width: 975px;
   }
 
   &:not(:hover) {
