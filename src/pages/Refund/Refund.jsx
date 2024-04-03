@@ -7,7 +7,7 @@ import { PopularGoods } from '../../components/popularGoods';
 const Refund = () => {
   return (
     <>
-      <PageTitle>Повернення & Обмін</PageTitle>
+      <PageTitle page={'refund'}></PageTitle>
       <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'88px'}>
         <PolicyBox>
           <PrivacyPolicy>

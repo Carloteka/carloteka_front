@@ -6,7 +6,7 @@ import { PopularGoods } from '../../components/popularGoods';
 const Policy = () => {
   return (
     <>
-      <PageTitle>Політика конфіденційності</PageTitle>
+      <PageTitle page={'policy'}></PageTitle>
       <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'88px'}>
         <PolicyBox>
           <PrivacyPolicy>

@@ -60,7 +60,7 @@ const Cart = () => {
 
   return (
     <>
-      <PageTitle>Кошик</PageTitle>
+      <PageTitle page={'cart'}></PageTitle>
       <ContainerLimiter paddingTopMob={'32px'} paddingTopDesc={'56px'}>
         <ListHeaderWrapper>
           <Name>Товар</Name>

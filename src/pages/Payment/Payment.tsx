@@ -179,7 +179,7 @@ const Payment = () => {
   return (
     (inCart.length > 0 || isSuccess) && (
       <>
-        <PageTitle>Оплата</PageTitle>
+        <PageTitle page={'payment'}></PageTitle>
         <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'80px'}>
           <GoToDelivery
             to={isSuccess ? '/catalog' : '/delivery'}
