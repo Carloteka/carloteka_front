@@ -27,7 +27,7 @@ export const PrivacyPolicy = styled.div`
   }
 
   ul > li {
-    padding-left: 26px;
+    padding-left: 32px;
     position: relative;
   }
   li::before {
@@ -39,5 +39,26 @@ export const PrivacyPolicy = styled.div`
     height: 4px;
     border-radius: 50%;
     background-color: black;
+  }
+
+  ol {
+    padding-left: 32px;
+    list-style-position: outside;
+
+    & > li {
+      text-indent: 4px;
+    }
+  }
+
+  a {
+    display: inline;
+    text-decoration: underline;
+    color: blue;
+  }
+
+  p,
+  ul,
+  ol {
+    margin-bottom: 1rem;
   }
 `;

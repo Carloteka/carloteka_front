@@ -117,7 +117,7 @@ const GoodDetail = () => {
     good && (
       <>
         {isLoading && <Loader />}
-        <PageTitle>{good.name}</PageTitle>
+        <PageTitle page={'catalog'} name={good.name}></PageTitle>
         <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'56px'}>
           <SectionInfo>
             <Slider

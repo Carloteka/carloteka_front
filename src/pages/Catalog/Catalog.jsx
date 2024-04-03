@@ -358,7 +358,7 @@ const Catalog = () => {
   return (
     <>
       {isLoading && <Loader />}
-      <PageTitle>Каталог</PageTitle>
+      <PageTitle page={'catalog'}></PageTitle>
       <ContainerLimiter paddingTopMob={'16px'} paddingTopDesc={'56px'}>
         <FlexContainer>
           <ShowFiltersBtn
