@@ -12,6 +12,7 @@ import { Loader } from '../Loader/Loader';
 import { postReview, fetchReview } from '../../api/api';
 import sprite from '../../images/sprite.svg';
 import { useGood } from '../../pages/GoodDetail/GoodDetail';
+import { Good } from '../../../@types/custom';
 
 type Review = {
   id: number;
@@ -91,10 +92,12 @@ const Reviews = () => {
   return (
     <>
       {isLoading && <Loader />}
-      {good && (
+      {Object.keys(good as Good).length > 0 && (
         <SectionReviews>
           <Form onSubmit={submitHandle}>
-            <p>Будьте першим, хто залишив відгук про &quot;{good.name}&quot;</p>
+            <p>
+              Будьте першим, хто залишив відгук про &quot;{good?.name}&quot;
+            </p>
             <div>
               <label>
                 Ваш рейтинг

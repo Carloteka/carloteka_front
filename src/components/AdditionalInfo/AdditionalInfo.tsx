@@ -1,12 +1,13 @@
 import { SectionAdditionalInfo } from './AdditionalInfo.styled';
 import sprite from '../../images/sprite.svg';
 import { useGood } from '../../pages/GoodDetail/GoodDetail';
+import { Good } from '../../../@types/custom';
 
 const AdditionalInfo = () => {
   const { good } = useGood();
 
   return (
-    good && (
+    Object.keys(good as Good).length > 0 && (
       <SectionAdditionalInfo>
         <table>
           <tbody>
@@ -14,19 +15,19 @@ const AdditionalInfo = () => {
               <td>Матеріал</td>
               <td>Дерево, вкрите коричневим лаком, найвищого рівня якості</td>
             </tr>
-            {good.length && (
+            {good?.length && (
               <tr>
                 <td>Довжина</td>
                 <td>{Math.floor(good.length)} см</td>
               </tr>
             )}
-            {good.height && (
+            {good?.height && (
               <tr>
                 <td>Висота</td>
                 <td>{Math.floor(good.height)} см</td>
               </tr>
             )}
-            {good.width && (
+            {good?.width && (
               <tr>
                 <td>Діаметр</td>
                 <td>{Math.floor(good.width)} см</td>

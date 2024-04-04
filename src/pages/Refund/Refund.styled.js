@@ -61,4 +61,8 @@ export const PrivacyPolicy = styled.div`
   ol {
     margin-bottom: 1rem;
   }
+
+  .bold {
+    font-weight: 600;
+  }
 `;
