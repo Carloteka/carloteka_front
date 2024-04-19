@@ -31,7 +31,6 @@ export const Footer = () => {
         console.log(error);
       }
     }
-    console.log('useEff footer');
   }, [contacts]);
 
   function scrollToTop() {
@@ -92,10 +91,7 @@ export const Footer = () => {
         <h3>Про нас</h3>
         <List>
           <li>
-            <Link
-              to={'/about'}
-              onClick={() => scrollToTop()}
-            >
+            <Link to={'/about'} onClick={() => scrollToTop()}>
               Наша історія
             </Link>
           </li>

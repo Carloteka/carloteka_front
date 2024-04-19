@@ -15,6 +15,7 @@ export const SearchBox = styled.div`
   }
 
   search {
+    z-index: 10;
     min-width: 208px;
     width: 100%;
     @media screen and (min-width: 834px) {
@@ -91,6 +92,8 @@ export const SearchResultDiv = styled.div`
   left: -33%;
   width: 170%;
   background-color: white;
+  z-index: 11;
+
   @media screen and (min-width: 1440px) {
     width: 100%;
     top: 38px;
