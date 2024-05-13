@@ -7,6 +7,7 @@ import {
   Name,
   Price,
   Quantity,
+  Total,
   FavoritesList,
   Card,
   Button,
@@ -66,7 +67,7 @@ const Cart = () => {
           <Name>Товар</Name>
           <Price>Ціна</Price>
           <Quantity>Кількість</Quantity>
-          <p>Загальна вартість</p>
+          <Total>Загальна вартість</Total>
         </ListHeaderWrapper>
         <FavoritesList>
           {inCart.map((el: Good) => (
@@ -133,7 +134,7 @@ const Cart = () => {
                 </div>
                 <div>
                   <p>Загальна вартість</p>
-                  <p>₴{getTotalPrice(inCart)}</p>
+                  <p>₴ {getTotalPrice(inCart)}</p>
                 </div>
               </div>
 

@@ -124,7 +124,7 @@ export const fetchReview = async (id) => {
 
 export const fetchNPAreas = async () => {
   try {
-    const response = await axios.get('/shop/np/areas/');
+    const response = await axios.get('/np/areas/');
     const arrayData = response.data;
     return arrayData;
   } catch (error) {
@@ -136,7 +136,7 @@ export const fetchNPSettlements = async (Ref) => {
   const params = { Ref };
 
   try {
-    const response = await axios.get('/shop/np/settlements/', { params });
+    const response = await axios.get('/np/settlements/', { params });
     const arrayData = response.data;
     return arrayData;
   } catch (error) {
@@ -148,7 +148,7 @@ export const fetchNPWarehouses = async (SettlementRef) => {
   const params = { SettlementRef };
 
   try {
-    const response = await axios.get('/shop/np/warehouses/', { params });
+    const response = await axios.get('/np/warehouses/', { params });
     const arrayData = response.data;
     // console.log(response.data);
     return arrayData;
@@ -163,7 +163,7 @@ export const fetchNPWarehouses = async (SettlementRef) => {
 
 export const createContact = async (body) => {
   try {
-    const response = await axios.post('/shop/np/contact/create/', body);
+    const response = await axios.post('/np/contact/create/', body);
     const arrayData = response.data;
     // console.log(response);
     return arrayData;
@@ -175,7 +175,7 @@ export const createContact = async (body) => {
 
 export const createWaybill = async (body) => {
   try {
-    const response = await axios.post('/shop/np/waybill/create/', body);
+    const response = await axios.post('/np/waybill/create/', body);
     const arrayData = response.data;
     return arrayData;
   } catch (error) {

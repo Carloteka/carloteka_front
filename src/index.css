@@ -19,8 +19,8 @@ body {
   font-family: 'Rubik', sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
-  line-height: calc(25 / 20);
+  font-size: 17px;
+  line-height: calc(21 / 17);
   letter-spacing: 0;
   color: #101010;
   background-color: white;
@@ -64,6 +64,7 @@ button {
 button,
 .primaryBtn,
 .secondaryBtn {
+  position: relative;
   font-size: 19px;
   line-height: 1;
   font-weight: 500;
@@ -74,6 +75,7 @@ button,
   padding: 5px 24px;
   width: 100%;
   min-height: 48px;
+  height: 48px;
   text-transform: uppercase;
 }
 
@@ -155,24 +157,13 @@ h1 {
 }
 
 h2 {
-  font-weight: 600;
-  font-size: 23px;
-  line-height: calc(34 / 23);
-  @media screen and (min-width: 834px) {
-    font-size: 36px;
-    line-height: calc(43 / 36);
-  }
+  font-size: 36px;
+  line-height: calc(43 / 36);
 }
 
 h3 {
-  font-weight: 700;
-  font-size: 20px;
-  line-height: calc(27 / 20);
-
-  @media screen and (min-width: 1440px) {
-    font-size: 23px;
-    line-height: calc(31 / 23);
-  }
+  font-size: 23px;
+  line-height: calc(31 / 23);
 }
 legend {
   font-weight: 700;
@@ -190,15 +181,9 @@ legend {
 }
 
 h4 {
-  font-weight: 400;
-  font-size: 13px;
-  line-height: calc(20 / 13);
-
-  @media screen and (min-width: 834px) {
-    font-weight: 700;
-    font-size: 18px;
-    line-height: calc(23 / 18);
-  }
+  font-weight: 700;
+  font-size: 18px;
+  line-height: calc(23 / 18);
 }
 
 input {

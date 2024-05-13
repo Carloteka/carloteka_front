@@ -1,7 +1,16 @@
 import { useState, useEffect, useContext } from 'react';
 import { CartContext } from '../Layout';
 import { Increment } from '../Increment/Increment';
-import { Img, Name, Div, Price, TotalPrice, DelBtn } from './CartCard.styled';
+import {
+  Img,
+  Name,
+  PriceTitle,
+  Price,
+  AmountTitle,
+  TotalTitle,
+  TotalPrice,
+  DelBtn,
+} from './CartCard.styled';
 import sprite from '../../images/sprite.svg';
 import { Good } from '../../../@types/custom';
 import { checkLocalStorage } from '../../utils';
@@ -40,23 +49,20 @@ export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
         loading="lazy"
       />
       <Name>Декоративна ваза з натурального дерева</Name>
-      <Div>
-        <p>Ціна</p>
-        <Price>₴ {price}</Price>
-      </Div>
-      <Div>
-        <p>Кількість</p>
-        <Increment
-          increment={increment}
-          good={good}
-          quantity={quantity}
-          setQuantity={setQuantity}
-        />
-      </Div>
-      <Div>
-        <p>Загальна вартість</p>
-        <TotalPrice>₴ {quantity * price}</TotalPrice>
-      </Div>
+
+      <PriceTitle>Ціна</PriceTitle>
+      <Price>₴ {price}</Price>
+
+      <AmountTitle>Кількість</AmountTitle>
+      <Increment
+        increment={increment}
+        good={good}
+        quantity={quantity}
+        setQuantity={setQuantity}
+      />
+
+      <TotalTitle>Загальна вартість</TotalTitle>
+      <TotalPrice>₴ {quantity * price}</TotalPrice>
 
       <DelBtn
         type="button"

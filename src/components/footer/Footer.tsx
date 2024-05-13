@@ -54,8 +54,8 @@ export const Footer = () => {
                 <use href={`${sprite}#clock`} />
               </svg>
               <WorkTime>
-                Пн - Пт {contacts.work_time_mo_fr}, Сб {contacts.work_time_sa},
-                Нд - {contacts.work_time_su}
+                Пн - Пт - {contacts.work_time_mo_fr}, <br></br>Сб -
+                {contacts.work_time_sa}, <br></br>Нд - {contacts.work_time_su}
               </WorkTime>
             </li>
             <li>
