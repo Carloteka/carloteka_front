@@ -16,52 +16,17 @@ export const Wrapper = styled.div`
     padding-top: 112px;
     min-height: 184px;
   }
-`;
 
-export const BreadCrumbs = styled.ul`
-  padding: 10px 16px;
-  min-width: 320px;
-  display: flex;
-  text-align: center;
+  & > h1 {
+    padding: 16px 0;
+    text-align: center;
 
-  @media screen and (min-width: 834px) {
-    padding: 0 121px;
-    width: 834px;
-    text-align: left;
-  }
-
-  @media screen and (min-width: 1440px) {
-    padding: 9px 64px 0;
-    width: 1440px;
-    font-weight: 400;
-    font-size: 23px;
-    line-height: calc(27 / 23);
-  }
-
-  & > li {
-    display: flex;
-    &:not(:last-child)::after {
-      content: '>';
-      padding: 0 16px;
-      width: 40px;
-      height: 24px;
+    @media screen and (min-width: 834px) {
+      padding: 32px 88px;
+      text-align: left;
     }
-
-    & > a {
-      display: inline;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-
-  & .disabled {
-    pointer-events: none;
-    cursor: not-allowed;
-
-    &:hover {
-      text-decoration: none;
+    @media screen and (min-width: 1440px) {
+      padding: 4px 112px 16px;
     }
   }
 `;

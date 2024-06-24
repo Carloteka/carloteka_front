@@ -1,11 +1,6 @@
-import { Wrapper, BreadCrumbs } from './PageTitle.styled';
-import { Link } from 'react-router-dom';
+import { Wrapper } from './PageTitle.styled';
+import { useLocation } from 'react-router-dom';
 import { pageTitles } from '../../utils/pageTitles';
-
-interface PageTitleProps {
-  page: string;
-  name?: string;
-}
 
 type Page =
   | 'aboutPayment'
@@ -18,20 +13,16 @@ type Page =
   | 'policy'
   | 'refund';
 
-export const PageTitle = ({ page, name }: PageTitleProps) => {
+export const PageTitle = () => {
+  const { pathname } = useLocation();
+
   return (
-    <Wrapper>
-      <BreadCrumbs>
-        <li>
-          <Link to={`/`}>Головна сторінка</Link>
-        </li>
-        <li>
-          <Link to={`/${page}`} className={!name ? 'disabled' : ''}>
-            {pageTitles[page as Page]}
-          </Link>
-        </li>
-        {name && <li> {name}</li>}
-      </BreadCrumbs>
-    </Wrapper>
+    <>
+      {pathname !== '/' && (
+        <Wrapper>
+          <h1 className="limiter">{pageTitles[pathname.slice(1) as Page]}</h1>
+        </Wrapper>
+      )}
+    </>
   );
 };

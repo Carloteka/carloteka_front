@@ -36,6 +36,18 @@ main {
   min-height: 80vh;
 }
 
+.limiter {
+  min-width: 288px;
+
+  @media screen and (min-width: 834px) {
+    width: 768px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    width: 1312px;
+  }
+}
+
 ul {
   list-style: none;
 }

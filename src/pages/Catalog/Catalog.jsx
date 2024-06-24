@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Loader } from '../../components/Loader/Loader';
-import { PageTitle } from '../../components/pageTitle/PageTitle.tsx';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter.tsx';
 import { Paginator } from '../../components/Paginator/Paginator.tsx';
 import { CatalogCard } from '../../components/CatalogCard/CatalogCard.tsx';
@@ -358,7 +357,6 @@ const Catalog = () => {
   return (
     <>
       {isLoading && <Loader />}
-      <PageTitle page={'catalog'}></PageTitle>
       <ContainerLimiter paddingTopMob={'16px'} paddingTopDesc={'56px'}>
         <FlexContainer>
           <ShowFiltersBtn

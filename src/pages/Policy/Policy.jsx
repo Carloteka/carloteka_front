@@ -1,4 +1,3 @@
-import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import { PolicyBox, PrivacyPolicy } from './Policy.styled';
 import { PopularGoods } from '../../components/popularGoods';
@@ -6,7 +5,6 @@ import { PopularGoods } from '../../components/popularGoods';
 const Policy = () => {
   return (
     <>
-      <PageTitle page={'policy'}></PageTitle>
       <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'88px'}>
         <PolicyBox>
           <PrivacyPolicy>

@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../../components/Layout';
 // import { Loader } from '../../components/Loader/Loader';
-import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import { InputMask } from 'primereact/inputmask';
 import {
@@ -377,7 +376,6 @@ const Delivery = () => {
     inCart.length > 0 && (
       <>
         {/* {isLoading && <Loader />} */}
-        <PageTitle page={'delivery'}></PageTitle>
         <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'80px'}>
           <DeliveryBox>
             {serverError ? (

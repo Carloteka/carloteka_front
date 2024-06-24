@@ -7,7 +7,6 @@ import {
   NavLink,
   useOutletContext,
 } from 'react-router-dom';
-import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { Loader } from '../../components/Loader/Loader';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import { Increment } from '../../components/Increment/Increment';
@@ -117,7 +116,6 @@ const GoodDetail = () => {
     good && (
       <>
         {isLoading && <Loader />}
-        <PageTitle page={'catalog'} name={good.name}></PageTitle>
         <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'56px'}>
           <SectionInfo>
             <Slider

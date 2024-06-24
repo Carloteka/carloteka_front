@@ -1,6 +1,5 @@
 import { useState, useContext } from 'react';
 import { CartContext } from '../../components/Layout';
-import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import {
   ListHeaderWrapper,
@@ -61,7 +60,6 @@ const Cart = () => {
 
   return (
     <>
-      <PageTitle page={'cart'}></PageTitle>
       <ContainerLimiter paddingTopMob={'32px'} paddingTopDesc={'56px'}>
         <ListHeaderWrapper>
           <Name>Товар</Name>
