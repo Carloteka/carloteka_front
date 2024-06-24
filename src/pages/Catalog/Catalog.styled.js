@@ -59,6 +59,10 @@ export const Form = styled.form`
       padding-bottom: 16px;
     }
 
+    &:nth-child(3) {
+      border: none;
+    }
+
     legend {
       width: 100%;
     }
@@ -101,6 +105,8 @@ export const Checkbox = styled.input`
 `;
 
 export const Price = styled.fieldset`
+  border-bottom: none;
+
   div {
     position: relative;
     display: flex;
@@ -108,7 +114,7 @@ export const Price = styled.fieldset`
     gap: 24px;
   }
 
-  div:last-child > label::before {
+  div:first-of-type > label::before {
     content: '₴';
     position: absolute;
     left: 8px;
@@ -170,6 +176,7 @@ export const Price = styled.fieldset`
     height: 32px;
     text-align: right;
     border: 1px solid #cccbc7;
+    border-radius: 6px;
   }
 `;
 
@@ -214,6 +221,7 @@ export const TagsContainer = styled.div`
     align-items: center;
     gap: 4px;
     background-color: #f2f0ec;
+    border-radius: 8px;
 
     @media screen and (min-width: 834px) {
       padding: 7.5px 8px;

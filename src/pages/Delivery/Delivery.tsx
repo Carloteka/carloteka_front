@@ -163,7 +163,7 @@ const Delivery = () => {
       setInCart(goodsInCart);
     }
   }, [inCart, amountInCart]);
-  console.log(inCart);
+  // console.log(inCart);
 
   function submitHandle(e: React.FormEvent) {
     e.preventDefault();

@@ -13,6 +13,7 @@ export const ThumbPhoto = styled.div`
     object-fit: cover;
     background-color: #dad4c8;
     height: 304px;
+    border-radius: 6px;
 
     @media screen and (min-width: 834px) {
       width: 240px;

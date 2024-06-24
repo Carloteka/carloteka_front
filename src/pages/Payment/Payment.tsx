@@ -54,11 +54,9 @@ const Payment = () => {
     | undefined
   >();
 
-  const goodsInCart: { id: number; amount: number }[] = checkLocalStorage(
-    'cart',
-    [],
-  );
+  const goodsInCart: Good[] = checkLocalStorage('cart', []);
 
+  const [inCart, setInCart] = useState<Good[]>(goodsInCart);
   if (goodsInCart.length === 0) {
     navigate('/cart');
   }
@@ -70,8 +68,8 @@ const Payment = () => {
     const order_id = localStorage.getItem('order_id');
     if (order_id) {
       createLiqpayBtn();
-      fetchLiqpayStatus();
-      createCallback();
+      // fetchLiqpayStatus();
+      // createCallback();
     }
     async function createLiqpayBtn() {
       try {
@@ -109,22 +107,6 @@ const Payment = () => {
     }
   }, [goodsInCart.length, isSuccess, navigate]);
 
-  const goods: [] = checkLocalStorage('goods', []);
-
-  const goodsInCartArray = goods.filter(
-    (el: { id: number; quantity: number }) =>
-      goodsInCart.some((item) => {
-        if (el.id === item.id) {
-          el.quantity = item.amount;
-          return true;
-        } else return false;
-      }),
-  );
-
-  const [inCart, setInCart] = useState<Good[]>(
-    goodsInCartArray.filter((el: { id: number }) => el.id !== 0),
-  );
-
   function clearCart() {
     localStorage.cart = [];
     setInCart([]);
@@ -161,6 +143,7 @@ const Payment = () => {
       console.log('send to backend', data);
     }
 
+    console.log('here in submit');
     setIsSuccess(true);
     clearCart();
     // e.form.reset();
@@ -170,10 +153,10 @@ const Payment = () => {
     const deliveryData = checkLocalStorage('delivery', {});
     const { post, office, city, country } = deliveryData;
     return term
-      ? `${post.value === 'novaposhta' ? '1-3 ' : '3-12 '}`
+      ? `${post.value === 'nova_post' ? '1-3 ' : '3-12 '}`
       : `Доставити до відділеня ${
-          post.value === 'novaposhta' ? 'Нової Пошти' : 'УкрПошти'
-        } №${office}, ${city.label}, ${country.label}.`;
+          post.value === 'nova_post' ? 'Нової Пошти' : 'УкрПошти'
+        } ${office.value}, ${city.label}, ${country.label}.`;
   }
 
   return (
@@ -211,18 +194,16 @@ const Payment = () => {
                         <div>
                           <p>
                             {el.name}
-                            {el.quantity > 1 && ` (${el.quantity} шт.)`}
+                            {!el?.quantity ? 1 : ` (${el.quantity} шт.)`}
                           </p>
-                          <p>₴ {el.price * el.quantity}</p>
+                          <p>
+                            ₴ {el.price * (!el?.quantity ? 1 : el.quantity)}
+                          </p>
                         </div>
                       </li>
                     ))}
                   </ul>
 
-                  <DivBorderBottom>
-                    <p>Доставка</p>
-                    <p> ₴ 95</p>
-                  </DivBorderBottom>
                   <div>
                     <span>Разом</span>
                     <p> ₴ {getTotalPrice(inCart)}</p>

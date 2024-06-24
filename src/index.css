@@ -77,6 +77,7 @@ button,
   min-height: 48px;
   height: 48px;
   text-transform: uppercase;
+  border-radius: 8px;
 }
 
 @media screen and (max-width: 1439px) {
@@ -191,6 +192,10 @@ input {
   font-size: inherit;
   line-height: inherit;
   border: none;
+  border-radius: 8px;
+}
+textarea {
+  border-radius: 8px;
 }
 address {
   font-style: inherit;

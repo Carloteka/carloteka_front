@@ -38,6 +38,7 @@ export const Chevron = styled.button`
   width: 30px;
   height: 36px;
   background: #f2f0ec;
+  border-radius: 5px;
 
   @media screen and (min-width: 834px) {
     width: 28px;

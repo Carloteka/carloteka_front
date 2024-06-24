@@ -1,9 +1,4 @@
-import {
-  InfoBox,
-  DeliveryPrice,
-  Total,
-  PolicyLink,
-} from './InvoiceInfo.styled';
+import { InfoBox, Total, PolicyLink } from './InvoiceInfo.styled';
 import { Good } from '../../../@types/custom';
 // import { getTotalPrice } from '../../utils';
 
@@ -35,14 +30,9 @@ export const InvoiceInfo = ({ inCart, total }: InvoiceInfoProps) => {
         ))}
       </ul>
 
-      <DeliveryPrice>
-        <p>Вартість доставки</p>
-        <p>₴ 95</p>
-      </DeliveryPrice>
-
       <Total>
         <p>Загальна сума:</p>
-        <p>₴ {(total + 95).toFixed(2)}</p>
+        <p>₴ {total.toFixed(2)}</p>
       </Total>
 
       <h3>Метод оплати</h3>
