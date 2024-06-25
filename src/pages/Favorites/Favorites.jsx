@@ -1,6 +1,5 @@
 import { useState, useContext } from 'react';
 import { FavoritesContext } from '../../components/Layout';
-import { PageTitle } from 'src/components/pageTitle/PageTitle';
 import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter.tsx';
 import {
   ListHeaderWrapper,
@@ -37,7 +36,6 @@ const Favorites = () => {
 
   return (
     <>
-      <PageTitle page={'favorites'}></PageTitle>
       <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'56px'}>
         <ListHeaderWrapper>
           <Name>Товар</Name>

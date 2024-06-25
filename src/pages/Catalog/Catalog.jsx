@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Loader } from '../../components/Loader/Loader';
-import { PageTitle } from '../../components/pageTitle/PageTitle.tsx';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter.tsx';
 import { Paginator } from '../../components/Paginator/Paginator.tsx';
 import { CatalogCard } from '../../components/CatalogCard/CatalogCard.tsx';
@@ -358,7 +357,6 @@ const Catalog = () => {
   return (
     <>
       {isLoading && <Loader />}
-      <PageTitle page={'catalog'}></PageTitle>
       <ContainerLimiter paddingTopMob={'16px'} paddingTopDesc={'56px'}>
         <FlexContainer>
           <ShowFiltersBtn
@@ -414,36 +412,6 @@ const Catalog = () => {
 
               <Price>
                 <legend>Ціна</legend>
-                <div>
-                  <span>0</span>
-                  <span>{maxValue}</span>
-                  <span>10000</span>
-                </div>
-
-                <MultiRangeSlider
-                  id="price-range"
-                  min={0}
-                  max={10000}
-                  minValue={minValue}
-                  maxValue={maxValue}
-                  onInput={(e) => {
-                    setMinValue(e.minValue);
-                    setMaxValue(e.maxValue);
-                  }}
-                  canMinMaxValueSame={true}
-                  ruler={false}
-                  label={false}
-                  barLeftColor="#a7a5a3"
-                  barInnerColor="#101010"
-                  barRightColor="#a7a5a3"
-                  thumbLeftColor="#101010"
-                  thumbRightColor="#101010"
-                  style={{
-                    border: 'none',
-                    boxShadow: 'none',
-                    width: '100%',
-                  }}
-                />
 
                 <div>
                   <label>
@@ -477,6 +445,31 @@ const Catalog = () => {
                     />
                   </label>
                 </div>
+
+                <MultiRangeSlider
+                  id="price-range"
+                  min={0}
+                  max={10000}
+                  minValue={minValue}
+                  maxValue={maxValue}
+                  onInput={(e) => {
+                    setMinValue(e.minValue);
+                    setMaxValue(e.maxValue);
+                  }}
+                  canMinMaxValueSame={true}
+                  ruler={false}
+                  label={false}
+                  barLeftColor="#a7a5a3"
+                  barInnerColor="#101010"
+                  barRightColor="#a7a5a3"
+                  thumbLeftColor="#101010"
+                  thumbRightColor="#101010"
+                  style={{
+                    border: 'none',
+                    boxShadow: 'none',
+                    width: '100%',
+                  }}
+                />
               </Price>
               <button
                 type="submit"

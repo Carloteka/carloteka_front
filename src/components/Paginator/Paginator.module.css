@@ -46,6 +46,7 @@
   font-size: 17px;
   line-height: 1;
   background-color: inherit;
+  border-radius: 6px;
   transition: background-color 0.25s;
 }
 @media screen and (min-width: 834px) {

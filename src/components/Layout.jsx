@@ -2,6 +2,7 @@ import { Suspense, createContext, useState, useMemo } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Loader } from './Loader/Loader';
 import { Header } from './header/Header';
+import { PageTitle } from './pageTitle/PageTitle';
 import { Footer } from './footer/Footer';
 import { MenuCart } from './MenuCart/MenuCart';
 import { Menu } from './Menu/Menu';
@@ -52,6 +53,7 @@ const Layout = () => {
       <CartContext.Provider value={valueCart}>
         <>
           <Header setShowCartMenu={setShowCartMenu} setShowMenu={setShowMenu} />
+          <PageTitle />
           <main>
             <Menu
               onClickHandle={onClose}

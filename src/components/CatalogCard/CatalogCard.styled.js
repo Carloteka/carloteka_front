@@ -12,7 +12,9 @@ export const ThumbPhoto = styled.div`
   img {
     object-fit: cover;
     background-color: #dad4c8;
-    height: 304px;
+    width: 100%;
+    // height: 304px;
+    border-radius: 6px;
 
     @media screen and (min-width: 834px) {
       width: 240px;
@@ -95,7 +97,7 @@ export const Div = styled.div`
 export const FlexContainer = styled.div`
   margin-bottom: 8px;
   display: flex;
-  align-items: stretch;
+  align-items: baseline;
   gap: 16px;
   justify-content: center;
 

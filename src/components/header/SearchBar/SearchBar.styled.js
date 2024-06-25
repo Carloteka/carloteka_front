@@ -33,6 +33,7 @@ export const Form = styled.form`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 8px;
 
   @media screen and (min-width: 834px) {
     padding: 0 16px;
