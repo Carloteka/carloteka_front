@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext } from 'react';
-import { CartContext } from '../../components/Layout';
+import { useState, useEffect } from 'react';
+// import { CartContext } from '../../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import { Loader } from '../../components/Loader/Loader';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
@@ -30,17 +30,17 @@ import { Good } from '../../../@types/custom';
 import { checkLocalStorage, getTotalPrice } from '../../utils';
 import {
   getLiqpayBtn,
-  getLiqpayStatus,
-  createLiqpayCallback,
+  // getLiqpayStatus,
+  // createLiqpayCallback,
 } from '../../api/api';
 
 const Payment = () => {
-  const { setAmountInCart } = useContext(CartContext);
+  // const { setAmountInCart } = useContext(CartContext);
   const navigate = useNavigate();
 
   const [value, setValue] = useState<string | undefined>('');
 
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<undefined | string>();
   const [card] = useState<string>('visa');
 
@@ -55,7 +55,7 @@ const Payment = () => {
 
   const goodsInCart: Good[] = checkLocalStorage('cart', []);
 
-  const [inCart, setInCart] = useState<Good[]>(goodsInCart);
+  const [inCart] = useState<Good[]>(goodsInCart);
   if (goodsInCart.length === 0) {
     navigate('/cart');
   }
@@ -81,36 +81,36 @@ const Payment = () => {
       }
     }
 
-    async function fetchLiqpayStatus() {
-      try {
-        setIsLoading(true);
-        const data = await getLiqpayStatus(order_id);
-        setIsSuccess(data === 404 ? false : true);
-        console.log(data === 404 ? undefined : data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    // async function fetchLiqpayStatus() {
+    //   try {
+    //     setIsLoading(true);
+    //     const data = await getLiqpayStatus(order_id);
+    //     setIsSuccess(data === 404 ? false : true);
+    //     console.log(data === 404 ? undefined : data);
+    //     setIsLoading(false);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
 
-    async function createCallback() {
-      try {
-        setIsLoading(true);
-        const data = await createLiqpayCallback();
-        //  setIsSuccess(data === 404 ? false : true);
-        console.log(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    // async function createCallback() {
+    //   try {
+    //     setIsLoading(true);
+    //     const data = await createLiqpayCallback();
+    //     //  setIsSuccess(data === 404 ? false : true);
+    //     console.log(data);
+    //     setIsLoading(false);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
   }, [goodsInCart.length, isSuccess, navigate]);
 
-  function clearCart() {
-    localStorage.cart = [];
-    setInCart([]);
-    setAmountInCart(0);
-  }
+  // function clearCart() {
+  //   localStorage.cart = [];
+  //   setInCart([]);
+  //   setAmountInCart(0);
+  // }
 
   function submitHandle(e: React.FormEvent) {
     e.preventDefault();
