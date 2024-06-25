@@ -304,7 +304,7 @@ export const GoodsList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
+  gap: 32px;
   order: 3;
 
   @media screen and (min-width: 834px) {
@@ -320,7 +320,7 @@ export const GoodsList = styled.ul`
     flex-direction: column;
     justify-content: space-between;
     gap: 16px;
-    width: 288px;
+    width: 100%;
     // min-height: 440px;
     @media screen and (min-width: 834px) {
       width: 240px;

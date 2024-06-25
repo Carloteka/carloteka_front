@@ -175,8 +175,9 @@ h2 {
 }
 
 h3 {
+  font-weight: 600;
   font-size: 23px;
-  line-height: calc(31 / 23);
+  line-height: calc(29 / 23);
 }
 legend {
   font-weight: 700;

@@ -143,8 +143,8 @@ const Payment = () => {
     }
 
     console.log('here in submit');
-    setIsSuccess(true);
-    clearCart();
+    // setIsSuccess(true);
+    // clearCart();
     // e.form.reset();
   }
 
@@ -195,7 +195,7 @@ const Payment = () => {
                             {!el?.quantity ? 1 : ` (${el.quantity} шт.)`}
                           </p>
                           <p>
-                            ₴ {el.price * (!el?.quantity ? 1 : el.quantity)}
+                            ₴ {el.price * (!el?.quantity ? 1 : +el.quantity)}
                           </p>
                         </div>
                       </li>
