@@ -226,3 +226,9 @@ fieldset {
   background: rgba(18 20 23 / 15%);
   border-radius: 6px;
 }
+
+.error {
+  padding-top: 1rem;
+  text-align: center;
+  color: red;
+}

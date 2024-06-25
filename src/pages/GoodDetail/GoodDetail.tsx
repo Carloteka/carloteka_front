@@ -6,6 +6,7 @@ import {
   Link,
   NavLink,
   useOutletContext,
+  useNavigate,
 } from 'react-router-dom';
 import { Loader } from '../../components/Loader/Loader';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
@@ -35,6 +36,7 @@ type Image = { image: string };
 
 const GoodDetail = () => {
   const { goodId } = useParams();
+  const navigate = useNavigate();
 
   const { setAmountInCart } = useContext(CartContext);
   const { setAmountInFavorites } = useContext(FavoritesContext);
@@ -48,6 +50,11 @@ const GoodDetail = () => {
       try {
         setIsLoading(true);
         const data = await fetchItemDetails(goodId);
+
+        if (!data) {
+          navigate('/');
+          return;
+        }
         setArray(data.image_set);
         setGood(data);
         setIsFavorite(favoriteArray.some((el) => el.id === data.id));
