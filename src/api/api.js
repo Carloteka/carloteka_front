@@ -225,9 +225,8 @@ export const getLiqpayStatus = async (id) => {
     const response = await axios.get('/liqpay/get-status/', {
       params,
     });
-    const arrayData = response.data;
-    // console.log(response);
-    return arrayData;
+    console.log(response);
+    return response;
   } catch (error) {
     console.log(error.response);
     return error.response.status;

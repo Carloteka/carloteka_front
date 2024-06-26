@@ -11,6 +11,7 @@ export const HeaderContainer = styled.header`
   height: 73px;
   background-color: #dad4c8;
   z-index: 20;
+  box-shadow: 1px 1px 1px 1px #ffffff50;
 
   @media screen and (min-width: 834px) {
     padding: 0 32px;

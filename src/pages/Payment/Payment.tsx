@@ -30,9 +30,11 @@ import { Good } from '../../../@types/custom';
 import { checkLocalStorage, getTotalPrice } from '../../utils';
 import {
   getLiqpayBtn,
-  // getLiqpayStatus,
+  getLiqpayStatus,
   // createLiqpayCallback,
 } from '../../api/api';
+
+type LiqPayStatus = 'failure' | 'success' | '';
 
 const Payment = () => {
   // const { setAmountInCart } = useContext(CartContext);
@@ -40,7 +42,7 @@ const Payment = () => {
 
   const [value, setValue] = useState<string | undefined>('');
 
-  const [isSuccess] = useState(false);
+  const [liqPayStatus, setLiqPayStatus] = useState<LiqPayStatus>('');
   const [paymentMethod, setPaymentMethod] = useState<undefined | string>();
   const [card] = useState<string>('visa');
 
@@ -53,6 +55,8 @@ const Payment = () => {
     | undefined
   >();
 
+  const isSuccess = liqPayStatus === 'success';
+
   const goodsInCart: Good[] = checkLocalStorage('cart', []);
 
   const [inCart] = useState<Good[]>(goodsInCart);
@@ -60,14 +64,25 @@ const Payment = () => {
     navigate('/cart');
   }
 
+  function detectLiqPayStatus(code: number): LiqPayStatus {
+    let payload: LiqPayStatus = '';
+    if (code === 402) {
+      payload = 'failure';
+    }
+    if (code === 200) {
+      payload = 'success';
+    }
+    return payload;
+  }
+
   useEffect(() => {
-    if (goodsInCart.length === 0 && isSuccess === false) {
+    if (goodsInCart.length === 0 && isSuccess) {
       navigate('/cart');
     }
     const order_id = localStorage.getItem('order_id');
     if (order_id) {
       createLiqpayBtn();
-      // fetchLiqpayStatus();
+      fetchLiqpayStatus();
       // createCallback();
     }
     async function createLiqpayBtn() {
@@ -81,17 +96,16 @@ const Payment = () => {
       }
     }
 
-    // async function fetchLiqpayStatus() {
-    //   try {
-    //     setIsLoading(true);
-    //     const data = await getLiqpayStatus(order_id);
-    //     setIsSuccess(data === 404 ? false : true);
-    //     console.log(data === 404 ? undefined : data);
-    //     setIsLoading(false);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
+    async function fetchLiqpayStatus() {
+      try {
+        setIsLoading(true);
+        const data = await getLiqpayStatus(order_id);
+        setLiqPayStatus(detectLiqPayStatus(data));
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
     // async function createCallback() {
     //   try {
@@ -104,7 +118,7 @@ const Payment = () => {
     //     console.log(error);
     //   }
     // }
-  }, [goodsInCart.length, isSuccess, navigate]);
+  }, [goodsInCart.length, liqPayStatus, navigate]);
 
   // function clearCart() {
   //   localStorage.cart = [];
@@ -148,7 +162,7 @@ const Payment = () => {
     // e.form.reset();
   }
 
-  function getDeliveryInfo(term: string) {
+  function getDeliveryInfo(term: string): string {
     const deliveryData = checkLocalStorage('delivery', {});
     const { post, office, city, country } = deliveryData;
     return term
@@ -158,6 +172,7 @@ const Payment = () => {
         } ${office.value}, ${city.label}, ${country.label}.`;
   }
 
+  console.log(liqPayStatus);
   return (
     (inCart.length > 0 || isSuccess) && (
       <>
@@ -175,7 +190,7 @@ const Payment = () => {
                 : 'Повернутись до розділу про доставку'}
             </p>
           </GoToDelivery>
-          {isSuccess ? (
+          {isSuccess && (
             <SuccessBox>
               <h2>Вітаємо! Ваша оплата успішна!</h2>
               <div>
@@ -219,120 +234,126 @@ const Payment = () => {
                 </DeliveryInfoDiv>
               </div>
             </SuccessBox>
-          ) : (
-            <DeliveryBox style={{ paddingBottom: '88px' }}>
-              <div>
-                <Form onSubmit={submitHandle} id="payment">
-                  <h2>Оплата онлайн</h2>
-                  <FlexContainer>
-                    <label>
-                      Ім’я та прізвище
-                      <input
-                        placeholder="Taras Shevchenko"
-                        name="name"
-                        type="text"
-                        required
-                      />
-                    </label>
-                    <RelativeDiv>
+          )}
+
+          {!liqPayStatus ||
+            (liqPayStatus === 'failure' && (
+              <DeliveryBox style={{ paddingBottom: '88px' }}>
+                <div>
+                  <Form onSubmit={submitHandle} id="payment">
+                    <h2>Оплата онлайн</h2>
+                    <FlexContainer>
                       <label>
-                        Номер картки
-                        <InputMask
-                          value={value || ''}
-                          onChange={(e) => setValue(e.value || undefined)}
-                          placeholder="1111 2222 3333 4444"
-                          mask="9999 9999 9999 9999"
-                          name="cardNo"
-                          slotChar="-"
+                        Ім’я та прізвище
+                        <input
+                          placeholder="Taras Shevchenko"
+                          name="name"
+                          type="text"
                           required
                         />
                       </label>
-                      <img
-                        src={visaImg}
-                        alt="visa and mastercard label"
-                        width={79}
-                        height={16}
-                      />
-                    </RelativeDiv>
+                      <RelativeDiv>
+                        <label>
+                          Номер картки
+                          <InputMask
+                            value={value || ''}
+                            onChange={(e) => setValue(e.value || undefined)}
+                            placeholder="1111 2222 3333 4444"
+                            mask="9999 9999 9999 9999"
+                            name="cardNo"
+                            slotChar="-"
+                            required
+                          />
+                        </label>
+                        <img
+                          src={visaImg}
+                          alt="visa and mastercard label"
+                          width={79}
+                          height={16}
+                        />
+                      </RelativeDiv>
 
-                    <label className="short">
-                      Місяць / Рік
-                      <InputMask
-                        value={value || ''}
-                        onChange={(e) => setValue(e.value || undefined)}
-                        placeholder="01 / 2024"
-                        mask="99/9999"
-                        name="cardExpire"
-                        className="short"
-                        required
-                      />
-                    </label>
-                    <label className="short">
-                      CVC
-                      <input
-                        placeholder="123"
-                        name="cvc"
-                        type="password"
-                        minLength={3}
-                        maxLength={3}
-                        className="short"
-                        required
-                      />
-                    </label>
-                    <button type="submit" className="primaryBtn">
-                      підтвердити
+                      <label className="short">
+                        Місяць / Рік
+                        <InputMask
+                          value={value || ''}
+                          onChange={(e) => setValue(e.value || undefined)}
+                          placeholder="01 / 2024"
+                          mask="99/9999"
+                          name="cardExpire"
+                          className="short"
+                          required
+                        />
+                      </label>
+                      <label className="short">
+                        CVC
+                        <input
+                          placeholder="123"
+                          name="cvc"
+                          type="password"
+                          minLength={3}
+                          maxLength={3}
+                          className="short"
+                          required
+                        />
+                      </label>
+                      <button type="submit" className="primaryBtn">
+                        підтвердити
+                      </button>
+                    </FlexContainer>
+                  </Form>
+                  <span>OR</span>
+                  <PaymentMethodDiv>
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod('applePay')}
+                    >
+                      <svg width={58} height={24}>
+                        <use href={`${sprite}#applePay`} />
+                      </svg>
                     </button>
-                  </FlexContainer>
-                </Form>
-                <span>OR</span>
-                <PaymentMethodDiv>
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('applePay')}
-                  >
-                    <svg width={58} height={24}>
-                      <use href={`${sprite}#applePay`} />
-                    </svg>
-                  </button>
-                  <GooglePayButton
-                    environment="TEST"
-                    paymentRequest={{
-                      apiVersion: 2,
-                      apiVersionMinor: 0,
-                      allowedPaymentMethods: [
-                        {
-                          type: 'CARD',
-                          parameters: {
-                            allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-                            allowedCardNetworks: ['MASTERCARD', 'VISA'],
-                          },
-                          tokenizationSpecification: {
-                            type: 'PAYMENT_GATEWAY',
+                    <GooglePayButton
+                      environment="TEST"
+                      paymentRequest={{
+                        apiVersion: 2,
+                        apiVersionMinor: 0,
+                        allowedPaymentMethods: [
+                          {
+                            type: 'CARD',
                             parameters: {
-                              gateway: 'example',
-                              gatewayMerchantId: 'exampleGatewayMerchantId',
+                              allowedAuthMethods: [
+                                'PAN_ONLY',
+                                'CRYPTOGRAM_3DS',
+                              ],
+                              allowedCardNetworks: ['MASTERCARD', 'VISA'],
+                            },
+                            tokenizationSpecification: {
+                              type: 'PAYMENT_GATEWAY',
+                              parameters: {
+                                gateway: 'example',
+                                gatewayMerchantId: 'exampleGatewayMerchantId',
+                              },
                             },
                           },
+                        ],
+                        merchantInfo: {
+                          merchantId: '12345678901234567890',
+                          merchantName: 'Demo Merchant',
                         },
-                      ],
-                      merchantInfo: {
-                        merchantId: '12345678901234567890',
-                        merchantName: 'Demo Merchant',
-                      },
-                      transactionInfo: {
-                        totalPriceStatus: 'FINAL',
-                        totalPriceLabel: 'Total',
-                        totalPrice: '100.00',
-                        currencyCode: 'USD',
-                        countryCode: 'US',
-                      },
-                    }}
-                    onLoadPaymentData={(paymentRequest) => {
-                      console.log('load payment data', paymentRequest);
-                    }}
-                  />
+                        transactionInfo: {
+                          totalPriceStatus: 'FINAL',
+                          totalPriceLabel: 'Total',
+                          totalPrice: '100.00',
+                          currencyCode: 'USD',
+                          countryCode: 'US',
+                        },
+                      }}
+                      onLoadPaymentData={(paymentRequest) => {
+                        console.log('load payment data', paymentRequest);
+                      }}
+                    />
 
-                  {/* <button
+                    {/* <button
                     type="button"
                     onClick={() => setPaymentMethod('googlePay')}
                   >
@@ -340,36 +361,43 @@ const Payment = () => {
                       <use href={`${sprite}#googlePay`} />
                     </svg>
                   </button> */}
-                  {liqpayBtn && (
-                    <form
-                      method="POST"
-                      action="https://www.liqpay.ua/api/3/checkout"
-                      acceptCharset="utf-8"
-                    >
-                      <input type="hidden" name="data" value={liqpayBtn.data} />
-                      <input
-                        type="hidden"
-                        name="signature"
-                        value={liqpayBtn.signature}
-                      />
-                      <button
-                        type="submit"
-                        style={{
-                          borderRadius: '14px',
-                          backgroundColor: 'rgb(95,180,40)',
-                          color: 'white',
-                        }}
-                      >{`>> LiqPay`}</button>
-                    </form>
+                    {liqpayBtn && (
+                      <form
+                        method="POST"
+                        action="https://www.liqpay.ua/api/3/checkout"
+                        acceptCharset="utf-8"
+                      >
+                        <input
+                          type="hidden"
+                          name="data"
+                          value={liqpayBtn.data}
+                        />
+                        <input
+                          type="hidden"
+                          name="signature"
+                          value={liqpayBtn.signature}
+                        />
+                        <button
+                          type="submit"
+                          style={{
+                            borderRadius: '14px',
+                            backgroundColor: 'rgb(95,180,40)',
+                            color: 'white',
+                          }}
+                        >{`>> LiqPay`}</button>
+                      </form>
+                    )}
+                  </PaymentMethodDiv>
+                  {liqPayStatus === 'failure' && (
+                    <p className="error">Оплата не пройшла. Спробуйте ще раз</p>
                   )}
-                </PaymentMethodDiv>
-              </div>
+                </div>
 
-              <aside style={{ paddingTop: '0' }}>
-                <InvoiceInfo inCart={inCart} total={+getTotalPrice(inCart)} />
-              </aside>
-            </DeliveryBox>
-          )}
+                <aside style={{ paddingTop: '0' }}>
+                  <InvoiceInfo inCart={inCart} total={+getTotalPrice(inCart)} />
+                </aside>
+              </DeliveryBox>
+            ))}
           {isLoading && <Loader></Loader>}
           {paymentMethod && (
             <Modal onClose={() => setPaymentMethod(undefined)}>
