@@ -103,18 +103,21 @@ export const postReview = async (id, body) => {
       `/shop/items/${id}/reviews/create/`,
       body,
     );
-    // console.log(response);
+    console.log(response);
     return response.status === 201 ? 201 : undefined;
   } catch (error) {
     console.log(error.response);
   }
 };
 
-export const fetchReview = async (id) => {
+export const fetchReview = async (id, offset) => {
+  const params = {
+    offset,
+  };
   try {
-    const response = await axios.get(`/shop/items/${id}/reviews/`);
-    // console.log(response);
-    const arrayData = response.data.results;
+    const response = await axios.get(`/shop/items/${id}/reviews/`, { params });
+    console.log(response.data);
+    const arrayData = response.data;
     return arrayData;
   } catch (error) {
     console.log(error.response);

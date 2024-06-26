@@ -7,8 +7,10 @@ import {
   ReviewList,
   Date,
 } from './Reviews.styled';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Loader } from '../Loader/Loader';
+import { Paginator } from '../Paginator/Paginator';
 import { postReview, fetchReview } from '../../api/api';
 import sprite from '../../images/sprite.svg';
 import { useGood } from '../../pages/GoodDetail/GoodDetail';
@@ -27,26 +29,41 @@ type Review = {
   item: number;
 };
 
+type Params = { [k: string]: string };
+
 const Reviews = () => {
   const { good } = useGood();
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const params = useMemo(
+    () => Object.fromEntries([...searchParams]),
+    [searchParams],
+  );
+
   const [rate, setRate] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [reviews, setReviews] = useState<Review[] | undefined>();
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [quantity, setQuantity] = useState(reviews?.length);
+
+  const limit = 10;
 
   async function getGoodDetail() {
     try {
       setIsLoading(true);
-      const data = await fetchReview(good?.id);
-      setReviews(data);
+      const data = await fetchReview(good?.id, params?.offset);
+      setReviews(data.results);
+      setQuantity(data.count);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
   }
   useEffect(() => {
-    getGoodDetail();
-  }, [good?.id]);
+    if (good?.id) {
+      getGoodDetail();
+    }
+  }, [good?.id, params]);
 
   function submitHandle(e: React.FormEvent) {
     e.preventDefault();
@@ -71,7 +88,7 @@ const Reviews = () => {
     elements.map((el) => (data[el.name] = el.value));
     data.stars = rate;
 
-    console.log('send to backend', data);
+    // console.log('send to backend', data);
 
     async function createReiew() {
       try {
@@ -87,6 +104,19 @@ const Reviews = () => {
     }
 
     createReiew();
+  }
+
+  function pageChanger(page: number) {
+    const offset = (page - 1) * limit;
+    let newparams: Params = {};
+    if (offset !== 0) {
+      newparams = { ...params, offset: offset.toString() };
+    } else {
+      newparams = { ...params };
+      delete newparams.offset;
+    }
+
+    setSearchParams(newparams);
   }
 
   return (
@@ -150,43 +180,52 @@ const Reviews = () => {
               надіслати
             </button>
           </Form>
-          {reviews && (
-            <ReviewList>
-              {reviews?.map((el) => (
-                <li key={el.id}>
-                  <article>
-                    <img
-                      src="../../src/images/photo.jpg"
-                      alt="user avatar"
-                      width={80}
-                      height={80}
-                    ></img>
-                    <h4>
-                      {el.first_name} {el.last_name}
-                    </h4>
-                    <ul>
-                      {[0, 1, 2, 3, 4].map((index) => (
-                        <li key={index}>
-                          <Star
-                            style={{
-                              fill:
-                                index < el.stars ? '#2d3f24' : 'transparent',
-                            }}
-                          >
-                            <use href={`${sprite}#star`} />
-                          </Star>
-                        </li>
-                      ))}
-                    </ul>
-                    <Date>{`${el.date.slice(8, 10)}.${el.date.slice(
-                      5,
-                      7,
-                    )}.${el.date.slice(0, 4)}`}</Date>
-                    <p>{el.text}</p>
-                  </article>
-                </li>
-              ))}
-            </ReviewList>
+          {reviews.length > 0 && (
+            <>
+              <ReviewList>
+                {reviews?.map((el) => (
+                  <li key={el.id}>
+                    <article>
+                      <img
+                        src="../../src/images/photo.jpg"
+                        alt="user avatar"
+                        width={80}
+                        height={80}
+                      ></img>
+                      <h4>
+                        {el.first_name} {el.last_name}
+                      </h4>
+                      <ul>
+                        {[0, 1, 2, 3, 4].map((index) => (
+                          <li key={index}>
+                            <Star
+                              style={{
+                                fill:
+                                  index < el.stars ? '#2d3f24' : 'transparent',
+                              }}
+                            >
+                              <use href={`${sprite}#star`} />
+                            </Star>
+                          </li>
+                        ))}
+                      </ul>
+                      <Date>{`${el.date.slice(8, 10)}.${el.date.slice(
+                        5,
+                        7,
+                      )}.${el.date.slice(0, 4)}`}</Date>
+                      <p>{el.text}</p>
+                    </article>
+                  </li>
+                ))}
+              </ReviewList>
+              <Paginator
+                setCurrentPage={pageChanger}
+                currentPage={
+                  params.offset ? Math.ceil(+params.offset / limit + 1) : 1
+                }
+                pageCount={Math.ceil(quantity / limit)}
+              />
+            </>
           )}
         </SectionReviews>
       )}
