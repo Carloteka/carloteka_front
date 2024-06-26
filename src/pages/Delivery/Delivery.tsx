@@ -293,6 +293,9 @@ const Delivery = () => {
         console.log(order, 'order');
         if (order?.order_id) {
           localStorage.setItem('order_id', JSON.stringify(order.order_id));
+          const temp = checkLocalStorage('delivery', {});
+          temp.cart = goodsInCart;
+          localStorage.setItem('delivery', JSON.stringify(temp));
           navigate('/payment');
           // e.form.reset();
         }
@@ -338,7 +341,6 @@ const Delivery = () => {
 
         const newArray = JSON.parse(localStorage.getItem('delivery') as string);
         delete newArray.office;
-        newArray.cart = goodsInCart;
         localStorage.setItem('delivery', JSON.stringify(newArray));
       }
     }
