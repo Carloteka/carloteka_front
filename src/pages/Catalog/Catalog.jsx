@@ -78,10 +78,11 @@ const Catalog = () => {
   const [quantity, setQuantity] = useState(catalog?.length);
   const [specOrderQuantity, setSpecOrderQuantity] = useState(0);
   const [instockQuantity, setInstockQuantity] = useState(0);
-  const [limit] = useState(12);
   const [tags, setTags] = useState([]);
 
   const [category] = useState(categories);
+
+  const limit = 12;
 
   useEffect(() => {
     if (query) {
@@ -610,7 +611,7 @@ const Catalog = () => {
                 currentPage={
                   params.offset ? Math.ceil(+params.offset / limit + 1) : 1
                 }
-                pageCount={limit !== 12 ? 0 : Math.ceil(quantity / limit)}
+                pageCount={Math.ceil(quantity / limit)}
               />
             </div>
           )}
