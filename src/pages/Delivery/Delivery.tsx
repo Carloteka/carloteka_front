@@ -338,6 +338,7 @@ const Delivery = () => {
 
         const newArray = JSON.parse(localStorage.getItem('delivery') as string);
         delete newArray.office;
+        newArray.cart = goodsInCart;
         localStorage.setItem('delivery', JSON.stringify(newArray));
       }
     }
