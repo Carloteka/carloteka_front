@@ -59,7 +59,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
             onClick={() => toggleCart()}
             disabled={stock === 'OUT_OF_STOCK'}
           >
-            <svg>
+            <svg style={{ fill: isFavorite ? 'white' : '#101010' }}>
               <use href={`${sprite}#cart`} />
             </svg>
           </Button>
