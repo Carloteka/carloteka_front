@@ -20,13 +20,20 @@ export const Wrapper = styled.div`
   & > h1 {
     padding: 16px 0;
     text-align: center;
+    font-weight: 600;
+    font-size: 35px;
+    line-height: calc(46 / 35);
 
     @media screen and (min-width: 834px) {
       padding: 32px 88px;
       text-align: left;
+      font-size: 50px;
+      line-height: calc(59 / 50);
     }
     @media screen and (min-width: 1440px) {
       padding: 4px 112px 16px;
+      font-size: 36px;
+      line-height: calc(43 / 36);
     }
   }
 `;

@@ -57,6 +57,8 @@ export const Input = styled.input`
   background-color: inherit;
   color: #101010;
   text-indent: 0px;
+  -webkit-appearance: none;
+  appearance: none;
 
   @media screen and (min-width: 1440px) {
     padding-right: 16px;

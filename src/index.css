@@ -190,7 +190,7 @@ legend {
   }
   @media screen and (min-width: 1440px) {
     font-size: 23px;
-    line-height: calc(31 / 23);
+    line-height: calc(29 / 23);
   }
 }
 
