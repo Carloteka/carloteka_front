@@ -10,7 +10,6 @@ export const ThumbPhoto = styled.div`
   }
 
   img {
-    object-fit: cover;
     background-color: #dad4c8;
     width: 100%;
     // height: 304px;

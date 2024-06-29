@@ -135,7 +135,6 @@ export const SearchResultDiv = styled.div`
 
   img {
     height: 56px;
-    object-fit: cover;
   }
 
   h4 {
