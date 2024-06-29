@@ -11,6 +11,7 @@ export const HeaderContainer = styled.header`
   height: 73px;
   background-color: #dad4c8;
   z-index: 20;
+  box-shadow: 1px 1px 1px 1px #ffffff50;
 
   @media screen and (min-width: 834px) {
     padding: 0 32px;
@@ -34,11 +35,14 @@ export const LimiterConatiner = styled.div`
   gap: 5px;
 
   @media screen and (min-width: 834px) {
+    justify-content: flex-start;
     width: 768px;
+    gap: 26px;
   }
 
   @media screen and (min-width: 1440px) {
     width: 1312px;
+    gap: 0;
   }
 `;
 
@@ -68,7 +72,7 @@ export const Logo = styled(Link)`
   }
 
   @media screen and (min-width: 1440px) {
-    margin-right: 182px;
+    margin-right: 144px;
     min-width: 80px;
     height: 80px;
     word-spacing: -4px;
@@ -89,7 +93,7 @@ export const Catalog = styled(NavLink)`
     margin-right: 0;
   }
   @media screen and (min-width: 1440px) {
-    margin-right: 80px;
+    margin-right: 147px;
   }
 `;
 
@@ -102,6 +106,10 @@ export const Actions = styled.div`
     @media screen and (max-width: 833px) {
       width: 16px;
       height: 16px;
+    }
+    @media screen and (min-width: 834px) {
+      width: 24px;
+      height: 24px;
     }
     @media screen and (min-width: 1440px) {
       width: 40px;
@@ -119,8 +127,8 @@ export const Actions = styled.div`
 
   @media screen and (min-width: 1440px) {
     justify-content: flex-end;
-    gap: 116px;
-    width: 368px;
+    gap: 80px;
+    width: 232px;
   }
 `;
 
@@ -138,9 +146,9 @@ export const NavigationLink = styled(NavLink)`
 `;
 
 export const BurgerMenuBtn = styled.button`
-  @media screen and (max-width: 833px) {
-    justify-content: flex-end;
+  justify-content: flex-end;
 
+  @media screen and (max-width: 833px) {
     svg {
       width: 12px;
       height: 8px;

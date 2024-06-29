@@ -1,87 +1,77 @@
 import styled from 'styled-components';
 
 export const Img = styled.img`
-  width: 100%;
+  min-width: 100%;
   height: 304px;
   background-color: #dad4c8;
-  order: 2;
+  grid-column: 1 / span 4;
+  grid-row: 2;
 
+  @media screen and (min-width: 834px) {
+    grid-column: 1 / span 3;
+    grid-row: 1;
+    height: 280px;
+  }
   @media screen and (min-width: 1440px) {
-    margin-right: 32px;
-    width: 304px;
     height: 336px;
   }
 `;
 
 export const Name = styled.h4`
-  margin-right: 0;
-  width: 100%;
   text-align: start;
-  order: 2;
+  grid-column: 1 / span 4;
+  grid-row: 3;
 
+  @media screen and (min-width: 834px) {
+    grid-column: 1 / span 3;
+    grid-row: 2;
+  }
   @media screen and (min-width: 1440px) {
-    margin-right: 32px;
-    width: 304px;
+    grid-column: 4 / span 3;
+    grid-row: 1;
   }
 `;
 
-export const Div = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  width: 100%;
-  color: #000;
-  order: 2;
-
-  @media screen and (min-width: 1440px) {
-    flex-direction: row;
-    align-items: center;
-    width: auto;
-  }
-
-  & > p:first-child {
-    font-size: 16px;
-    line-height: calc(23 / 16);
-
-    @media screen and (min-width: 1440px) {
-      display: none;
-    }
-  }
-
-  @media screen and (max-width: 1439px) {
-    & > div {
-      margin: 0;
-      width: 103px;
-    }
-  }
+export const PriceTitle = styled.span`
+  grid-row: 4;
 `;
-
 export const Price = styled.p`
-  width: 80px;
-  text-align: start;
+  grid-column: 3 / span 2;
+  grid-row: 4;
   color: #000;
 
-  @media screen and (max-width: 1439px) {
-    margin: 22px 0 2px;
-    text-align: end;
-  }
-
-  @media screen and (min-width: 1440px) {
-    margin-right: 32px;
+  @media screen and (min-width: 834px) {
+    grid-column: 4 / span 2;
+    grid-row: 1;
+    text-align: start;
     color: #101010;
   }
+  @media screen and (min-width: 1440px) {
+    grid-column: 7 / span 2;
+  }
+
   &::first-letter {
     color: #5b5b59;
   }
 `;
-
+export const AmountTitle = styled.span`
+  grid-row: 5;
+`;
+export const TotalTitle = styled.span`
+  grid-row: 6;
+`;
 export const TotalPrice = styled.p`
+  grid-row: 6;
   color: #000;
 
-  @media screen and (min-width: 1440px) {
-    margin-right: 32px;
-    width: 120px;
+  @media screen and (min-width: 834px) {
+    width: 80px;
+    grid-column: 8 / span 2;
+    grid-row: 1;
     color: #101010;
+  }
+  @media screen and (min-width: 1440px) {
+    grid-column: 11 / span 2;
   }
   &::first-letter {
     color: #5b5b59;
@@ -89,14 +79,18 @@ export const TotalPrice = styled.p`
 `;
 
 export const DelBtn = styled.button`
-  width: 16px;
-  height: 16px;
-  order: 1;
-  align-self: end;
+  margin-left: auto;
+  width: 24px;
+  height: 24px;
+  grid-column: 4;
+  justify-content: flex-end;
 
+  @media screen and (min-width: 834px) {
+    grid-column: 9;
+    grid-row: 1;
+  }
   @media screen and (min-width: 1440px) {
-    align-self: center;
-    order: 4;
+    grid-column: 12;
   }
 
   svg {

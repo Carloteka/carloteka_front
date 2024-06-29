@@ -1,14 +1,43 @@
-import { Wrapper, List, Socials } from './footer.styled';
+import { Wrapper, List, WorkTime, Socials } from './footer.styled';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sprite from '../../images/sprite.svg';
 import { socialLinks } from '../../socialLinks';
+import { fetchContacts } from '../../api/api';
+
+type Contacts = {
+  admin_phone: string;
+  telegram_link: string;
+  viber_link: string;
+  work_time_mo_fr: string;
+  work_time_sa: string;
+  work_time_su: string;
+};
 
 export const Footer = () => {
+  const [contacts, setContacts] = useState<Contacts>();
+
+  useEffect(() => {
+    if (contacts?.admin_phone) {
+      return;
+    }
+    getContacts();
+
+    async function getContacts() {
+      try {
+        const data = await fetchContacts();
+        setContacts(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [contacts]);
+
   function scrollToTop() {
     window.scrollTo(0, 0);
   }
 
-  return (
+  return contacts?.admin_phone ? (
     <Wrapper>
       <div>
         <h3>Адреса</h3>
@@ -16,16 +45,25 @@ export const Footer = () => {
           <List>
             <li>
               <svg>
+                <use href={`${sprite}#geo`} />
+              </svg>
+              <p>м. Дніпро</p>
+            </li>
+            <li>
+              <svg>
                 <use href={`${sprite}#clock`} />
               </svg>
-              <p>Пн - Пт 9.00 - 19.00, Сб 09.0 - 17.00, Нд - вихідний</p>
+              <WorkTime>
+                Пн - Пт - {contacts.work_time_mo_fr}, <br></br>Сб -
+                {contacts.work_time_sa}, <br></br>Нд - {contacts.work_time_su}
+              </WorkTime>
             </li>
             <li>
               <svg>
                 <use href={`${sprite}#phone`} />
               </svg>
               <a href="tel:+380671111111" title="Call +380671111111">
-                +380671111111
+                {contacts.admin_phone}
               </a>
             </li>
             <li>
@@ -53,11 +91,7 @@ export const Footer = () => {
         <h3>Про нас</h3>
         <List>
           <li>
-            <Link
-              to={'/about'}
-              onClick={() => scrollToTop()}
-              className="littleText"
-            >
+            <Link to={'/about'} onClick={() => scrollToTop()}>
               Наша історія
             </Link>
           </li>
@@ -94,5 +128,5 @@ export const Footer = () => {
         </List>
       </div>
     </Wrapper>
-  );
+  ) : null;
 };

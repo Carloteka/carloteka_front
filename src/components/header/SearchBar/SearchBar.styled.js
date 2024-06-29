@@ -11,14 +11,18 @@ export const SearchBox = styled.div`
     width: auto;
   }
   @media screen and (min-width: 1440px) {
-    margin-right: 142px;
+    margin-right: 134px;
   }
 
   search {
+    z-index: 10;
     min-width: 208px;
     width: 100%;
     @media screen and (min-width: 834px) {
-      width: 398px;
+      width: 370px;
+    }
+    @media screen and (min-width: 1440px) {
+      width: 500px;
     }
   }
 `;
@@ -29,6 +33,7 @@ export const Form = styled.form`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 8px;
 
   @media screen and (min-width: 834px) {
     padding: 0 16px;
@@ -52,14 +57,12 @@ export const Input = styled.input`
   background-color: inherit;
   color: #101010;
   text-indent: 0px;
-
-  @media screen and (min-width: 834px) {
-    width: 342px;
-  }
+  -webkit-appearance: none;
+  appearance: none;
 
   @media screen and (min-width: 1440px) {
-    padding: 0 16px 0;
-    width: 366px;
+    padding-right: 16px;
+    width: 450px;
   }
 
   &::placeholder {
@@ -92,6 +95,8 @@ export const SearchResultDiv = styled.div`
   left: -33%;
   width: 170%;
   background-color: white;
+  z-index: 11;
+
   @media screen and (min-width: 1440px) {
     width: 100%;
     top: 38px;

@@ -1,12 +1,12 @@
 import { useState, useContext } from 'react';
 import { CartContext } from '../../components/Layout';
-import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import {
   ListHeaderWrapper,
   Name,
   Price,
   Quantity,
+  Total,
   FavoritesList,
   Card,
   Button,
@@ -19,39 +19,22 @@ import {
   GoToPayment,
 } from './Cart.styled';
 import { CartCard } from '../../components/CartCard/CartCard';
-import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
-import { addToCart } from '../../utils/addToCart';
+import {
+  addToCart,
+  toggleLocalStorage,
+  checkLocalStorage,
+  getTotalPrice,
+} from '../../utils';
 import sprite from '../../images/sprite.svg';
 import { Good } from '../../../@types/custom';
 
 const Cart = () => {
   const { setAmountInCart } = useContext(CartContext);
 
-  let goodsInCart: { id: number; amount: number }[] = [];
+  const goodsInCart: Good[] = checkLocalStorage('cart', []);
 
-  if (localStorage.getItem('cart')) {
-    goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
-  }
-
-  let goods: [] = [];
-
-  if (localStorage.getItem('goods')) {
-    goods = JSON.parse(localStorage.getItem('goods') as string);
-  }
-
-  const goodsInCartArray = goods.filter(
-    (el: { id: number; quantity: number }) =>
-      goodsInCart.some((item) => {
-        if (el.id === item.id) {
-          el.quantity = item.amount;
-          return true;
-        } else return false;
-      }),
-  );
-
-  const [inCart, setInCart] = useState<Good[]>(
-    goodsInCartArray.filter((el: { id: number }) => el.id !== 0),
-  );
+  const [inCart, setInCart] = useState<Good[]>(goodsInCart);
+  console.log(inCart);
 
   function clearCart() {
     localStorage.cart = [];
@@ -60,39 +43,29 @@ const Cart = () => {
   }
 
   function delFromCart(id: number) {
-    const newArray = goodsInCartArray.filter(
-      (el: { id: number }) => el.id !== id,
-    );
-    toggleCartInLocalStorage(true, id);
+    const newArray = goodsInCart.filter((el: { id: number }) => el.id !== id);
+    toggleLocalStorage(true, id);
     setInCart(newArray);
   }
 
-  function getTotalPrice() {
-    return inCart.reduce(
-      (total: number, el: { quantity: number; price: number }) =>
-        el.price * (el?.quantity ? el.quantity : 1) + total,
-      0,
-    );
-  }
-
-  function increment(amount: number, id: number) {
+  function increment(amount: number, good: Good) {
     const newArray: Good[] = [...inCart];
-    newArray[inCart.findIndex((el: { id: number }) => el.id === id)].quantity =
-      amount;
+    newArray[
+      inCart.findIndex((el: { id: number }) => el.id === good.id)
+    ].quantity = amount;
 
-    addToCart(amount, id, 'replace');
+    addToCart(amount, good, 'replace');
     setInCart(newArray);
   }
 
   return (
     <>
-      <PageTitle>Кошик</PageTitle>
       <ContainerLimiter paddingTopMob={'32px'} paddingTopDesc={'56px'}>
         <ListHeaderWrapper>
           <Name>Товар</Name>
           <Price>Ціна</Price>
           <Quantity>Кількість</Quantity>
-          <p>Загальна вартість</p>
+          <Total>Загальна вартість</Total>
         </ListHeaderWrapper>
         <FavoritesList>
           {inCart.map((el: Good) => (
@@ -126,8 +99,8 @@ const Cart = () => {
             <svg width={124} height={124}>
               <use href={`${sprite}#cart`} />
             </svg>
-            <h2>Ваш кошик пустий</h2>
-            <GoToCatalog to={'/catalog'} className="secondaryBtn">
+            <h2>Ваш кошик порожній</h2>
+            <GoToCatalog to={'/catalog'} className="primaryBtn">
               <svg width={14} height={9}>
                 <use href={`${sprite}#arrow-right`} />
               </svg>
@@ -155,11 +128,11 @@ const Cart = () => {
               <div>
                 <div>
                   <p>Ціна</p>
-                  <p>₴ {getTotalPrice()}</p>
+                  <p>₴ {getTotalPrice(inCart)}</p>
                 </div>
                 <div>
                   <p>Загальна вартість</p>
-                  <p>₴{getTotalPrice()}</p>
+                  <p>₴ {getTotalPrice(inCart)}</p>
                 </div>
               </div>
 

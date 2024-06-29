@@ -1,4 +1,4 @@
-import { TextContainer, Title, LinkBtn } from './CategoryCard.styled';
+import { Title, LinkBtn } from './CategoryCard.styled';
 import { Slider } from './slider/Slider';
 import { useState } from 'react';
 import { Categories } from '../../../@types/custom';
@@ -43,27 +43,19 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
   // }
   return (
     <>
+      <Title>{name}</Title>
       <Slider
         arrayToRender={arrayToRender}
         sliderHandler={sliderHandler}
         description={name}
       />
-
-      <TextContainer>
-        <Title>{name}</Title>
-        <Slider
-          arrayToRender={arrayToRender}
-          sliderHandler={sliderHandler}
-          description={name}
-        />
-        <p>{description}</p>
-        <LinkBtn
-          className="secondaryBtn"
-          to={`/catalog?category__id=${category.id}`}
-        >
-          Переглянути
-        </LinkBtn>
-      </TextContainer>
+      <p>{description}</p>
+      <LinkBtn
+        className="secondaryBtn"
+        to={`/catalog?category__id=${category.id}`}
+      >
+        Переглянути
+      </LinkBtn>
     </>
   );
 };

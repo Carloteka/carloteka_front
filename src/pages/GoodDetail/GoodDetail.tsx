@@ -1,7 +1,13 @@
 import { Suspense, useState, useEffect, useContext } from 'react';
 import { CartContext, FavoritesContext } from '../../components/Layout';
-import { Outlet, useParams, Link, NavLink } from 'react-router-dom';
-import { PageTitle } from '../../components/pageTitle/PageTitle';
+import {
+  Outlet,
+  useParams,
+  Link,
+  NavLink,
+  useOutletContext,
+  useNavigate,
+} from 'react-router-dom';
 import { Loader } from '../../components/Loader/Loader';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import { Increment } from '../../components/Increment/Increment';
@@ -17,15 +23,20 @@ import {
 import { Slider } from '../../components/category-card/slider/Slider';
 import sprite from '../../images/sprite.svg';
 import { fetchItemDetails } from '../../api/api';
-import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
-import { addToCart } from '../../utils/addToCart';
-import { getBanner } from '../../utils/getBanner';
+import {
+  addToCart,
+  getBanner,
+  toggleLocalStorage,
+  checkLocalStorage,
+} from '../../utils';
 import { Good } from '../../../@types/custom';
 
+type ContextType = { good: Good | null };
 type Image = { image: string };
 
 const GoodDetail = () => {
   const { goodId } = useParams();
+  const navigate = useNavigate();
 
   const { setAmountInCart } = useContext(CartContext);
   const { setAmountInFavorites } = useContext(FavoritesContext);
@@ -39,9 +50,14 @@ const GoodDetail = () => {
       try {
         setIsLoading(true);
         const data = await fetchItemDetails(goodId);
+
+        if (!data) {
+          navigate('/');
+          return;
+        }
         setArray(data.image_set);
         setGood(data);
-        setIsFavorite(favoriteArray.includes(data.id));
+        setIsFavorite(favoriteArray.some((el) => el.id === data.id));
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -50,15 +66,9 @@ const GoodDetail = () => {
     getGoodDetail();
   }, [goodId]);
 
-  let favoriteArray: number[] = [];
+  const favoriteArray: { id: number }[] = checkLocalStorage('favorite', []);
 
-  if (localStorage.getItem('favorite')) {
-    favoriteArray = JSON.parse(localStorage.getItem('favorite') as string);
-  } else {
-    localStorage.setItem('favorite', JSON.stringify(favoriteArray));
-  }
-
-  const isInFavorite: boolean = favoriteArray.includes(good?.id);
+  const isInFavorite: boolean = favoriteArray.some((el) => el.id === good?.id);
   const [isFavorite, setIsFavorite] = useState(isInFavorite);
 
   const [amount, setAmount] = useState(1);
@@ -95,7 +105,7 @@ const GoodDetail = () => {
   }
 
   function toggleFavorite() {
-    toggleLocalStorage(isFavorite, 'favorite', good.id);
+    toggleLocalStorage(isFavorite, 'favorite', { id: good.id });
     setIsFavorite((prev) => !prev);
     setAmountInFavorites((amountInFavorites: number) =>
       isFavorite ? amountInFavorites - 1 : amountInFavorites + 1,
@@ -103,7 +113,7 @@ const GoodDetail = () => {
   }
 
   function toggleCart() {
-    const isNeedAddNewToCart = addToCart(amount, good.id, 'add');
+    const isNeedAddNewToCart = addToCart(amount, good, 'add');
 
     isNeedAddNewToCart &&
       setAmountInCart((amountInCart: number) => amountInCart + 1);
@@ -113,7 +123,6 @@ const GoodDetail = () => {
     good && (
       <>
         {isLoading && <Loader />}
-        <PageTitle>{good.name}</PageTitle>
         <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'56px'}>
           <SectionInfo>
             <Slider
@@ -132,7 +141,7 @@ const GoodDetail = () => {
               <div>
                 <Increment
                   increment={increment}
-                  id={good.id}
+                  good={good}
                   quantity={amount}
                   setQuantity={() => {
                     return;
@@ -192,7 +201,7 @@ const GoodDetail = () => {
           </AdditionalNavigation>
 
           <Suspense fallback={<Loader />}>
-            <Outlet />
+            <Outlet context={{ good }} />
           </Suspense>
         </ContainerLimiter>
       </>
@@ -200,4 +209,7 @@ const GoodDetail = () => {
   );
 };
 
+export function useGood() {
+  return useOutletContext<ContextType>();
+}
 export default GoodDetail;

@@ -14,7 +14,8 @@ import sprite from '../../images/sprite.svg';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { socialLinks } from '../../socialLinks';
-import { Categories } from '../../../@types/custom'; 
+import { Categories } from '../../../@types/custom';
+import { checkLocalStorage } from '../../utils';
 
 interface MenuProps {
   onClickHandle: () => void;
@@ -22,10 +23,11 @@ interface MenuProps {
 }
 
 export const Menu = ({ onClickHandle, showMenu }: MenuProps) => {
-  const tempString = localStorage.getItem('categories') as string;
-  const categories: Categories[] = tempString ? JSON.parse(tempString) : [];
+  const categories: Categories[] = checkLocalStorage('categories', []);
+  console.log(categories);
+  // const categories: Categories[] = tempString ? JSON.parse(tempString) : [];
 
-  const [showList, setShowList] = useState<boolean>();
+  const [showList, setShowList] = useState<boolean>(false);
 
   return (
     <>
@@ -58,7 +60,7 @@ export const Menu = ({ onClickHandle, showMenu }: MenuProps) => {
               </FlexCatalogContainer>
               {showList && (
                 <CategoriesList>
-                  {categories.map((el) => (
+                  {categories?.map((el) => (
                     <li key={el.id}>
                       <Link
                         to={`/catalog?category__id=${el.id}`}

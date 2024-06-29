@@ -16,9 +16,10 @@ export const MenuContainer = styled.div<{ $showCartMenu: boolean }>`
   padding: 130px 18px 180px;
   position: fixed;
   top: 0;
-  width: 288px;
-  height: 100dvh;
-  right: ${({ $showCartMenu }) => ($showCartMenu ? '0' : '-288px')};
+  width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
+  right: ${({ $showCartMenu }) => ($showCartMenu ? '0' : '-100%')};
 
   display: flex;
   flex-direction: column;
@@ -26,16 +27,13 @@ export const MenuContainer = styled.div<{ $showCartMenu: boolean }>`
   background-color: white;
   z-index: 32;
   transition: right 0.5s ease-out;
-  overflow-y: scroll;
 
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
     padding: 112px 56px 151px;
 
     right: ${({ $showCartMenu }) => ($showCartMenu ? '0' : '-599px')};
 
     width: 599px;
-    height: auto;
-    min-height: 1024px;
   }
 
   a {
@@ -52,7 +50,7 @@ export const CloseButton = styled.button`
     stroke: #101010;
   }
 
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
     top: 56px;
     left: 56px;
   }
@@ -60,7 +58,7 @@ export const CloseButton = styled.button`
 
 export const Card = styled.li`
   display: flex;
-  justify-content: space-between;
+  gap: 24px;
   width: 100%;
   margin-bottom: 20px;
 
@@ -69,6 +67,7 @@ export const Card = styled.li`
   }
 
   button {
+    margin-left: auto;
     width: 30px;
     height: 30px;
     align-self: center;
@@ -78,7 +77,7 @@ export const Card = styled.li`
     width: 282px;
   }
 
-  @media screen and (max-width: 1439px) {
+  @media screen and (max-width: 833px) {
     gap: 8px;
     font-size: 13px;
     line-height: calc(20 / 13);
@@ -100,7 +99,7 @@ export const Img = styled.img`
   height: 82px;
   background-color: #dad4c8;
 
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
     width: 127px;
     height: 158px;
   }

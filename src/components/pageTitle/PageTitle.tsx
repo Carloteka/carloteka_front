@@ -1,13 +1,28 @@
-import { Wrapper, Title } from './PageTitle.styled';
+import { Wrapper } from './PageTitle.styled';
+import { useLocation } from 'react-router-dom';
+import { pageTitles } from '../../utils/pageTitles';
 
-interface PageTitleProps {
-  children?: React.ReactNode;
-}
+type Page =
+  | 'aboutPayment'
+  | 'about'
+  | 'cart'
+  | 'catalog'
+  | 'delivery'
+  | 'favorites'
+  | 'payment'
+  | 'policy'
+  | 'refund';
 
-export const PageTitle = ({ children }: PageTitleProps) => {
+export const PageTitle = () => {
+  const { pathname } = useLocation();
+
   return (
-    <Wrapper>
-      <Title>{children}</Title>
-    </Wrapper>
+    <>
+      {pathname !== '/' && (
+        <Wrapper>
+          <h1 className="limiter">{pageTitles[pathname.slice(1) as Page]}</h1>
+        </Wrapper>
+      )}
+    </>
   );
 };

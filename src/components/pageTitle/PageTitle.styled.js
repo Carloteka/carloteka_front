@@ -3,36 +3,37 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   padding-top: 73px;
   width: 100%;
-  min-height: 144px;
+  min-height: 185px;
   display: flex;
-  align-items: center;
   justify-content: center;
-
   background-color: #dad4c8;
 
   @media screen and (min-width: 834px) {
     padding-top: 96px;
-    height: 219px;
+    min-height: 219px;
   }
   @media screen and (min-width: 1440px) {
     padding-top: 112px;
-    height: 336px;
-  }
-`;
-
-export const Title = styled.h1`
-  padding: 10px 16px;
-  min-width: 320px;
-  text-align: center;
-
-  @media screen and (min-width: 834px) {
-    padding: 0 121px;
-    width: 834px;
-    text-align: left;
+    min-height: 184px;
   }
 
-  @media screen and (min-width: 1440px) {
-    padding: 0 176px;
-    width: 1440px;
+  & > h1 {
+    padding: 16px 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 35px;
+    line-height: calc(46 / 35);
+
+    @media screen and (min-width: 834px) {
+      padding: 32px 88px;
+      text-align: left;
+      font-size: 50px;
+      line-height: calc(59 / 50);
+    }
+    @media screen and (min-width: 1440px) {
+      padding: 4px 112px 16px;
+      font-size: 36px;
+      line-height: calc(43 / 36);
+    }
   }
 `;

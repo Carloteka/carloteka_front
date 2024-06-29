@@ -14,32 +14,52 @@
 }
 
 .paginator {
-  margin-top: 56px;
-  display: none;
+  margin-top: 34px;
+  display: flex;
+  justify-content: center;
   list-style: none;
-
-  gap: 32px;
-
+  gap: 12px;
   order: 3;
 }
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 834px) {
   .paginator {
-    display: flex;
+    margin-top: 40px;
+    justify-content: flex-start;
+    gap: 24px;
+  }
+  @media screen and (min-width: 1440px) {
+    .paginator {
+      margin-top: 56px;
+      gap: 32px;
+    }
   }
 }
 
 .paginator button {
-  padding: 0 10px;
-  min-width: 50px;
+  padding: 3px 10px;
+  min-width: 32px;
   width: fit-content;
-  height: 50px;
+  height: 32px;
   border: 1px solid var(--grey5);
   color: var(--main-txt-cl);
   font-weight: 400;
   font-size: 17px;
   line-height: 1;
   background-color: inherit;
+  border-radius: 6px;
   transition: background-color 0.25s;
+}
+@media screen and (min-width: 834px) {
+  .paginator button {
+    min-width: 32px;
+    height: 32px;
+  }
+  @media screen and (min-width: 1440px) {
+    .paginator button {
+      min-width: 50px;
+      height: 50px;
+    }
+  }
 }
 .paginator button:focus,
 .paginator button:hover {
@@ -67,13 +87,39 @@ li:has(button[data-hidden='true']) {
 }
 
 /* addition width+gap of disappearing buttons to padding of ul to avoid moving navigation buttons   */
-.paginator:has(> li:first-child[data-hidden='true']) {
-  padding-left: 82px;
+/* .paginator:has(> li:first-child[data-hidden='true']) {
+  padding-left: 48px;
+} */
+@media screen and (min-width: 834px) {
+  .paginator:has(> li:first-child[data-hidden='true']) {
+    padding-left: 56px;
+  }
+  @media screen and (min-width: 1440px) {
+    .paginator:has(> li:first-child[data-hidden='true']) {
+      padding-left: 82px;
+    }
+  }
 }
-.paginator:has(
+
+/* .paginator:has(
     > li:first-child[data-hidden='true'] + li:nth-child(2)[data-hidden='true']
   ) {
-  padding-left: 164px;
+  padding-left: 84px;
+} */
+@media screen and (min-width: 834px) {
+  .paginator:has(
+      > li:first-child[data-hidden='true'] + li:nth-child(2)[data-hidden='true']
+    ) {
+    padding-left: 112px;
+  }
+  @media screen and (min-width: 1440px) {
+    .paginator:has(
+        > li:first-child[data-hidden='true']
+          + li:nth-child(2)[data-hidden='true']
+      ) {
+      padding-left: 164px;
+    }
+  }
 }
 /* ------------------- */
 
@@ -124,4 +170,13 @@ li:has(button[data-hidden='true']) {
 
 #dark .last_page_translucent {
   color: var(--dark-main-bg-cl);
+}
+
+/* //  ========= mobile edition ==== */
+@media screen and (max-width: 833px) {
+  .first,
+  .more,
+  .last {
+    display: none;
+  }
 }

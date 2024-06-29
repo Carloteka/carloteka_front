@@ -10,9 +10,7 @@ import {
   Star,
 } from './CatalogCard.styled';
 import sprite from '../../images/sprite.svg';
-import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
-import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
-import { getBanner } from '../../utils/getBanner';
+import { toggleLocalStorage, getBanner, checkLocalStorage } from '../../utils';
 import { Good as Popular } from '../../../@types/custom';
 
 interface SliderItemProps {
@@ -25,35 +23,26 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
   const { setAmountInCart } = useContext(CartContext);
   const { setAmountInFavorites } = useContext(FavoritesContext);
 
-  let cartArray: { id: number; amount: number }[] = [];
-  let favoriteArray: number[] = [];
-
-  if (localStorage.getItem('cart')) {
-    cartArray = JSON.parse(localStorage.getItem('cart') as string);
-  } else {
-    localStorage.setItem('cart', JSON.stringify(cartArray));
-  }
-
-  if (localStorage.getItem('favorite')) {
-    favoriteArray = JSON.parse(localStorage.getItem('favorite') as string);
-  } else {
-    localStorage.setItem('favorite', JSON.stringify(favoriteArray));
-  }
+  const cartArray: { id: number; amount: number }[] = checkLocalStorage(
+    'cart',
+    [],
+  );
+  const favoriteArray: { id: number }[] = checkLocalStorage('favorite', []);
 
   const isInCart: boolean = cartArray.some((el) => el.id === id);
-  const isInFavorite: boolean = favoriteArray.includes(id);
+  const isInFavorite: boolean = favoriteArray.some((el) => el.id === id);
   const [inCart, setInCart] = useState(isInCart);
   const [isFavorite, setIsFavorite] = useState(isInFavorite);
 
   function toggleCart() {
-    toggleCartInLocalStorage(inCart, id);
+    toggleLocalStorage(inCart, 'cart', item);
     setInCart((prev) => !prev);
     setAmountInCart((amountInCart: number) =>
       isInCart ? amountInCart - 1 : amountInCart + 1,
     );
   }
   function toggleFavorite() {
-    toggleLocalStorage(isFavorite, 'favorite', id);
+    toggleLocalStorage(isFavorite, 'favorite', item);
     setIsFavorite((prev) => !prev);
     setAmountInFavorites((amountInFavorites: number) =>
       isFavorite ? amountInFavorites - 1 : amountInFavorites + 1,
@@ -70,7 +59,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
             onClick={() => toggleCart()}
             disabled={stock === 'OUT_OF_STOCK'}
           >
-            <svg>
+            <svg style={{ fill: isFavorite ? 'white' : '#101010' }}>
               <use href={`${sprite}#cart`} />
             </svg>
           </Button>
@@ -108,7 +97,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
                 : `http://localhost:8000/${mini_image}`
             }
             alt="img першої категорії"
-            width={304}
+            width={288}
             height={304}
             style={{
               opacity:

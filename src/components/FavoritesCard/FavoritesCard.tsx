@@ -1,18 +1,16 @@
 import { useContext } from 'react';
-import { CartContext } from '../Layout';
+import { CartContext, FavoritesContext } from '../Layout';
 import {
   FlexContainer,
   Img,
   Name,
-  Div,
   Price,
   Star,
-  BuyBtnDesc,
   DelBtn,
   BuyBtn,
 } from './FavoritesCard.styled';
 import sprite from '../../images/sprite.svg';
-import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
+import { toggleLocalStorage, checkLocalStorage } from '../../utils';
 import { Good } from '../../../@types/custom';
 
 interface FavoritesCardProps {
@@ -24,11 +22,17 @@ export const FavoritesCard = ({ good, onClickDelete }: FavoritesCardProps) => {
   const { image_set, name, price, id, stars } = good;
 
   const { setAmountInCart } = useContext(CartContext);
-  // const [quantity, setQuantity] = useState(1);
+  const { setAmountInFavorites } = useContext(FavoritesContext);
 
   function buyBtnHandle() {
-    toggleCartInLocalStorage(false, id);
+    setAmountInFavorites((amountInFavorites: number) => amountInFavorites - 1);
+    onClickDelete(id);
+    const cartArray = checkLocalStorage('cart', []);
+    if (cartArray.some((el: { id: number }) => el.id === id)) {
+      return;
+    }
     setAmountInCart((amountInCart: number) => amountInCart + 1);
+    toggleLocalStorage(false, 'cart', good);
   }
 
   // useEffect(() => {
@@ -61,44 +65,37 @@ export const FavoritesCard = ({ good, onClickDelete }: FavoritesCardProps) => {
         loading="lazy"
       />
       <Name>Декоративна ваза з натурального дерева</Name>
-      <Div>
-        <FlexContainer>
-          <ul>
-            {[0, 1, 2, 3, 4].map((index) => (
-              <li key={index}>
-                <Star
-                  style={{ fill: index <= stars ? '#5B5B59' : 'transparent' }}
-                >
-                  <use href={`${sprite}#star`} />
-                </Star>
-              </li>
-            ))}
-          </ul>
-          {stars}
-        </FlexContainer>
 
-        <Price>₴ {price}</Price>
+      <FlexContainer>
+        <ul>
+          {[0, 1, 2, 3, 4].map((index) => (
+            <li key={index}>
+              <Star
+                style={{ fill: index <= stars ? '#5B5B59' : 'transparent' }}
+              >
+                <use href={`${sprite}#star`} />
+              </Star>
+            </li>
+          ))}
+        </ul>
+        {stars}
+      </FlexContainer>
 
-        <BuyBtnDesc
-          type="button"
-          className="primaryBtn"
-          onClick={() => buyBtnHandle()}
-        >
-          Купити
-        </BuyBtnDesc>
+      <Price>₴ {price}</Price>
 
-        <DelBtn
-          type="button"
-          onClick={() => {
-            setAmountInCart((amountInCart: number) => amountInCart - 1);
-            onClickDelete(id);
-          }}
-        >
-          <svg width={8} height={8}>
-            <use href={`${sprite}#close`} />
-          </svg>
-        </DelBtn>
-      </Div>
+      <DelBtn
+        type="button"
+        onClick={() => {
+          setAmountInFavorites(
+            (amountInFavorites: number) => amountInFavorites - 1,
+          );
+          onClickDelete(id);
+        }}
+      >
+        <svg width={8} height={8}>
+          <use href={`${sprite}#close`} />
+        </svg>
+      </DelBtn>
 
       <BuyBtn
         type="button"

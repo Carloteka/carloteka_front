@@ -19,10 +19,8 @@ body {
   font-family: 'Rubik', sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 18px;
-  font-size: 24px;
-  line-height: calc(25 / 18);
-  line-height: calc(25 / 24);
+  font-size: 17px;
+  line-height: calc(21 / 17);
   letter-spacing: 0;
   color: #101010;
   background-color: white;
@@ -36,6 +34,18 @@ main {
   background-color: white;
   overflow-x: hidden;
   min-height: 80vh;
+}
+
+.limiter {
+  min-width: 288px;
+
+  @media screen and (min-width: 834px) {
+    width: 768px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    width: 1312px;
+  }
 }
 
 ul {
@@ -63,10 +73,23 @@ button {
     color var(--transition-time),
     background-color var(--transition-time);
 }
-button {
+button,
+.primaryBtn,
+.secondaryBtn {
+  position: relative;
   font-size: 19px;
   line-height: 1;
   font-weight: 500;
+}
+
+.primaryBtn,
+.secondaryBtn {
+  padding: 5px 24px;
+  width: 100%;
+  min-height: 48px;
+  height: 48px;
+  text-transform: uppercase;
+  border-radius: 8px;
 }
 
 @media screen and (max-width: 1439px) {
@@ -78,10 +101,6 @@ button {
 }
 
 .primaryBtn {
-  padding: 5px 24px;
-  width: 100%;
-  height: 48px;
-  text-transform: uppercase;
   color: white;
   background-color: #2d3f24;
 }
@@ -104,10 +123,6 @@ button {
 }
 
 .secondaryBtn {
-  padding: 5px 24px;
-  width: 100%;
-  height: 48px;
-  text-transform: uppercase;
   color: #2d3f24;
   border: 1px solid #2d3f24;
 }
@@ -144,7 +159,6 @@ h1 {
   font-weight: 600;
   font-size: 35px;
   line-height: calc(46 / 35);
-
   @media screen and (min-width: 834px) {
     font-size: 50px;
     line-height: calc(59 / 50);
@@ -156,29 +170,28 @@ h1 {
 }
 
 h2 {
+  font-size: 36px;
+  line-height: calc(43 / 36);
+}
+
+h3 {
   font-weight: 600;
   font-size: 23px;
-  line-height: calc(34 / 23);
-  @media screen and (min-width: 1440px) {
-    font-size: 36px;
-    line-height: calc(43 / 36);
-  }
+  line-height: calc(29 / 23);
 }
-
-h3,
 legend {
   font-weight: 700;
-  font-size: 20px;
-  line-height: calc(27 / 20);
+  font-size: 23px;
+  line-height: calc(31 / 23);
 
   @media screen and (min-width: 834px) {
-    font-size: 24px;
-    line-height: calc(31 / 24);
+    font-size: 22px;
+    line-height: calc(26 / 22);
   }
-}
-legend {
-  font-size: 24px;
-  line-height: calc(31 / 24);
+  @media screen and (min-width: 1440px) {
+    font-size: 23px;
+    line-height: calc(29 / 23);
+  }
 }
 
 h4 {
@@ -192,6 +205,10 @@ input {
   font-size: inherit;
   line-height: inherit;
   border: none;
+  border-radius: 8px;
+}
+textarea {
+  border-radius: 8px;
 }
 address {
   font-style: inherit;
@@ -208,4 +225,10 @@ fieldset {
 ::-webkit-scrollbar-thumb {
   background: rgba(18 20 23 / 15%);
   border-radius: 6px;
+}
+
+.error {
+  padding-top: 1rem;
+  text-align: center;
+  color: red;
 }

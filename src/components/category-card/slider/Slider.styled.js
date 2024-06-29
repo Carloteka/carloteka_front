@@ -19,7 +19,8 @@ export const SliderContainer = styled.div`
     background: #f2f0ec;
 
     box-shadow: 1px 1px 7px 0px #dad4c870;
-    @media screen and (min-width: 1440px) {
+
+    @media screen and (min-width: 834px) {
       width: 32px;
       height: 40px;
       border-radius: 0;
@@ -32,13 +33,13 @@ export const SliderContainer = styled.div`
 
   .btn_left {
     left: 8px;
-    @media screen and (min-width: 1440px) {
+    @media screen and (min-width: 834px) {
       left: 16px;
     }
   }
   .btn_right {
     right: 8px;
-    @media screen and (min-width: 1440px) {
+    @media screen and (min-width: 834px) {
       right: 16px;
     }
   }

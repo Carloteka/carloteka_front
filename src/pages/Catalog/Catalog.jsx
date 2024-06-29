@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Loader } from '../../components/Loader/Loader';
-import { PageTitle } from '../../components/pageTitle/PageTitle.tsx';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter.tsx';
 import { Paginator } from '../../components/Paginator/Paginator.tsx';
 import { CatalogCard } from '../../components/CatalogCard/CatalogCard.tsx';
@@ -27,6 +26,7 @@ import {
 
 import sprite from '../../images/sprite.svg';
 import { fetchAllGoods, fetchFilteredGoods } from '../../api/api.js';
+import { checkLocalStorage } from '../../utils';
 
 import MultiRangeSlider from 'multi-range-slider-react';
 
@@ -71,19 +71,18 @@ const Catalog = () => {
     return sortBy;
   }
 
-  let categories = [];
-
-  if (localStorage.getItem('categories')) {
-    categories = JSON.parse(localStorage.getItem('categories'));
-  }
+  const categories = checkLocalStorage('categories', []);
 
   const [catalog, setCatalog] = useState([]);
 
   const [quantity, setQuantity] = useState(catalog?.length);
-  const [limit] = useState(12);
+  const [specOrderQuantity, setSpecOrderQuantity] = useState(0);
+  const [instockQuantity, setInstockQuantity] = useState(0);
   const [tags, setTags] = useState([]);
 
   const [category] = useState(categories);
+
+  const limit = 12;
 
   useEffect(() => {
     if (query) {
@@ -100,6 +99,8 @@ const Catalog = () => {
         setIsLoading(true);
         const data = await fetchAllGoods(12);
         setQuantity(data.count);
+        setInstockQuantity(data.in_stock_count);
+        setSpecOrderQuantity(data.specific_order_count);
         setCatalog(data.data);
         setIsLoading(false);
       } catch (error) {
@@ -176,22 +177,6 @@ const Catalog = () => {
     return range;
   }
 
-  function getGoodsInStock() {
-    if (!catalog || catalog?.length === 0) {
-      return;
-    }
-    const amount = catalog.filter((el) => el.stock === 'IN_STOCK');
-    return amount.length;
-  }
-
-  function getGoodsToOrder() {
-    if (catalog === undefined) {
-      return;
-    }
-    const amount = catalog.filter((el) => el.stock === 'SPECIFIC_ORDER');
-    return amount.length;
-  }
-
   function onChangeHandler(field, value) {
     let newparams = {};
     let temp = params[field];
@@ -245,6 +230,8 @@ const Catalog = () => {
       setIsLoading(true);
       const data = await fetchFilteredGoods(filter);
       setQuantity(data.count);
+      setInstockQuantity(data.in_stock_count);
+      setSpecOrderQuantity(data.specific_order_count);
       setCatalog(data.data);
       setIsLoading(false);
     } catch (error) {
@@ -371,7 +358,6 @@ const Catalog = () => {
   return (
     <>
       {isLoading && <Loader />}
-      <PageTitle>Каталог</PageTitle>
       <ContainerLimiter paddingTopMob={'16px'} paddingTopDesc={'56px'}>
         <FlexContainer>
           <ShowFiltersBtn
@@ -410,7 +396,7 @@ const Catalog = () => {
                     checked={isChecked('stock', 'IN_STOCK')}
                     onChange={() => onChangeHandler('stock', 'IN_STOCK')}
                   />
-                  В наявності ({getGoodsInStock()})
+                  В наявності ({instockQuantity})
                 </label>
 
                 <label>
@@ -421,42 +407,12 @@ const Catalog = () => {
                     checked={isChecked('stock', 'SPECIFIC_ORDER')}
                     onChange={() => onChangeHandler('stock', 'SPECIFIC_ORDER')}
                   />
-                  Під замовлення ({getGoodsToOrder()})
+                  Під замовлення ({specOrderQuantity})
                 </label>
               </fieldset>
 
               <Price>
                 <legend>Ціна</legend>
-                <div>
-                  <span>0</span>
-                  <span>{maxValue}</span>
-                  <span>10000</span>
-                </div>
-
-                <MultiRangeSlider
-                  id="price-range"
-                  min={0}
-                  max={10000}
-                  minValue={minValue}
-                  maxValue={maxValue}
-                  onInput={(e) => {
-                    setMinValue(e.minValue);
-                    setMaxValue(e.maxValue);
-                  }}
-                  canMinMaxValueSame={true}
-                  ruler={false}
-                  label={false}
-                  barLeftColor="#a7a5a3"
-                  barInnerColor="#101010"
-                  barRightColor="#a7a5a3"
-                  thumbLeftColor="#101010"
-                  thumbRightColor="#101010"
-                  style={{
-                    border: 'none',
-                    boxShadow: 'none',
-                    width: '100%',
-                  }}
-                />
 
                 <div>
                   <label>
@@ -490,6 +446,31 @@ const Catalog = () => {
                     />
                   </label>
                 </div>
+
+                <MultiRangeSlider
+                  id="price-range"
+                  min={0}
+                  max={10000}
+                  minValue={minValue}
+                  maxValue={maxValue}
+                  onInput={(e) => {
+                    setMinValue(e.minValue);
+                    setMaxValue(e.maxValue);
+                  }}
+                  canMinMaxValueSame={true}
+                  ruler={false}
+                  label={false}
+                  barLeftColor="#a7a5a3"
+                  barInnerColor="#101010"
+                  barRightColor="#a7a5a3"
+                  thumbLeftColor="#101010"
+                  thumbRightColor="#101010"
+                  style={{
+                    border: 'none',
+                    boxShadow: 'none',
+                    width: '100%',
+                  }}
+                />
               </Price>
               <button
                 type="submit"
@@ -501,7 +482,23 @@ const Catalog = () => {
             </Form>
           </Aside>
 
-          {!query && catalog?.length > 0 ? (
+          {query && catalog?.length === 0 ? (
+            <NoResultBox>
+              <NoResult>
+                <p>За запитом {query ? `'${query}'` : ''} нічого не знайдено</p>
+                <ul>
+                  <li>Спробуйте ввести назву товару або категорії</li>
+                  <li>Переконайтеся, що в назвах немає граматичних помилок</li>
+                  <li>
+                    Або скористайтесь списком усіх товарів, поділених за
+                    категоріями (ліворуч)
+                  </li>
+                </ul>
+              </NoResult>
+
+              <PopularGoods width={3} />
+            </NoResultBox>
+          ) : (
             <div
               style={{ padding: '0', display: 'flex', flexDirection: 'column' }}
             >
@@ -614,25 +611,9 @@ const Catalog = () => {
                 currentPage={
                   params.offset ? Math.ceil(+params.offset / limit + 1) : 1
                 }
-                pageCount={limit !== 12 ? 0 : Math.ceil(quantity / limit)}
+                pageCount={Math.ceil(quantity / limit)}
               />
             </div>
-          ) : (
-            <NoResultBox>
-              <NoResult>
-                <p>За запитом {query ? `'${query}'` : ''} нічого не знайдено</p>
-                <ul>
-                  <li>Спробуйте ввести назву товару або категорії</li>
-                  <li>Переконайтеся, що в назвах немає граматичних помилок</li>
-                  <li>
-                    Або скористайтесь списком усіх товарів, поділених за
-                    категоріями (ліворуч)
-                  </li>
-                </ul>
-              </NoResult>
-
-              <PopularGoods width={3} />
-            </NoResultBox>
           )}
         </FlexContainer>
       </ContainerLimiter>

@@ -1,4 +1,3 @@
-import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import {
   PaymentSection,
@@ -11,7 +10,6 @@ import paymentImgJpg from '../../images/high-view-laptop-black-shopping-card-1x.
 const AboutPaymentAndDelivery = () => {
   return (
     <>
-      <PageTitle>Оплата та доставка</PageTitle>
       <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'88px'}>
         <PaymentSection>
           <div>

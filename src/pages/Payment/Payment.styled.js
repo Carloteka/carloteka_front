@@ -146,10 +146,11 @@ export const PaymentMethodDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
 
   @media screen and (max-width: 1439px) {
     flex-direction: column;
-    gap: 16px;
   }
 
   button {

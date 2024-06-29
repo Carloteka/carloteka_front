@@ -2,9 +2,6 @@ import styled from 'styled-components';
 
 export const ThumbPhoto = styled.div`
   position: relative;
-  @media screen and (min-width: 1440px) {
-    margin-bottom: 16px;
-  }
 
   &:hover {
     div {
@@ -14,8 +11,19 @@ export const ThumbPhoto = styled.div`
 
   img {
     object-fit: cover;
-    height: 304px;
     background-color: #dad4c8;
+    width: 100%;
+    // height: 304px;
+    border-radius: 6px;
+
+    @media screen and (min-width: 834px) {
+      width: 240px;
+      height: 280px;
+    }
+    @media screen and (min-width: 1440px) {
+      width: 304px;
+      height: 304px;
+    }
   }
 
   div {
@@ -47,10 +55,11 @@ export const ThumbPhoto = styled.div`
 `;
 
 export const Name = styled.h4`
-  margin-bottom: 0;
-
+  @media screen and (min-width: 834px) {
+    margin: 16px 0 8px;
+  }
   @media screen and (min-width: 1440px) {
-    margin-bottom: 24px;
+    margin: 16px 0 24px;
   }
 `;
 
@@ -88,13 +97,15 @@ export const Div = styled.div`
 export const FlexContainer = styled.div`
   margin-bottom: 8px;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 16px;
   justify-content: center;
 
+  @media screen and (min-width: 834px) {
+    justify-content: flex-start;
+  }
   @media screen and (min-width: 1440px) {
     margin-bottom: 16px;
-    justify-content: flex-start;
   }
 
   ul {

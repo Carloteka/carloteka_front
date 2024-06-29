@@ -1,14 +1,24 @@
 import { useState, useEffect, useContext } from 'react';
 import { CartContext } from '../Layout';
 import { Increment } from '../Increment/Increment';
-import { Img, Name, Div, Price, TotalPrice, DelBtn } from './CartCard.styled';
+import {
+  Img,
+  Name,
+  PriceTitle,
+  Price,
+  AmountTitle,
+  TotalTitle,
+  TotalPrice,
+  DelBtn,
+} from './CartCard.styled';
 import sprite from '../../images/sprite.svg';
 import { Good } from '../../../@types/custom';
+import { checkLocalStorage } from '../../utils';
 
 interface CartCardProps {
   good: Good;
   onClickDelete: (id: number) => void;
-  increment: (quantity: number, id: number) => void;
+  increment: (quantity: number, good: Good) => void;
 }
 
 export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
@@ -18,15 +28,11 @@ export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    if (!localStorage.getItem('cart')) {
-      localStorage.setItem('cart', JSON.stringify([]));
-    }
+    const newArray = checkLocalStorage('cart', []);
 
-    const newArray = JSON.parse(localStorage.getItem('cart') as string);
+    const temp = newArray.find((el: { id: number }) => el.id === id);
 
-    const temp = newArray.find((el: { id: number }) => el.id === good.id);
-
-    setQuantity(temp.amount);
+    setQuantity(temp?.quantity ? temp.quantity : 1);
   }, [quantity]);
 
   return (
@@ -43,23 +49,20 @@ export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
         loading="lazy"
       />
       <Name>Декоративна ваза з натурального дерева</Name>
-      <Div>
-        <p>Ціна</p>
-        <Price>₴ {price}</Price>
-      </Div>
-      <Div>
-        <p>Кількість</p>
-        <Increment
-          increment={increment}
-          id={id}
-          quantity={quantity}
-          setQuantity={setQuantity}
-        />
-      </Div>
-      <Div>
-        <p>Загальна вартість</p>
-        <TotalPrice>₴ {quantity * price}</TotalPrice>
-      </Div>
+
+      <PriceTitle>Ціна</PriceTitle>
+      <Price>₴ {price}</Price>
+
+      <AmountTitle>Кількість</AmountTitle>
+      <Increment
+        increment={increment}
+        good={good}
+        quantity={quantity}
+        setQuantity={setQuantity}
+      />
+
+      <TotalTitle>Загальна вартість</TotalTitle>
+      <TotalPrice>₴ {quantity * price}</TotalPrice>
 
       <DelBtn
         type="button"

@@ -1,0 +1,8 @@
+User-agent: Googlebot
+Disallow: /nogooglebot/
+Clean-param: ref /catalog
+
+User-agent: *
+Allow: /
+
+Sitemap: http://carloteka.com/sitemap.xml

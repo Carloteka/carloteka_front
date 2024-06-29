@@ -13,6 +13,7 @@ import sprite from '../../images/sprite.svg';
 import { SearchBar } from './SearchBar/SearchBar';
 import { useState, useEffect, useContext } from 'react';
 import { CartContext, FavoritesContext } from '../Layout';
+import { checkLocalStorage } from '../../utils';
 
 interface HeaderProps {
   setShowMenu: (arg0: boolean) => void;
@@ -24,15 +25,14 @@ export const Header = ({ setShowCartMenu, setShowMenu }: HeaderProps) => {
   const { amountInFavorites } = useContext(FavoritesContext);
 
   const [inCart, setInCart] = useState<object[]>([]);
-  const [inFavorites, setInFavorites] = useState<number[]>([]);
+  const [inFavorites, setInFavorites] = useState<object[]>([]);
 
   let goodsInCart: object[] = [];
-  let goodsInFavorites: number[] = [];
+  let goodsInFavorites: object[] = [];
 
   useEffect(() => {
-    if (localStorage.getItem('cart')) {
-      goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
-    }
+    goodsInCart = checkLocalStorage('cart', []);
+
     if (inCart.length === goodsInCart.length) {
       return;
     }
@@ -41,9 +41,8 @@ export const Header = ({ setShowCartMenu, setShowMenu }: HeaderProps) => {
   }, [setInCart, inCart, goodsInCart]);
 
   useEffect(() => {
-    if (localStorage.getItem('favorite')) {
-      goodsInFavorites = JSON.parse(localStorage.getItem('favorite') as string);
-    }
+    goodsInFavorites = checkLocalStorage('favorite', []);
+
     if (inFavorites.length === goodsInFavorites.length) {
       return;
     }
@@ -68,20 +67,24 @@ export const Header = ({ setShowCartMenu, setShowMenu }: HeaderProps) => {
         </Catalog>
         <SearchBar />
         <Actions>
-          <NavigationLink to={'/favorites'} title="На сторінку Обраних">
+          <NavigationLink to={'/favorites'} title="На сторінку Список бажань">
             <svg width={24} height={24}>
               <use href={`${sprite}#favorite`} />
             </svg>
-            {inFavorites?.length > 0 && <Counter>{amountInFavorites}</Counter>}
+            {inFavorites?.length > 0 && amountInFavorites > 0 && (
+              <Counter>{amountInFavorites}</Counter>
+            )}
           </NavigationLink>
           <CartMenuBtn
-            onClick={() => inCart?.length > 0 && openCartMenu()}
-            title={inCart?.length > 0 ? 'Меню Кошика' : 'Кошик пустий'}
+            onClick={() => openCartMenu()}
+            title={inCart?.length > 0 ? 'Меню Кошика' : 'Кошик порожній'}
           >
             <svg width={24} height={24}>
               <use href={`${sprite}#cart`} />
             </svg>
-            {inCart?.length > 0 && <Counter>{amountInCart}</Counter>}
+            {inCart?.length > 0 && amountInCart > 0 && (
+              <Counter>{amountInCart}</Counter>
+            )}
           </CartMenuBtn>
 
           <BurgerMenuBtn

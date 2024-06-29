@@ -1,4 +1,3 @@
-import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { Link } from 'react-router-dom';
 import {
   SectionAboutBrand,
@@ -29,7 +28,6 @@ import imgAvif from '../../images/lamination-wood-grade-cylinders-manufacturer-1
 const AboutUs = () => {
   return (
     <>
-      <PageTitle>Про нас</PageTitle>
       <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'80px'}>
         <picture>
           <source

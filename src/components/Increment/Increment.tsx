@@ -1,23 +1,24 @@
 import { IncrementBox } from './Increment.styled';
+import { Good } from '../../../@types/custom';
 
 interface IncrementProps {
   quantity: number;
-  id: number;
-  increment: (quantity: number, id: number) => void;
+  good: Good;
+  increment: (quantity: number, good: Good) => void;
   setQuantity: (quantity: number) => void;
 }
 
 export const Increment = ({
   increment,
-  id,
+  good,
   quantity,
   setQuantity,
 }: IncrementProps) => {
-  function incrementHandle(payload: number, id: number) {
+  function incrementHandle(payload: number) {
     if (payload + quantity === 0) {
       return;
     }
-    increment(payload + quantity, id);
+    increment(payload + quantity, good);
     if (setQuantity) {
       setQuantity(payload + quantity);
     }
@@ -25,11 +26,11 @@ export const Increment = ({
 
   return (
     <IncrementBox>
-      <button type="button" onClick={() => incrementHandle(-1, id)}>
+      <button type="button" onClick={() => incrementHandle(-1)}>
         --
       </button>
       <span>{quantity}</span>
-      <button type="button" onClick={() => incrementHandle(1, id)}>
+      <button type="button" onClick={() => incrementHandle(1)}>
         +
       </button>
     </IncrementBox>

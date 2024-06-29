@@ -29,9 +29,13 @@ export const DeliveryBox = styled.section`
   }
 
   .error {
-    margin: -20px 0;
+    margin: -15px 0;
     color: red;
     font-size: 0.9rem;
+
+    @media screen and (min-width: 1440px) {
+      margin: -20px 0;
+    }
   }
 `;
 
@@ -136,6 +140,7 @@ export const StyledSelect = styled(Select)`
   }
   .rs__control {
     padding: 0 8px;
+    border-radius: 6px;
 
     @media screen and (min-width: 1440px) {
       padding: 0 16px;
@@ -151,15 +156,25 @@ export const StyledSelect = styled(Select)`
   .rs__menu {
     margin-top: 0;
     border: 1px solid #a7a5a3;
-    border-radius: 0;
+    border-radius: 6px;
   }
   .rs__option:hover {
     svg {
       fill: white;
     }
   }
+  .rs__option:first-child:hover {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
+
+  .rs__option:last-child:hover {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
   .rs__menu-list {
     padding-top: 0;
+    padding-bottom: 0;
   }
   .rs__value-container {
     padding: 0;

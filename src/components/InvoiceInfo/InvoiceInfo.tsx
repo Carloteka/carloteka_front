@@ -1,30 +1,13 @@
-import {
-  InfoBox,
-  DeliveryPrice,
-  Total,
-  PolicyLink,
-} from './InvoiceInfo.styled';
+import { InfoBox, Total, PolicyLink } from './InvoiceInfo.styled';
 import { Good } from '../../../@types/custom';
-// type Good = {
-//   name: string;
-//   price: number;
-//   id_name: string;
-//   quantity: number;
-// };
+// import { getTotalPrice } from '../../utils';
 
 interface InvoiceInfoProps {
   inCart: Good[];
+  total: number;
 }
 
-export const InvoiceInfo = ({ inCart }: InvoiceInfoProps) => {
-  function getTotalPrice() {
-    return inCart.reduce(
-      (total: number, el: { quantity: number; price: number }) =>
-        el.price * (el?.quantity ? el.quantity : 1) + total,
-      0,
-    );
-  }
-
+export const InvoiceInfo = ({ inCart, total }: InvoiceInfoProps) => {
   return (
     <InfoBox>
       <h3>Ваше замовлення</h3>
@@ -41,20 +24,15 @@ export const InvoiceInfo = ({ inCart }: InvoiceInfoProps) => {
                 {el.name}
                 {el.quantity > 1 && ` (${el.quantity} шт.)`}
               </p>
-              <p>₴ {el.price * el.quantity}</p>
+              <p>₴ {el.price * (el?.quantity ? el.quantity : 1)}</p>
             </div>
           </li>
         ))}
       </ul>
 
-      <DeliveryPrice>
-        <p>Вартість доставки</p>
-        <p>₴ 95</p>
-      </DeliveryPrice>
-
       <Total>
         <p>Загальна сума:</p>
-        <p>₴ {getTotalPrice() + 95}</p>
+        <p>₴ {total.toFixed(2)}</p>
       </Total>
 
       <h3>Метод оплати</h3>

@@ -151,7 +151,7 @@ export const Paginator = ({
     <ul className={css.paginator}>
       {pageCount <= 1 ? null : (
         <>
-          <li data-hidden={isBtnHidden('start')}>
+          <li data-hidden={isBtnHidden('start')} className={css.first}>
             <button
               type="button"
               data-type={'styled'}
@@ -237,7 +237,7 @@ export const Paginator = ({
                 : thirdBtnRef.current.innerText}
             </button>
           </li>
-          <li data-hidden={isBtnHidden('more')}>
+          <li data-hidden={isBtnHidden('more')} className={css.more}>
             <button
               type="button"
               title="show more pages"
@@ -265,7 +265,7 @@ export const Paginator = ({
             </button>
           </li>
 
-          <li data-hidden={isBtnHidden('last')}>
+          <li data-hidden={isBtnHidden('last')} className={css.last}>
             <button
               type="button"
               data-type={'styled'}

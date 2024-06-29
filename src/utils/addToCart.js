@@ -1,4 +1,4 @@
-export function addToCart(amount, id, method) {
+export function addToCart(amount, good, method) {
   if (!localStorage.getItem('cart')) {
     localStorage.setItem('cart', JSON.stringify([]));
   }
@@ -6,12 +6,12 @@ export function addToCart(amount, id, method) {
   const newArray = JSON.parse(localStorage.getItem('cart'));
   let isInArray;
   const mapedArray = newArray.map((el) => {
-    if (el.id === id) {
+    if (el.id === good.id) {
       if (method === 'replace') {
-        el.amount = amount;
+        el.quantity = amount;
       }
       if (method === 'add') {
-        el.amount += amount;
+        el.quantity += amount;
       }
 
       isInArray = true;
@@ -20,7 +20,10 @@ export function addToCart(amount, id, method) {
   });
 
   if (!isInArray) {
-    mapedArray.push({ amount, id });
+    const temp = { ...good };
+    temp.quantity = amount;
+
+    mapedArray.push(temp);
   }
 
   localStorage.setItem('cart', JSON.stringify(mapedArray));

@@ -6,10 +6,11 @@ export const InfoBox = styled.div`
   padding: 16px;
   width: 100%;
   background-color: #dad4c8;
+  border-radius: 8px;
 
   @media screen and (min-width: 1440px) {
     margin-bottom: 24px;
-    padding: 31px 30.5px 19px;
+    padding: 32px 30.5px;
     width: 528px;
   }
 
@@ -34,6 +35,7 @@ export const InfoBox = styled.div`
 
   ul {
     margin-top: 16px;
+    border-bottom: 1px solid #a7a5a3;
   }
 
   li {
@@ -59,12 +61,6 @@ export const InfoBox = styled.div`
   & > p:last-child {
     margin-top: 1em;
   }
-`;
-
-export const DeliveryPrice = styled.div`
-  padding: 16px 0;
-  min-height: 57px;
-  border-bottom: 1px solid #a7a5a3;
 `;
 
 export const Total = styled.div`
