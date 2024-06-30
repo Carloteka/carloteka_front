@@ -1,3 +1,4 @@
+import css from './Catalog.module.scss';
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Loader } from '../../components/Loader/Loader';
@@ -5,25 +6,6 @@ import { ContainerLimiter } from '../../components/containerLimiter/ContainerLim
 import { Paginator } from '../../components/Paginator/Paginator.tsx';
 import { CatalogCard } from '../../components/CatalogCard/CatalogCard.tsx';
 import { PopularGoods } from '../../components/popularGoods/index.ts';
-import {
-  FlexContainer,
-  ShowFiltersBtn,
-  Aside,
-  Form,
-  Checkbox,
-  Price,
-  TagsContainer,
-  FlexDiv,
-  SelectBox,
-  Backdrop,
-  Menu,
-  CheckedIcon,
-  SelectItem,
-  GoodsList,
-  NoResultBox,
-  NoResult,
-} from './Catalog.styled.js';
-
 import sprite from '../../images/sprite.svg';
 import { fetchAllGoods, fetchFilteredGoods } from '../../api/api.js';
 import { checkLocalStorage } from '../../utils';
@@ -358,22 +340,31 @@ const Catalog = () => {
   return (
     <>
       {isLoading && <Loader />}
-      <ContainerLimiter paddingTopMob={'16px'} paddingTopDesc={'56px'}>
-        <FlexContainer>
-          <ShowFiltersBtn
+      <ContainerLimiter>
+        <div className={css.flexBox}>
+          <button
             type="button"
-            className={showFilters ? 'secondaryBtn' : 'primaryBtn'}
+            className={`${css.showFilters} ${
+              showFilters ? 'secondaryBtn' : 'primaryBtn'
+            }`}
             onClick={() => setShowFilters((prev) => !prev)}
           >
             {showFilters ? 'Сховати фільтри' : 'Фільтри'}
-          </ShowFiltersBtn>
-          <Aside $show={showFilters}>
-            <Form onSubmit={handleSubmit} id="filter">
+          </button>
+          <aside
+            className={css.aside}
+            style={{ display: showFilters ? 'block' : 'none' }}
+          >
+            <form
+              onSubmit={handleSubmit}
+              id="filter"
+              className={css.filtersForm}
+            >
               <fieldset>
                 <legend>Категорії товарів</legend>
                 {category?.map((el) => (
                   <label key={el.id}>
-                    <Checkbox
+                    <input
                       type="checkbox"
                       name="cat"
                       value={el.id}
@@ -389,7 +380,7 @@ const Catalog = () => {
                 <legend>Наявність в магазині</legend>
 
                 <label>
-                  <Checkbox
+                  <input
                     type="checkbox"
                     name="stock"
                     value="IN_STOCK"
@@ -400,7 +391,7 @@ const Catalog = () => {
                 </label>
 
                 <label>
-                  <Checkbox
+                  <input
                     type="checkbox"
                     name="stock"
                     value="SPECIFIC_ORDER"
@@ -411,7 +402,7 @@ const Catalog = () => {
                 </label>
               </fieldset>
 
-              <Price>
+              <fieldset className={css.priceFilter}>
                 <legend>Ціна</legend>
 
                 <div>
@@ -471,7 +462,7 @@ const Catalog = () => {
                     width: '100%',
                   }}
                 />
-              </Price>
+              </fieldset>
               <button
                 type="submit"
                 className="primaryBtn"
@@ -479,12 +470,12 @@ const Catalog = () => {
               >
                 Застосувати
               </button>
-            </Form>
-          </Aside>
+            </form>
+          </aside>
 
           {query && catalog?.length === 0 ? (
-            <NoResultBox>
-              <NoResult>
+            <div className={css.noResultBox}>
+              <div>
                 <p>За запитом {query ? `'${query}'` : ''} нічого не знайдено</p>
                 <ul>
                   <li>Спробуйте ввести назву товару або категорії</li>
@@ -494,16 +485,14 @@ const Catalog = () => {
                     категоріями (ліворуч)
                   </li>
                 </ul>
-              </NoResult>
+              </div>
 
               <PopularGoods width={3} />
-            </NoResultBox>
+            </div>
           ) : (
-            <div
-              style={{ padding: '0', display: 'flex', flexDirection: 'column' }}
-            >
+            <div className={css.mainContentBox}>
               {tags?.length > 0 && (
-                <TagsContainer>
+                <div className={css.tagsDiv}>
                   <ul>
                     {tags.map((el, index) => (
                       <li key={`${el.value}-${index}`}>
@@ -533,14 +522,17 @@ const Catalog = () => {
                       </label>
                     </li>
                   </ul>
-                </TagsContainer>
+                </div>
               )}
-              <FlexDiv>
+              <div className={css.flexDiv}>
                 <span>
                   Представлено {getRangeToDisplay()} з {quantity}
                 </span>
                 <span style={{ margin: '0 32px' }}> | </span>
-                <SelectBox onClick={(e) => toggleSelectMenu(e)}>
+                <div
+                  className={css.selectBox}
+                  onClick={(e) => toggleSelectMenu(e)}
+                >
                   <span>Сортувати: </span>
                   <p>
                     {selectValue}
@@ -557,10 +549,16 @@ const Catalog = () => {
                     </svg>
                   </p>
 
-                  <Backdrop
+                  <div
+                    className="backdrop"
                     style={{ display: showSelectMenu ? 'block' : 'none' }}
                   />
-                  <Menu $show={showSelectMenu}>
+                  <ul
+                    className={css.menu}
+                    style={{
+                      visibility: showSelectMenu ? 'visible' : 'hidden',
+                    }}
+                  >
                     {[
                       { label: 'За популярністю', value: 'rating' },
                       { label: 'Від дешевих до дорогих', value: 'price' },
@@ -569,8 +567,18 @@ const Catalog = () => {
                         value: '-price',
                       },
                     ].map((el) => (
-                      <SelectItem
-                        $show={!showSelectMenu && el.label === selectValue}
+                      <li
+                        className={css.selectItem}
+                        style={{
+                          backgroundColor:
+                            !showSelectMenu && el.label === selectValue
+                              ? '#2d3f24'
+                              : 'white',
+                          color:
+                            !showSelectMenu && el.label === selectValue
+                              ? 'white'
+                              : '#101010',
+                        }}
                         key={el.value}
                         onClick={() => {
                           setSelectValue(el.label);
@@ -578,34 +586,36 @@ const Catalog = () => {
                         }}
                       >
                         {(showSelectMenu || el.label === selectValue) && (
-                          <CheckedIcon
+                          <svg
+                            className={`${css.checkedIcon} ${
+                              !showSelectMenu &&
+                              el.label === selectValue &&
+                              css.checkedIconActive
+                            }`}
                             checked={
                               !showSelectMenu && el.label === selectValue
                             }
                             width={24}
                             height={24}
-                            style={{
-                              transform: 'rotate(0deg)',
-                            }}
                           >
                             <use href={`${sprite}#checked`} />
-                          </CheckedIcon>
+                          </svg>
                         )}
 
                         <p>{el.label}</p>
-                      </SelectItem>
+                      </li>
                     ))}
-                  </Menu>
-                </SelectBox>
-              </FlexDiv>
+                  </ul>
+                </div>
+              </div>
 
-              <GoodsList>
+              <ul className={css.goodList}>
                 {getSortedGoods()?.map((el) => (
                   <li key={el.id}>
                     <CatalogCard item={el} />
                   </li>
                 ))}
-              </GoodsList>
+              </ul>
               <Paginator
                 setCurrentPage={pageChanger}
                 currentPage={
@@ -615,7 +625,7 @@ const Catalog = () => {
               />
             </div>
           )}
-        </FlexContainer>
+        </div>
       </ContainerLimiter>
     </>
   );

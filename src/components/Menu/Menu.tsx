@@ -1,15 +1,4 @@
-import {
-  Backdrop,
-  MenuContainer,
-  CloseButton,
-  List,
-  FlexCatalogContainer,
-  CategoriesList,
-  LinkLarge,
-  Contacts,
-  Tel,
-  Socials,
-} from './Menu.styled';
+import css from './Menu.module.scss';
 import sprite from '../../images/sprite.svg';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -31,20 +20,26 @@ export const Menu = ({ onClickHandle, showMenu }: MenuProps) => {
 
   return (
     <>
-      <Backdrop
+      <div
+        className="backdrop overlay"
         onClick={() => onClickHandle()}
         style={{ display: showMenu ? 'flex' : 'none' }}
-      ></Backdrop>
-      <MenuContainer $showMenu={showMenu}>
-        <CloseButton onClick={() => onClickHandle()} title="Close menu">
+      ></div>
+      <div className={`${css.menuWrapper} ${showMenu ? css.show : ''}`}>
+        <button
+          onClick={() => onClickHandle()}
+          title="Close menu"
+          className={css.closeBtn}
+        >
           <svg width={24} height={24}>
             <use href={`${sprite}#close`} />
           </svg>
-        </CloseButton>
+        </button>
         <nav>
-          <List>
+          <ul className={css.navList}>
             <li>
-              <FlexCatalogContainer
+              <div
+                className={css.navListFlexItem}
                 onClick={() => setShowList((prev) => !prev)}
               >
                 <h3>Каталог</h3>
@@ -57,9 +52,9 @@ export const Menu = ({ onClickHandle, showMenu }: MenuProps) => {
                 >
                   <use href={`${sprite}#chevron`} />
                 </svg>
-              </FlexCatalogContainer>
+              </div>
               {showList && (
-                <CategoriesList>
+                <ul className={css.categoriesList}>
                   {categories?.map((el) => (
                     <li key={el.id}>
                       <Link
@@ -70,32 +65,40 @@ export const Menu = ({ onClickHandle, showMenu }: MenuProps) => {
                       </Link>
                     </li>
                   ))}
-                </CategoriesList>
+                </ul>
               )}
             </li>
             <li>
-              <LinkLarge to={'/about'} onClick={() => onClickHandle()}>
+              <Link
+                to={'/about'}
+                onClick={() => onClickHandle()}
+                className={css.largeLink}
+              >
                 Про нас
-              </LinkLarge>
+              </Link>
             </li>
             <li>
-              <LinkLarge to={'/aboutPayment'} onClick={() => onClickHandle()}>
+              <Link
+                to={'/aboutPayment'}
+                onClick={() => onClickHandle()}
+                className={css.largeLink}
+              >
                 Оплата & Доставка
-              </LinkLarge>
+              </Link>
             </li>
-          </List>
+          </ul>
         </nav>
-        <Contacts>
+        <div className={css.contactsDiv}>
           <h3>Зв’язатись з нами</h3>
           <address>
             <ul>
-              <Tel>
+              <li className="tel">
                 <a href="tel:+380955810075" title="Call +380955810075">
                   +380 (95) 581-00-75
                 </a>
-              </Tel>
+              </li>
             </ul>
-            <Socials>
+            <ul className={css.socials}>
               {socialLinks.map((el) => (
                 <li key={el.social}>
                   <a
@@ -110,10 +113,10 @@ export const Menu = ({ onClickHandle, showMenu }: MenuProps) => {
                   </a>
                 </li>
               ))}
-            </Socials>
+            </ul>
           </address>
-        </Contacts>
-      </MenuContainer>
+        </div>
+      </div>
     </>
   );
 };

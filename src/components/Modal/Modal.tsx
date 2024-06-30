@@ -1,5 +1,5 @@
+import css from './Modal.module.scss';
 import { useEffect } from 'react';
-import { Backdrop, ModalBox } from './Modal.styled';
 
 interface ModalProps {
   children: React.ReactNode[];
@@ -30,8 +30,8 @@ export const Modal = ({ children, onClose }: ModalProps) => {
   };
 
   return (
-    <Backdrop className="overlay" onMouseDown={handleBackdropClick}>
-      <ModalBox>{children}</ModalBox>
-    </Backdrop>
+    <div className="backdrop overlay" onMouseDown={handleBackdropClick}>
+      <div className={css.modalBox}>{children}</div>
+    </div>
   );
 };

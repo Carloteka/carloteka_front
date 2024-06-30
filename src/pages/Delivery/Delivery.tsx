@@ -1,16 +1,11 @@
+import css from './Delivery.module.scss';
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
 import { CartContext } from '../../components/Layout';
 // import { Loader } from '../../components/Loader/Loader';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import { InputMask } from 'primereact/inputmask';
-import {
-  DeliveryBox,
-  Form,
-  FlexContainer,
-  StyledSelect,
-  GeoIcon,
-} from './Delivery.styled';
 import { InvoiceInfo } from '../../components/InvoiceInfo/InvoiceInfo';
 import sprite from '../../images/sprite.svg';
 import { Good } from '../../../@types/custom';
@@ -366,9 +361,9 @@ const Delivery = () => {
         value: item,
         label: (
           <>
-            <GeoIcon width={24} height={24}>
+            <svg className={css.geoIcon} width={24} height={24}>
               <use href={`${sprite}#geo`} />
-            </GeoIcon>
+            </svg>
             <span>{item}</span>
           </>
         ),
@@ -379,8 +374,8 @@ const Delivery = () => {
     inCart.length > 0 && (
       <>
         {/* {isLoading && <Loader />} */}
-        <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'80px'}>
-          <DeliveryBox>
+        <ContainerLimiter >
+          <section className="deliveryWrapper">
             {serverError ? (
               <p>
                 Наразі сервер наших партнерів недоступний. Спробуйте вибрати
@@ -388,9 +383,13 @@ const Delivery = () => {
                 оформлення заказу
               </p>
             ) : (
-              <Form onSubmit={submitHandle} id="delivery">
+              <form
+                onSubmit={submitHandle}
+                id="delivery"
+                className={`${css.deliveryForm} payment-delivery_form`}
+              >
                 <h2>Адреса доставки</h2>
-                <FlexContainer>
+                <div>
                   <label className="short">
                     Ім&apos;я
                     <input
@@ -421,7 +420,7 @@ const Delivery = () => {
                   </label>
                   <label>
                     Служба доставки
-                    <StyledSelect
+                    <Select
                       className="react-select-container"
                       classNamePrefix="rs"
                       name={'post'}
@@ -439,7 +438,7 @@ const Delivery = () => {
                   {delivery?.post && (
                     <label>
                       Країна
-                      <StyledSelect
+                      <Select
                         className="react-select-container"
                         classNamePrefix="rs"
                         name={'country'}
@@ -457,7 +456,7 @@ const Delivery = () => {
                   {delivery?.country?.value === 'Україна' && (
                     <label>
                       Регіон
-                      <StyledSelect
+                      <Select
                         className="react-select-container"
                         classNamePrefix="rs"
                         name={'oblast'}
@@ -485,7 +484,7 @@ const Delivery = () => {
                       <>
                         <label>
                           Місто
-                          <StyledSelect
+                          <Select
                             className="react-select-container"
                             classNamePrefix="rs"
                             name={'city'}
@@ -520,7 +519,7 @@ const Delivery = () => {
                   {delivery?.country?.value === 'Україна' && delivery?.city && (
                     <label>
                       Номер відділення
-                      <StyledSelect
+                      <Select
                         className="react-select-container"
                         classNamePrefix="rs"
                         name={'office'}
@@ -577,7 +576,7 @@ const Delivery = () => {
 
                   <label>
                     Вид оплати
-                    <StyledSelect
+                    <Select
                       className="react-select-container"
                       classNamePrefix="rs"
                       name={'payment'}
@@ -617,7 +616,7 @@ const Delivery = () => {
                       }
                     />
                   </label>
-                </FlexContainer>
+                </div>
                 <h3>Додаткова інформація</h3>
                 <label>
                   Коментар щодо замовлення (не обов’язково)
@@ -636,16 +635,16 @@ const Delivery = () => {
                 <button type="submit" form="delivery" className="primaryBtn">
                   продовжити
                 </button>
-              </Form>
+              </form>
             )}
-            <aside>
+            <aside className={css.aside}>
               <InvoiceInfo inCart={inCart} total={+getTotalPrice(inCart)} />
 
               <button type="submit" form="delivery" className="primaryBtn">
                 продовжити
               </button>
             </aside>
-          </DeliveryBox>
+          </section>
         </ContainerLimiter>
       </>
     )

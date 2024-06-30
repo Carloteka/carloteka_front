@@ -1,4 +1,4 @@
-import { Wrapper, List, WorkTime, Socials } from './footer.styled';
+import css from './footer.module.scss';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sprite from '../../images/sprite.svg';
@@ -38,11 +38,11 @@ export const Footer = () => {
   }
 
   return contacts?.admin_phone ? (
-    <Wrapper>
+    <footer className={css.footer}>
       <div>
         <h3>Адреса</h3>
         <address>
-          <List>
+          <ul className={css.list}>
             <li>
               <svg>
                 <use href={`${sprite}#geo`} />
@@ -53,10 +53,10 @@ export const Footer = () => {
               <svg>
                 <use href={`${sprite}#clock`} />
               </svg>
-              <WorkTime>
+              <p className={css.worktime}>
                 Пн - Пт - {contacts.work_time_mo_fr}, <br></br>Сб -
                 {contacts.work_time_sa}, <br></br>Нд - {contacts.work_time_su}
-              </WorkTime>
+              </p>
             </li>
             <li>
               <svg>
@@ -67,7 +67,7 @@ export const Footer = () => {
               </a>
             </li>
             <li>
-              <Socials>
+              <ul className={css.socials}>
                 {socialLinks.map((el) => (
                   <li key={el.social}>
                     <a
@@ -82,14 +82,14 @@ export const Footer = () => {
                     </a>
                   </li>
                 ))}
-              </Socials>
+              </ul>
             </li>
-          </List>
+          </ul>
         </address>
       </div>
       <div>
         <h3>Про нас</h3>
-        <List>
+        <ul className={css.list}>
           <li>
             <Link to={'/about'} onClick={() => scrollToTop()}>
               Наша історія
@@ -105,11 +105,11 @@ export const Footer = () => {
               Політика конфіденційності
             </Link>
           </li>
-        </List>
+        </ul>
       </div>
       <div>
         <h3>Допомога</h3>
-        <List>
+        <ul className={css.list}>
           <li>
             <Link to={'/aboutPayment'} onClick={() => scrollToTop()}>
               Оплата & Доставка
@@ -125,8 +125,8 @@ export const Footer = () => {
               Служба підтримки
             </Link>
           </li>
-        </List>
+        </ul>
       </div>
-    </Wrapper>
+    </footer>
   ) : null;
 };

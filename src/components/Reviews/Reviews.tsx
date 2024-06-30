@@ -1,12 +1,4 @@
-import {
-  SectionReviews,
-  Form,
-  Star,
-  TextAreaLabel,
-  FlexContainer,
-  ReviewList,
-  Date,
-} from './Reviews.styled';
+import css from './Reviews.module.scss';
 import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Loader } from '../Loader/Loader';
@@ -123,8 +115,8 @@ const Reviews = () => {
     <>
       {isLoading && <Loader />}
       {Object.keys(good as Good).length > 0 && (
-        <SectionReviews>
-          <Form onSubmit={submitHandle}>
+        <section className={css.reviewSection}>
+          <form onSubmit={submitHandle} className={css.reviewForm}>
             <p>
               Будьте першим, хто залишив відгук про &quot;{good?.name}&quot;
             </p>
@@ -135,32 +127,34 @@ const Reviews = () => {
               </label>
               <ul>
                 <li>
-                  <Star
+                  <svg
+                    className={css.star}
                     onClick={() => setRate(0)}
                     style={{
                       fill: 'transparent',
                     }}
                   >
                     <use href={`${sprite}#star`} />
-                  </Star>
+                  </svg>
                 </li>
                 {[0, 1, 2, 3, 4].map((index) => (
                   <li key={index} onClick={() => setRate(index + 1)}>
-                    <Star
+                    <svg
+                      className={css.star}
                       style={{
                         fill: index < rate ? '#2d3f24' : 'transparent',
                       }}
                     >
                       <use href={`${sprite}#star`} />
-                    </Star>
+                    </svg>
                   </li>
                 ))}
               </ul>
             </div>
-            <FlexContainer>
-              <TextAreaLabel>
+            <div className={css.flexContainer}>
+              <label>
                 Ваш відгук *<textarea name="text" rows={6}></textarea>
-              </TextAreaLabel>
+              </label>
               <label>
                 Ім&apos;я *
                 <input type="text" name="first_name" maxLength={50} required />
@@ -169,7 +163,7 @@ const Reviews = () => {
                 Електронна пошта *
                 <input type="email" name="email" maxLength={255} required />
               </label>
-            </FlexContainer>
+            </div>
             <button
               type="submit"
               className="primaryBtn"
@@ -179,10 +173,10 @@ const Reviews = () => {
             >
               надіслати
             </button>
-          </Form>
+          </form>
           {reviews.length > 0 && (
             <>
-              <ReviewList>
+              <ul className={css.reviewList}>
                 {reviews?.map((el) => (
                   <li key={el.id}>
                     <article>
@@ -198,26 +192,27 @@ const Reviews = () => {
                       <ul>
                         {[0, 1, 2, 3, 4].map((index) => (
                           <li key={index}>
-                            <Star
+                            <svg
+                              className={css.star}
                               style={{
                                 fill:
                                   index < el.stars ? '#2d3f24' : 'transparent',
                               }}
                             >
                               <use href={`${sprite}#star`} />
-                            </Star>
+                            </svg>
                           </li>
                         ))}
                       </ul>
-                      <Date>{`${el.date.slice(8, 10)}.${el.date.slice(
-                        5,
-                        7,
-                      )}.${el.date.slice(0, 4)}`}</Date>
+                      <p className={css.date}>{`${el.date.slice(
+                        8,
+                        10,
+                      )}.${el.date.slice(5, 7)}.${el.date.slice(0, 4)}`}</p>
                       <p>{el.text}</p>
                     </article>
                   </li>
                 ))}
-              </ReviewList>
+              </ul>
               <Paginator
                 setCurrentPage={pageChanger}
                 currentPage={
@@ -227,7 +222,7 @@ const Reviews = () => {
               />
             </>
           )}
-        </SectionReviews>
+        </section>
       )}
     </>
   );

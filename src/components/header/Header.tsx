@@ -1,18 +1,9 @@
-import {
-  HeaderContainer,
-  LimiterConatiner,
-  Logo,
-  Catalog,
-  Actions,
-  NavigationLink,
-  CartMenuBtn,
-  BurgerMenuBtn,
-  Counter,
-} from './Header.styled';
-import sprite from '../../images/sprite.svg';
-import { SearchBar } from './SearchBar/SearchBar';
+import css from './Header.module.scss';
 import { useState, useEffect, useContext } from 'react';
+import { NavLink, Link } from 'react-router-dom';
 import { CartContext, FavoritesContext } from '../Layout';
+import { SearchBar } from './SearchBar/SearchBar';
+import sprite from '../../images/sprite.svg';
 import { checkLocalStorage } from '../../utils';
 
 interface HeaderProps {
@@ -59,48 +50,60 @@ export const Header = ({ setShowCartMenu, setShowMenu }: HeaderProps) => {
   }
 
   return (
-    <HeaderContainer>
-      <LimiterConatiner>
-        <Logo to={'/'}>Brand Logo</Logo>
-        <Catalog to={'/catalog'} title="На сторінку Товарів">
+    <header className={css.header}>
+      <div className="limiter">
+        <Link to={'/'} className={css.logo}>
+          Brand Logo
+        </Link>
+        <NavLink
+          to={'/catalog'}
+          title="На сторінку Товарів"
+          className={css.catalogLink}
+        >
           Каталог
-        </Catalog>
+        </NavLink>
         <SearchBar />
-        <Actions>
-          <NavigationLink to={'/favorites'} title="На сторінку Список бажань">
+        <div className={css.actionsDiv}>
+          <NavLink
+            to={'/favorites'}
+            title="На сторінку Список бажань"
+            className={css.favLink}
+          >
             <svg width={24} height={24}>
               <use href={`${sprite}#favorite`} />
             </svg>
             {inFavorites?.length > 0 && amountInFavorites > 0 && (
-              <Counter>{amountInFavorites}</Counter>
+              <span className={css.counter}>{amountInFavorites}</span>
             )}
-          </NavigationLink>
-          <CartMenuBtn
+          </NavLink>
+          <button
             onClick={() => openCartMenu()}
             title={inCart?.length > 0 ? 'Меню Кошика' : 'Кошик порожній'}
+            className={css.cartMenuBtn}
           >
             <svg width={24} height={24}>
               <use href={`${sprite}#cart`} />
             </svg>
             {inCart?.length > 0 && amountInCart > 0 && (
-              <Counter>{amountInCart}</Counter>
+              <span className={css.counter}>{amountInCart}</span>
             )}
-          </CartMenuBtn>
+          </button>
 
-          <BurgerMenuBtn
+          <button
             type="button"
             title="Меню"
             onClick={() => {
               openMenu();
               setShowMenu(true);
             }}
+            className={css.burgerBtn}
           >
             <svg width={18} height={12}>
               <use href={`${sprite}#burger-menu`} />
             </svg>
-          </BurgerMenuBtn>
-        </Actions>
-      </LimiterConatiner>
-    </HeaderContainer>
+          </button>
+        </div>
+      </div>
+    </header>
   );
 };

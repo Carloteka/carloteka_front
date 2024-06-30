@@ -1,0 +1,115 @@
+.listHeaderWrapper {
+  padding: 8px;
+  width: 100%;
+  font-size: 16px;
+  line-height: calc(23 / 16);
+  text-align: start;
+  background-color: #dad4c8;
+  border-radius: 8px;
+
+  @media screen and (min-width: 834px) {
+    padding: 12px 0;
+    font-size: 20px;
+    line-height: calc(25 / 20);
+  }
+
+  & .mobVers {
+    display: block;
+
+    @media screen and (min-width: 834px) {
+      display: none;
+    }
+  }
+  & .tablVers {
+    display: none;
+
+    @media screen and (min-width: 834px) {
+      display: block;
+    }
+  }
+
+  & .mobVers,
+  & .tablVers {
+    grid-column: 3 / span 2;
+    text-align: end;
+
+    @media screen and (min-width: 834px) {
+      grid-column: 6 / span 4;
+      text-align: left;
+    }
+    @media screen and (min-width: 1440px) {
+      grid-column: 8 / span 5;
+    }
+  }
+}
+
+.name {
+  grid-column: 1 / span 1;
+
+  @media screen and (min-width: 834px) {
+    grid-column: 2 / span 1;
+  }
+}
+
+.price {
+  display: none;
+
+  @media screen and (min-width: 834px) {
+    display: block;
+    grid-column: 4 / span 1;
+  }
+  @media screen and (min-width: 1440px) {
+    grid-column: 7 / span 1;
+  }
+}
+
+.card {
+  display: grid;
+
+  grid-template-rows: 41px 31px 8px 32px 48px;
+
+  @media screen and (max-width: 833px) {
+    grid-template-columns: 60px auto 118px;
+  }
+  @media screen and (min-width: 834px) {
+    grid-template-rows: 158px 25px 97px auto;
+  }
+  @media screen and (min-width: 1440px) {
+    grid-template-rows: auto;
+  }
+}
+
+.clearBtn {
+  margin-left: auto;
+
+  @media screen and (min-width: 834px) {
+    margin-left: 34.38%;
+    width: 416px;
+  }
+  @media screen and (min-width: 1440px) {
+    margin-left: auto;
+  }
+}
+
+.toCatalog {
+  margin: 0 auto;
+  padding: 14.5px 8px;
+
+  @media screen and (min-width: 834px) {
+    margin: 0;
+    padding: 14.5px 24px;
+    width: 328px;
+  }
+  @media screen and (min-width: 1440px) {
+    width: 415px;
+  }
+
+  & > svg {
+    margin-right: 8px;
+    fill: white;
+    transform: rotate(180deg);
+    @media screen and (min-width: 1440px) {
+      margin-right: 49px;
+    }
+  }
+}

@@ -1,17 +1,13 @@
+import css from './AboutPaymentAndDelivery.module.scss';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
-import {
-  PaymentSection,
-  DeliverySection,
-  InfoSection,
-} from './AboutPaymentAndDelivery.styled';
 import sprite from '../../images/sprite.svg';
 import paymentImgJpg from '../../images/high-view-laptop-black-shopping-card-1x.jpg';
 
 const AboutPaymentAndDelivery = () => {
   return (
     <>
-      <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'88px'}>
-        <PaymentSection>
+      <ContainerLimiter>
+        <section className={css.paymentSection}>
           <div>
             <h3>&#8226; Пром-оплата</h3>
             <ul>
@@ -40,8 +36,8 @@ const AboutPaymentAndDelivery = () => {
             width="288"
             height="426"
           />
-        </PaymentSection>
-        <DeliverySection>
+        </section>
+        <section className={css.deliverySection}>
           <h3>Доставка:</h3>
           <details open={true}>
             <summary>
@@ -86,8 +82,8 @@ const AboutPaymentAndDelivery = () => {
               </li>
             </ol>
           </details>
-        </DeliverySection>
-        <InfoSection>
+        </section>
+        <section className={css.infoSection}>
           <h3>Інформація про доставку</h3>
           <p>
             Замовлення оформлені через корзину сайту опрацьовуються
@@ -126,7 +122,7 @@ const AboutPaymentAndDelivery = () => {
             12-21 робочих днів. Доставка за кордон тількидля передплачених
             замовлень та послуг доставки.
           </p>
-        </InfoSection>
+        </section>
       </ContainerLimiter>
     </>
   );

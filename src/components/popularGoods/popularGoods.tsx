@@ -1,5 +1,5 @@
+import css from './popularGoods.module.scss';
 import { useState, useEffect } from 'react';
-import { Section, Title } from './popularGoods.styled';
 import { fetchPopularGoods } from '../../api/api';
 import { SliderPopulars } from './sliderPopulars/SliderPopulars';
 import { Good as Popular } from '../../../@types/custom';
@@ -49,8 +49,8 @@ export const PopularGoods = ({ width }: PopularGoodsProps) => {
   }
 
   return (
-    <Section>
-      <Title>Популярні товари</Title>
+    <section className={css.popularSection}>
+      <h2>Популярні товари</h2>
       <SliderPopulars
         arrayToRender={arrayToRender}
         sliderHandler={sliderHandler}
@@ -59,6 +59,6 @@ export const PopularGoods = ({ width }: PopularGoodsProps) => {
         arrayToRender={arrayToRender.slice(0, 1)}
         sliderHandler={sliderHandler}
       />
-    </Section>
+    </section>
   );
 };

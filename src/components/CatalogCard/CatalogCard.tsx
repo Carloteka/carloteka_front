@@ -1,14 +1,7 @@
+import css from './CatalogCard.module.scss';
 import { useState, useContext } from 'react';
-import { CartContext, FavoritesContext } from '../Layout';
 import { Link } from 'react-router-dom';
-import {
-  ThumbPhoto,
-  Name,
-  Button,
-  Div,
-  FlexContainer,
-  Star,
-} from './CatalogCard.styled';
+import { CartContext, FavoritesContext } from '../Layout';
 import sprite from '../../images/sprite.svg';
 import { toggleLocalStorage, getBanner, checkLocalStorage } from '../../utils';
 import { Good as Popular } from '../../../@types/custom';
@@ -51,27 +44,29 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
 
   return (
     <>
-      <ThumbPhoto>
+      <div className={css.thumbPhoto}>
         <div>
-          <Button
+          <button
             type="button"
             style={{ backgroundColor: inCart ? '#2D3F24' : 'white' }}
             onClick={() => toggleCart()}
             disabled={stock === 'OUT_OF_STOCK'}
+            className={css.cardBtn}
           >
-            <svg style={{ fill: isFavorite ? 'white' : '#101010' }}>
+            <svg style={{ fill: inCart ? 'white' : '#101010' }}>
               <use href={`${sprite}#cart`} />
             </svg>
-          </Button>
-          <Button
+          </button>
+          <button
             type="button"
             style={{ backgroundColor: isFavorite ? '#2D3F24' : 'white' }}
             onClick={() => toggleFavorite()}
+            className={css.cardBtn}
           >
             <svg style={{ fill: isFavorite ? 'white' : '#101010' }}>
               <use href={`${sprite}#favorite`} />
             </svg>
-          </Button>
+          </button>
         </div>
         {!(stock === 'IN_STOCK') && (
           <p
@@ -112,25 +107,25 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
             loading="lazy"
           />
         </Link>
-      </ThumbPhoto>
-      <Name>{name}</Name>
-      <Div>
-        <FlexContainer>
+      </div>
+      <h4 className={css.name}>{name}</h4>
+      <div className={css.infoDiv}>
+        <div className={css.flexBox}>
           <ul>
             {[0, 1, 2, 3, 4].map((index) => (
               <li key={index}>
-                <Star
+                <svg
                   style={{ fill: index < stars ? '#5B5B59' : 'transparent' }}
                 >
                   <use href={`${sprite}#star`} />
-                </Star>
+                </svg>
               </li>
             ))}
           </ul>
           {stars}
-        </FlexContainer>
+        </div>
         <p>₴ {price}</p>
-      </Div>
+      </div>
     </>
   );
 };

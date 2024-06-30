@@ -1,23 +1,8 @@
+import css from './Cart.module.scss';
 import { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { CartContext } from '../../components/Layout';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
-import {
-  ListHeaderWrapper,
-  Name,
-  Price,
-  Quantity,
-  Total,
-  FavoritesList,
-  Card,
-  Button,
-  EmptyMessage,
-  FlexBox,
-  GoToCatalog,
-  FlexContainer,
-  CouponBox,
-  BuyBox,
-  GoToPayment,
-} from './Cart.styled';
 import { CartCard } from '../../components/CartCard/CartCard';
 import {
   addToCart,
@@ -60,71 +45,71 @@ const Cart = () => {
 
   return (
     <>
-      <ContainerLimiter paddingTopMob={'32px'} paddingTopDesc={'56px'}>
-        <ListHeaderWrapper>
-          <Name>Товар</Name>
-          <Price>Ціна</Price>
-          <Quantity>Кількість</Quantity>
-          <Total>Загальна вартість</Total>
-        </ListHeaderWrapper>
-        <FavoritesList>
+      <ContainerLimiter>
+        <div className={`grid ${css.listHeaderWrapper}`}>
+          <p className={css.name}>Товар</p>
+          <p className={css.price}>Ціна</p>
+          <p className={css.quantity}>Кількість</p>
+          <p className={css.total}>Загальна вартість</p>
+        </div>
+        <div className="favorites-cart_list">
           {inCart.map((el: Good) => (
-            <Card key={el.id}>
+            <li className={`grid ${css.card}`} key={el.id}>
               <CartCard
                 good={el}
                 onClickDelete={delFromCart}
                 increment={increment}
               />
-            </Card>
+            </li>
           ))}
-        </FavoritesList>
+        </div>
         {inCart.length > 0 ? (
-          <FlexBox>
-            <GoToCatalog to={'/catalog'} className="secondaryBtn">
+          <div className={css.flexBox}>
+            <Link to={'/catalog'} className={`${css.toCatalog} secondaryBtn`}>
               <svg width={16} height={16}>
                 <use href={`${sprite}#arrow-right`} />
               </svg>
               продовжити покупки
-            </GoToCatalog>
-            <Button
+            </Link>
+            <button
               type="button"
               onClick={() => clearCart()}
-              className="secondaryBtn"
+              className={`${css.cartsBtn} secondaryBtn`}
             >
               Очистити кошик
-            </Button>
-          </FlexBox>
+            </button>
+          </div>
         ) : (
-          <EmptyMessage>
+          <div className="emptyMessage">
             <svg width={124} height={124}>
               <use href={`${sprite}#cart`} />
             </svg>
             <h2>Ваш кошик порожній</h2>
-            <GoToCatalog to={'/catalog'} className="primaryBtn">
+            <Link to={'/catalog'} className={`${css.clearBtn} primaryBtn`}>
               <svg width={14} height={9}>
                 <use href={`${sprite}#arrow-right`} />
               </svg>
               повернутись до покупок
-            </GoToCatalog>
-          </EmptyMessage>
+            </Link>
+          </div>
         )}
         {inCart.length > 0 && (
-          <FlexContainer>
-            <CouponBox>
+          <div className={css.flexContainer}>
+            <form className={css.couponForm}>
               <h3>Купон на знижку</h3>
               <label>
                 Введіть номер купону
                 <input type="text" placeholder="Номер купону" />
               </label>
-              <Button
-                className="secondaryBtn"
+              <button
+                className={`${css.cartsBtn} secondaryBtn`}
                 type="button"
                 onClick={() => console.log('apply coupon')}
               >
                 застосувати купон
-              </Button>
-            </CouponBox>
-            <BuyBox>
+              </button>
+            </form>
+            <div className={css.buyBox}>
               <div>
                 <div>
                   <p>Ціна</p>
@@ -136,14 +121,14 @@ const Cart = () => {
                 </div>
               </div>
 
-              <GoToPayment to={'/delivery'} className="primaryBtn">
+              <Link to={'/delivery'} className={`${css.toPayment} primaryBtn`}>
                 перейти до оплати
                 <svg width={14} height={9}>
                   <use href={`${sprite}#arrow-right`} />
                 </svg>
-              </GoToPayment>
-            </BuyBox>
-          </FlexContainer>
+              </Link>
+            </div>
+          </div>
         )}
       </ContainerLimiter>
     </>

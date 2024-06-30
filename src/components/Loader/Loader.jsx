@@ -1,9 +1,9 @@
-import { LoaderWrap } from './Loader.styled';
+import css from './Loader.module.scss';
 
 export const Loader = () => {
   return (
-    <LoaderWrap>
+    <div className={css.loaderWrapper}>
       <div></div>
-    </LoaderWrap>
+    </div>
   );
 };

@@ -1,14 +1,6 @@
+import css from './MenuCart.module.scss';
 import { useState, useEffect, useContext } from 'react';
 import { CartContext } from '../Layout';
-import {
-  Backdrop,
-  MenuContainer,
-  CloseButton,
-  Card,
-  Img,
-  Price,
-  Total,
-} from './MenuCart.styled';
 import sprite from '../../images/sprite.svg';
 import { Link } from 'react-router-dom';
 import { Good } from '../../../@types/custom';
@@ -42,23 +34,28 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
 
   return (
     <>
-      <Backdrop
+      <div
+        className="backdrop overlay"
         onClick={() => onClickHandle()}
-        style={{ display: showCartMenu ? 'flex' : 'none' }}
-      ></Backdrop>
+        style={{ display: showCartMenu ? 'flex' : 'none', zIndex: 28 }}
+      ></div>
 
-      <MenuContainer $showCartMenu={showCartMenu}>
-        <CloseButton onClick={() => onClickHandle()} title="Закрити меню">
+      <div className={`${css.menuWrapper} ${showCartMenu ? css.show : ''}`}>
+        <button
+          onClick={() => onClickHandle()}
+          title="Закрити меню"
+          className={css.closeBtn}
+        >
           <svg width={24} height={24}>
             <use href={`${sprite}#close`} />
           </svg>
-        </CloseButton>
+        </button>
         {inCart?.length > 0 ? (
           <>
             <ul>
               {inCart?.map((el: Good) => (
-                <Card key={el.id}>
-                  <Img
+                <li className={css.card} key={el.id}>
+                  <img
                     src={
                       import.meta.env.PROD
                         ? `http://carloteka.com/${el.image_set[0].image}`
@@ -71,7 +68,7 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
                   />
                   <div>
                     <h4>{el.name}</h4>
-                    <Price>Ціна: ₴ {el.price}</Price>
+                    <p className="price">Ціна: ₴ {el.price}</p>
                     <p>Кількість: {el?.quantity ? el.quantity : 1}</p>
                   </div>
 
@@ -89,14 +86,14 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
                       <use href={`${sprite}#del-x`} />
                     </svg>
                   </button>
-                </Card>
+                </li>
               ))}
             </ul>
 
-            <Total>
+            <div className={css.total}>
               <p>Вартість:</p>
               <p>₴ {getTotalPrice(inCart)}</p>
-            </Total>
+            </div>
 
             <Link
               to={'/cart'}
@@ -116,7 +113,7 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
         ) : (
           <p>нічого нема</p>
         )}
-      </MenuContainer>
+      </div>
     </>
   );
 };

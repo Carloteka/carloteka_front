@@ -1,4 +1,4 @@
-import { Wrapper } from './PageTitle.styled';
+import css from './PageTitle.module.scss';
 import { useLocation } from 'react-router-dom';
 import { pageTitles } from '../../utils/pageTitles';
 
@@ -19,9 +19,11 @@ export const PageTitle = () => {
   return (
     <>
       {pathname !== '/' && (
-        <Wrapper>
-          <h1 className="limiter">{pageTitles[pathname.slice(1) as Page]}</h1>
-        </Wrapper>
+        <div className="underHeader">
+          <h1 className={`limiter ${css.title}`}>
+            {pageTitles[pathname.slice(1) as Page]}
+          </h1>
+        </div>
       )}
     </>
   );
