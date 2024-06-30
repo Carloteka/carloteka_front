@@ -62,68 +62,6 @@
   }
 }
 
-.react-select-container {
-  width: 100%;
-  .rs__indicator-separator {
-    display: none;
-  }
-
-  .rs__control {
-    padding: 0 8px;
-    border-radius: 6px;
-
-    @media screen and (min-width: 1440px) {
-      padding: 0 16px;
-    }
-  }
-  .rs__input {
-    margin: 0;
-    height: 50px;
-  }
-  .rs__input-container {
-    height: 50px;
-  }
-  .rs__menu {
-    margin-top: 0;
-    border: 1px solid #a7a5a3;
-    border-radius: 6px;
-  }
-  .rs__option:hover {
-    svg {
-      fill: white;
-    }
-  }
-  .rs__option:first-child:hover {
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-  }
-
-  .rs__option:last-child:hover {
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-  }
-  .rs__menu-list {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-  .rs__value-container {
-    padding: 0;
-    height: 50px;
-  }
-  .rs__single-value {
-    margin-left: 0;
-    color: #101010;
-
-    svg {
-      display: none;
-    }
-  }
-  .rs__placeholder {
-    padding-bottom: 4px;
-    color: #a7a5a3;
-  }
-}
-
 .geoIcon {
   padding: 2px 4px;
   fill: #5b5b59;

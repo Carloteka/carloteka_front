@@ -374,7 +374,7 @@ const Delivery = () => {
     inCart.length > 0 && (
       <>
         {/* {isLoading && <Loader />} */}
-        <ContainerLimiter >
+        <ContainerLimiter>
           <section className="deliveryWrapper">
             {serverError ? (
               <p>
@@ -386,7 +386,7 @@ const Delivery = () => {
               <form
                 onSubmit={submitHandle}
                 id="delivery"
-                className={`${css.deliveryForm} payment-delivery_form`}
+                className={`payment-delivery_form ${css.deliveryForm}`}
               >
                 <h2>Адреса доставки</h2>
                 <div>
