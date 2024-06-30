@@ -1,0 +1,41 @@
+.refundBox {
+  ul > li {
+    padding-left: 32px;
+    position: relative;
+  }
+  li::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: black;
+  }
+
+  ol {
+    padding-left: 32px;
+    list-style-position: outside;
+
+    & > li {
+      text-indent: 4px;
+    }
+  }
+
+  a {
+    display: inline;
+    text-decoration: underline;
+    color: blue;
+  }
+
+  p,
+  ul,
+  ol {
+    margin-bottom: 1rem;
+  }
+
+  .bold {
+    font-weight: 600;
+  }
+}

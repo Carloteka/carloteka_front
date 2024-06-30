@@ -1,12 +1,4 @@
-import {
-  SearchBox,
-  Form,
-  Input,
-  Backdrop,
-  SearchResultDiv,
-  GoodListResult,
-  Button,
-} from './SearchBar.styled';
+import css from './SearchBar.module.scss';
 import sprite from '../../../images/sprite.svg';
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
@@ -86,16 +78,16 @@ export const SearchBar = () => {
   return (
     <>
       {isLoading && <Loader />}
-      <SearchBox>
+      <div className={css.searchBox}>
         <search>
-          <Form
+          <form
             onSubmit={handleSubmit}
             style={{
               boxShadow: query ? '1px 1px 7px 0 #c6b89e' : '',
               background: query ? '#fff' : '#F2F0EC',
             }}
           >
-            <Input
+            <input
               type={'search'}
               name="query"
               value={query}
@@ -113,19 +105,26 @@ export const SearchBar = () => {
                 <use href={`${sprite}#search`} />
               </svg>
             </button>
-          </Form>
+          </form>
         </search>
         {showResult && query && (
           <>
-            <Backdrop onClick={() => setShowResult(false)}></Backdrop>
-            <SearchResultDiv>
+            <div
+              className="backdrop"
+              onClick={() => setShowResult(false)}
+            ></div>
+            <div className={css.searchResult}>
               {!(goods.length > 0) && !(searchedCategories.length > 0) ? (
                 <>
                   <p>нічого не знайдено</p>
                   <div>
-                    <Button title="Show catalog" to={'/catalog'}>
+                    <Link
+                      title="Show catalog"
+                      to={'/catalog'}
+                      className={css.linkBtn}
+                    >
                       ПОДИВИТИСЬ КАТАЛОГ
-                    </Button>
+                    </Link>
                   </div>
                 </>
               ) : (
@@ -148,7 +147,7 @@ export const SearchBar = () => {
                                 alt={el.name}
                               />
                               <Link
-                                to={`/catalog?category__i=${el.id}`}
+                                to={`/catalog?category__id=${el.id}`}
                                 onClick={() => setShowResult(false)}
                               >
                                 {el?.name}
@@ -159,7 +158,7 @@ export const SearchBar = () => {
                       </li>
                     )}
                     {goods.length > 0 && (
-                      <GoodListResult>
+                      <li className={css.goodListResult}>
                         <h4>Товари</h4>
                         <ul>
                           {goods.map((el) => (
@@ -175,7 +174,7 @@ export const SearchBar = () => {
                                 alt={el.name}
                               />
                               <Link
-                                to={`/${el.category.id}/${el.slug}/description`}
+                                to={`/${el.slug}/description`}
                                 onClick={() => setShowResult(false)}
                               >
                                 {el?.name}
@@ -184,25 +183,25 @@ export const SearchBar = () => {
                             </li>
                           ))}
                         </ul>
-                      </GoodListResult>
+                      </li>
                     )}
                   </ul>
                   <div>
-                    <Button
+                    <Link
                       title="Show all results"
                       to={`/catalog?query=${query}`}
                       onClick={() => setShowResult(false)}
-                      className="primaryBtn"
+                      className={`${css.linkBtn} primaryBtn`}
                     >
                       Всі результати
-                    </Button>
+                    </Link>
                   </div>
                 </>
               )}
-            </SearchResultDiv>
+            </div>
           </>
         )}
-      </SearchBox>
+      </div>
     </>
   );
 };

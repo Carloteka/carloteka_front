@@ -1,19 +1,10 @@
+import css from './CartCard.module.scss';
 import { useState, useEffect, useContext } from 'react';
 import { CartContext } from '../Layout';
 import { Increment } from '../Increment/Increment';
-import {
-  Img,
-  Name,
-  PriceTitle,
-  Price,
-  AmountTitle,
-  TotalTitle,
-  TotalPrice,
-  DelBtn,
-} from './CartCard.styled';
 import sprite from '../../images/sprite.svg';
-import { Good } from '../../../@types/custom';
 import { checkLocalStorage } from '../../utils';
+import { Good } from '../../../@types/custom';
 
 interface CartCardProps {
   good: Good;
@@ -37,7 +28,7 @@ export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
 
   return (
     <>
-      <Img
+      <img
         src={
           import.meta.env.PROD
             ? `http://carloteka.com/${image_set[0].image}`
@@ -47,13 +38,14 @@ export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
         height={82}
         alt={name}
         loading="lazy"
+        className={css.img}
       />
-      <Name>Декоративна ваза з натурального дерева</Name>
+      <h4 className={css.name}>Декоративна ваза з натурального дерева</h4>
 
-      <PriceTitle>Ціна</PriceTitle>
-      <Price>₴ {price}</Price>
+      <span className={css.priceTitle}>Ціна</span>
+      <p className={css.price}>₴ {price}</p>
 
-      <AmountTitle>Кількість</AmountTitle>
+      <span className={css.amountTitle}>Кількість</span>
       <Increment
         increment={increment}
         good={good}
@@ -61,10 +53,11 @@ export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
         setQuantity={setQuantity}
       />
 
-      <TotalTitle>Загальна вартість</TotalTitle>
-      <TotalPrice>₴ {quantity * price}</TotalPrice>
+      <span className={css.totaltitle}>Загальна вартість</span>
+      <p className={css.totalPrice}>₴ {quantity * price}</p>
 
-      <DelBtn
+      <button
+        className={css.delBtn}
         type="button"
         onClick={() => {
           setAmountInCart((amountInCart: number) => amountInCart - 1);
@@ -74,7 +67,7 @@ export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
         <svg width={16} height={16}>
           <use href={`${sprite}#close`} />
         </svg>
-      </DelBtn>
+      </button>
     </>
   );
 };

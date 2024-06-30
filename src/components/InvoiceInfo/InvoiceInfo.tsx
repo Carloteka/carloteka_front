@@ -1,4 +1,5 @@
-import { InfoBox, Total, PolicyLink } from './InvoiceInfo.styled';
+import css from './InvoiceInfo.module.scss';
+import { Link } from 'react-router-dom';
 import { Good } from '../../../@types/custom';
 // import { getTotalPrice } from '../../utils';
 
@@ -9,7 +10,7 @@ interface InvoiceInfoProps {
 
 export const InvoiceInfo = ({ inCart, total }: InvoiceInfoProps) => {
   return (
-    <InfoBox>
+    <div className={css.infoBox}>
       <h3>Ваше замовлення</h3>
       <div>
         <h4>Товар</h4>
@@ -30,10 +31,10 @@ export const InvoiceInfo = ({ inCart, total }: InvoiceInfoProps) => {
         ))}
       </ul>
 
-      <Total>
+      <div className={css.total}>
         <p>Загальна сума:</p>
         <p>₴ {total.toFixed(2)}</p>
-      </Total>
+      </div>
 
       <h3>Метод оплати</h3>
       <p>
@@ -44,8 +45,11 @@ export const InvoiceInfo = ({ inCart, total }: InvoiceInfoProps) => {
         Ваші особисті дані використовуватимуться для обробки вашого замовлення,
         можливості користування цим веб-сайтом та для інших цілей, описаних у
         нашій
-        <PolicyLink to={'./policy'}> політиці конфіденційності.</PolicyLink>
+        <Link to={'./policy'} className={css.policyLink}>
+          {' '}
+          політиці конфіденційності.
+        </Link>
       </p>
-    </InfoBox>
+    </div>
   );
 };

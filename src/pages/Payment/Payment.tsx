@@ -1,25 +1,11 @@
+import css from './Payment.module.scss';
 import { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { CartContext } from '../../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import { Loader } from '../../components/Loader/Loader';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import { InputMask } from 'primereact/inputmask';
-import {
-  DeliveryBox,
-  GoToDelivery,
-  Form,
-  RelativeDiv,
-  PaymentMethodDiv,
-  FlexContainer,
-  SuccessBox,
-  OrderInfoDiv,
-  DivBorderBottom,
-  DeliveryInfoDiv,
-  HeaderDiv,
-  ModalMain,
-  UserDiv,
-  CardDiv,
-} from './Payment.styled';
 import { Modal } from '../../components/Modal/Modal';
 import { InvoiceInfo } from '../../components/InvoiceInfo/InvoiceInfo';
 import sprite from '../../images/sprite.svg';
@@ -186,10 +172,10 @@ const Payment = () => {
 
   return (
     <>
-      <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'80px'}>
-        <GoToDelivery
+      <ContainerLimiter >
+        <Link
+          className={`${css.toDelivery} secondaryBtn`}
           to={isSuccess ? '/catalog' : '/delivery'}
-          className="secondaryBtn"
         >
           <svg width={16} height={16}>
             <use href={`${sprite}#arrow-right`} />
@@ -199,17 +185,17 @@ const Payment = () => {
               ? 'Повернутись до покупок'
               : 'Повернутись до розділу про доставку'}
           </p>
-        </GoToDelivery>
+        </Link>
         {isSuccess && (
-          <SuccessBox>
+          <div className={css.successBox}>
             <h2>Вітаємо! Ваша оплата успішна!</h2>
             <div>
-              <OrderInfoDiv>
+              <div className={css.orderInfo}>
                 <h3>Деталі замовлення</h3>
-                <DivBorderBottom>
+                <div className={css.borderBottom}>
                   <h4>Товар</h4>
                   <h4>Сума:</h4>
-                </DivBorderBottom>
+                </div>
 
                 <ul>
                   {deliveryData?.cart?.map((el: Good) => (
@@ -229,8 +215,8 @@ const Payment = () => {
                   <span>Разом</span>
                   <p> ₴ {getTotalPrice(inCart)}</p>
                 </div>
-              </OrderInfoDiv>
-              <DeliveryInfoDiv>
+              </div>
+              <div className={css.deliveryInfo}>
                 <h3>Деталі доставки</h3>
                 <p>{getDeliveryInfo('')}</p>
                 <p>
@@ -238,17 +224,24 @@ const Payment = () => {
                   робочих днів. Вартість доставки базується на тарифах Нової
                   Пошти / Укрпошти.
                 </p>
-              </DeliveryInfoDiv>
+              </div>
             </div>
-          </SuccessBox>
+          </div>
         )}
 
         {(!liqPayStatus || liqPayStatus === 'failure') && (
-          <DeliveryBox style={{ paddingBottom: '88px' }}>
-            <div>
-              <Form onSubmit={submitHandle} id="payment">
+          <section
+            className="deliveryWrapper"
+            style={{ paddingBottom: '88px' }}
+          >
+            <div className={css.paymentBox}>
+              <form
+                onSubmit={submitHandle}
+                id="payment"
+                className={css.paymentForm}
+              >
                 <h2>Оплата онлайн</h2>
-                <FlexContainer>
+                <div className={css.flexBox}>
                   <label>
                     Ім’я та прізвище
                     <input
@@ -258,7 +251,7 @@ const Payment = () => {
                       required
                     />
                   </label>
-                  <RelativeDiv>
+                  <div className={css.relativeDiv}>
                     <label>
                       Номер картки
                       <InputMask
@@ -277,7 +270,7 @@ const Payment = () => {
                       width={79}
                       height={16}
                     />
-                  </RelativeDiv>
+                  </div>
 
                   <label className="short">
                     Місяць / Рік
@@ -306,10 +299,10 @@ const Payment = () => {
                   <button type="submit" className="primaryBtn">
                     підтвердити
                   </button>
-                </FlexContainer>
-              </Form>
+                </div>
+              </form>
               <span>OR</span>
-              <PaymentMethodDiv>
+              <div className={css.paymentMethodDiv}>
                 <button
                   type="button"
                   onClick={() => setPaymentMethod('applePay')}
@@ -386,7 +379,7 @@ const Payment = () => {
                     >{`>> LiqPay`}</button>
                   </form>
                 )}
-              </PaymentMethodDiv>
+              </div>
               {liqPayStatus === 'failure' && (
                 <p className="error">Оплата не пройшла. Спробуйте ще раз</p>
               )}
@@ -395,12 +388,12 @@ const Payment = () => {
             <aside style={{ paddingTop: '0' }}>
               <InvoiceInfo inCart={inCart} total={+getTotalPrice(inCart)} />
             </aside>
-          </DeliveryBox>
+          </section>
         )}
         {isLoading && <Loader></Loader>}
         {paymentMethod && (
           <Modal onClose={() => setPaymentMethod(undefined)}>
-            <HeaderDiv>
+            <div className={css.modalHeaderDiv}>
               <svg width={60} height={24}>
                 <use href={`${sprite}#${paymentMethod}`} />
               </svg>
@@ -409,16 +402,16 @@ const Payment = () => {
                   <use href={`${sprite}#close`} />
                 </svg>
               </button>
-            </HeaderDiv>
-            <ModalMain>
-              <UserDiv>
+            </div>
+            <div className={css.modalMain}>
+              <div>
                 <img src={photo} alt="your photo" width={60} height={60} />
                 <div>
                   <p>Тарас Шевченко</p>
                   <p>myemail@gmail.com</p>
                 </div>
-              </UserDiv>
-              <CardDiv>
+              </div>
+              <div className={css.cardDiv}>
                 <img
                   src={visaImg}
                   alt="visa and mastercard label"
@@ -430,7 +423,7 @@ const Payment = () => {
                   }}
                 />
                 <p>{card === 'visa' ? 'Visa' : 'MasterCard'}********1111</p>
-              </CardDiv>
+              </div>
               <form id="paymentSystems" onSubmit={submitHandle}>
                 <div>
                   <label>
@@ -447,7 +440,7 @@ const Payment = () => {
                   підтвердити
                 </button>
               </form>
-            </ModalMain>
+            </div>
           </Modal>
         )}
       </ContainerLimiter>

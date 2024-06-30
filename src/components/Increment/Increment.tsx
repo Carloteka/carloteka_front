@@ -1,4 +1,4 @@
-import { IncrementBox } from './Increment.styled';
+import css from './Increment.module.scss';
 import { Good } from '../../../@types/custom';
 
 interface IncrementProps {
@@ -25,7 +25,7 @@ export const Increment = ({
   }
 
   return (
-    <IncrementBox>
+    <div className={css.incrementBox}>
       <button type="button" onClick={() => incrementHandle(-1)}>
         --
       </button>
@@ -33,6 +33,6 @@ export const Increment = ({
       <button type="button" onClick={() => incrementHandle(1)}>
         +
       </button>
-    </IncrementBox>
+    </div>
   );
 };

@@ -1,14 +1,13 @@
+import css from './Refund.module.scss';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
-import { PrivacyPolicy } from './Refund.styled';
-import { PolicyBox } from '../Policy/Policy.styled';
 import { PopularGoods } from '../../components/popularGoods';
 
 const Refund = () => {
   return (
     <>
-      <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'88px'}>
-        <PolicyBox>
-          <PrivacyPolicy>
+      <ContainerLimiter>
+        <div className="privacyWrapper">
+          <div className={css.refundBox}>
             <h3>Повернення & Обмін</h3>
             <p>
               Повернення або обмін товару здійснюється протягом 14 календарних
@@ -155,11 +154,11 @@ const Refund = () => {
                 відправника!!!
               </li>
             </ul>
-          </PrivacyPolicy>
+          </div>
           <div>
             <PopularGoods width={1} />
           </div>
-        </PolicyBox>
+        </div>
       </ContainerLimiter>
     </>
   );

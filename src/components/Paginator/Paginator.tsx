@@ -1,4 +1,4 @@
-import css from './Paginator.module.css';
+import css from './Paginator.module.scss';
 import { useRef } from 'react';
 
 interface PaginatorProps {

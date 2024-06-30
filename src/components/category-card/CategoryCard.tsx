@@ -1,6 +1,7 @@
-import { Title, LinkBtn } from './CategoryCard.styled';
-import { Slider } from './slider/Slider';
+import css from './CategoryCard.module.scss';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Slider } from './slider/Slider';
 import { Categories } from '../../../@types/custom';
 
 type Image = { image: string };
@@ -43,19 +44,19 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
   // }
   return (
     <>
-      <Title>{name}</Title>
+      <h2 className={css.title}>{name}</h2>
       <Slider
         arrayToRender={arrayToRender}
         sliderHandler={sliderHandler}
         description={name}
       />
       <p>{description}</p>
-      <LinkBtn
-        className="secondaryBtn"
+      <Link
+        className={`secondaryBtn ${css.goBtn}`}
         to={`/catalog?category__id=${category.id}`}
       >
         Переглянути
-      </LinkBtn>
+      </Link>
     </>
   );
 };

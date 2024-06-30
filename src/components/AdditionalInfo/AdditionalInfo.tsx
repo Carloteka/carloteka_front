@@ -1,4 +1,4 @@
-import { SectionAdditionalInfo } from './AdditionalInfo.styled';
+import css from './AdditionalInfo.module.scss';
 import sprite from '../../images/sprite.svg';
 import { useGood } from '../../pages/GoodDetail/GoodDetail';
 import { Good } from '../../../@types/custom';
@@ -8,7 +8,7 @@ const AdditionalInfo = () => {
 
   return (
     Object.keys(good as Good).length > 0 && (
-      <SectionAdditionalInfo>
+      <section className={css.additionalInfoSection}>
         <table>
           <tbody>
             <tr>
@@ -65,7 +65,7 @@ const AdditionalInfo = () => {
             </tbody>
           </table>
         </details>
-      </SectionAdditionalInfo>
+      </section>
     )
   );
 };

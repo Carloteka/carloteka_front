@@ -1,4 +1,4 @@
-import { SliderContainer, ChevronIcon } from './Slider.styled';
+import css from './Slider.module.scss';
 import sprite from '../../../images/sprite.svg';
 
 type Image = { image: string };
@@ -19,16 +19,16 @@ export const Slider = ({
   // setArray(((width+payload)>array.length) || index+payload<0 ? array : arrayToRender.slice(index+payload, width+payload));
   // }
   return (
-    <SliderContainer>
+    <div className={css.sliderWrapper}>
       <button
-        className="btn_left"
+        className={css.btn_left}
         type="button"
         onClick={() => sliderHandler(-1)}
         title="To the previous image"
       >
-        <ChevronIcon width={8} height={14}>
+        <svg width={8} height={14}>
           <use href={`${sprite}#chevronCategory`} />
-        </ChevronIcon>
+        </svg>
       </button>
       <ul>
         {arrayToRender.map((el, index) => (
@@ -49,19 +49,15 @@ export const Slider = ({
       </ul>
 
       <button
-        className="btn_right"
+        className={css.btn_right}
         type="button"
         onClick={() => sliderHandler(1)}
         title="To the next image"
       >
-        <ChevronIcon
-          style={{ transform: 'rotate(180deg)' }}
-          width={8}
-          height={14}
-        >
+        <svg style={{ transform: 'rotate(180deg)' }} width={8} height={14}>
           <use href={`${sprite}#chevronCategory`} />
-        </ChevronIcon>
+        </svg>
       </button>
-    </SliderContainer>
+    </div>
   );
 };

@@ -1,3 +1,4 @@
+import css from './GoodDetail.module.scss';
 import { Suspense, useState, useEffect, useContext } from 'react';
 import { CartContext, FavoritesContext } from '../../components/Layout';
 import {
@@ -11,15 +12,6 @@ import {
 import { Loader } from '../../components/Loader/Loader';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import { Increment } from '../../components/Increment/Increment';
-import {
-  SectionInfo,
-  SellDiv,
-  Price,
-  Material,
-  AddToCartBtn,
-  AddToFavoriteBtn,
-  AdditionalNavigation,
-} from './GoodDetail.styled';
 import { Slider } from '../../components/category-card/slider/Slider';
 import sprite from '../../images/sprite.svg';
 import { fetchItemDetails } from '../../api/api';
@@ -36,6 +28,7 @@ type Image = { image: string };
 
 const GoodDetail = () => {
   const { goodId } = useParams();
+
   const navigate = useNavigate();
 
   const { setAmountInCart } = useContext(CartContext);
@@ -123,21 +116,21 @@ const GoodDetail = () => {
     good && (
       <>
         {isLoading && <Loader />}
-        <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'56px'}>
-          <SectionInfo>
+        <ContainerLimiter>
+          <section className={css.info}>
             <Slider
               arrayToRender={arrayToRender}
               sliderHandler={sliderHandler}
               description={good.name}
             ></Slider>
-            <SellDiv>
+            <div className={css.sellBox}>
               <h3>{good.name}</h3>
-              <Price>₴ {good.price}</Price>
+              <p className={css.price}>₴ {good.price}</p>
               <p>
                 <span>Наявність в магазині: </span>
                 {good.stock === 'IN_STOCK' ? 'так' : getBanner(good.stock)}
               </p>
-              <Material>{good.mini_description}</Material>
+              <p className={css.material}>{good.mini_description}</p>
               <div>
                 <Increment
                   increment={increment}
@@ -147,15 +140,16 @@ const GoodDetail = () => {
                     return;
                   }}
                 />
-                <AddToCartBtn
+                <button
                   type="button"
                   onClick={() => toggleCart()}
-                  className="secondaryBtn"
+                  className={`${css.addToCartBtn} secondaryBtn`}
                   title="Add to the cart"
                 >
                   Додати до кошика
-                </AddToCartBtn>
-                <AddToFavoriteBtn
+                </button>
+                <button
+                  className={css.addToFavoriteBtn}
                   type="button"
                   style={{
                     backgroundColor: isFavorite ? '#2D3F24' : 'transparent',
@@ -172,7 +166,7 @@ const GoodDetail = () => {
                   >
                     <use href={`${sprite}#favorite`} />
                   </svg>
-                </AddToFavoriteBtn>
+                </button>
                 <Link
                   to={'/delivery'}
                   className="primaryBtn"
@@ -185,10 +179,10 @@ const GoodDetail = () => {
                 <span>Категорія: </span>
                 {good.category?.name}
               </p>
-            </SellDiv>
-          </SectionInfo>
+            </div>
+          </section>
 
-          <AdditionalNavigation>
+          <ul className={css.additionalNav}>
             <li>
               <NavLink to="description">Опис &nbsp; /</NavLink>
             </li>
@@ -198,7 +192,7 @@ const GoodDetail = () => {
             <li>
               <NavLink to="reviews">Відгуки</NavLink>
             </li>
-          </AdditionalNavigation>
+          </ul>
 
           <Suspense fallback={<Loader />}>
             <Outlet context={{ good }} />

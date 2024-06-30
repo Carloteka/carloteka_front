@@ -1,14 +1,6 @@
+import css from './FavoritesCard.module.scss';
 import { useContext } from 'react';
 import { CartContext, FavoritesContext } from '../Layout';
-import {
-  FlexContainer,
-  Img,
-  Name,
-  Price,
-  Star,
-  DelBtn,
-  BuyBtn,
-} from './FavoritesCard.styled';
 import sprite from '../../images/sprite.svg';
 import { toggleLocalStorage, checkLocalStorage } from '../../utils';
 import { Good } from '../../../@types/custom';
@@ -53,7 +45,8 @@ export const FavoritesCard = ({ good, onClickDelete }: FavoritesCardProps) => {
 
   return (
     <>
-      <Img
+      <img
+        className={css.img}
         src={
           import.meta.env.PROD
             ? `http://carloteka.com/${image_set[0].image}`
@@ -64,26 +57,25 @@ export const FavoritesCard = ({ good, onClickDelete }: FavoritesCardProps) => {
         alt={name}
         loading="lazy"
       />
-      <Name>Декоративна ваза з натурального дерева</Name>
+      <h4 className={css.name}>Декоративна ваза з натурального дерева</h4>
 
-      <FlexContainer>
+      <div className={css.flexDiv}>
         <ul>
           {[0, 1, 2, 3, 4].map((index) => (
             <li key={index}>
-              <Star
-                style={{ fill: index <= stars ? '#5B5B59' : 'transparent' }}
-              >
+              <svg style={{ fill: index <= stars ? '#5B5B59' : 'transparent' }}>
                 <use href={`${sprite}#star`} />
-              </Star>
+              </svg>
             </li>
           ))}
         </ul>
         {stars}
-      </FlexContainer>
+      </div>
 
-      <Price>₴ {price}</Price>
+      <p className={css.price}>₴ {price}</p>
 
-      <DelBtn
+      <button
+        className={css.delBtn}
         type="button"
         onClick={() => {
           setAmountInFavorites(
@@ -95,15 +87,15 @@ export const FavoritesCard = ({ good, onClickDelete }: FavoritesCardProps) => {
         <svg width={8} height={8}>
           <use href={`${sprite}#close`} />
         </svg>
-      </DelBtn>
+      </button>
 
-      <BuyBtn
+      <button
         type="button"
-        className="primaryBtn"
+        className={`primaryBtn ${css.buyBtn}`}
         onClick={() => buyBtnHandle()}
       >
         Купити
-      </BuyBtn>
+      </button>
     </>
   );
 };

@@ -1,16 +1,8 @@
+import css from './Favorites.module.scss';
 import { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { FavoritesContext } from '../../components/Layout';
 import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter.tsx';
-import {
-  ListHeaderWrapper,
-  Name,
-  Price,
-  FavoritesList,
-  Card,
-  Button,
-  EmptyMessage,
-  GoToCatalog,
-} from './Favorites.styled';
 import { FavoritesCard } from '../../components/FavoritesCard/FavoritesCard';
 import { toggleLocalStorage, checkLocalStorage } from '../../utils';
 import sprite from '../../images/sprite.svg';
@@ -36,44 +28,44 @@ const Favorites = () => {
 
   return (
     <>
-      <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'56px'}>
-        <ListHeaderWrapper>
-          <Name>Товар</Name>
-          <Price>Ціна</Price>
-          <p className="mobVers">Рейтинг, відгуки та ціна товару</p>
-          <p className="tablVers">Рейтинг товару та відгуки</p>
-        </ListHeaderWrapper>
+      <ContainerLimiter>
+        <div className={`grid ${css.listHeaderWrapper}`}>
+          <p className={css.name}>Товар</p>
+          <p className={css.price}>Ціна</p>
+          <p className={css.mobVers}>Рейтинг, відгуки та ціна товару</p>
+          <p className={css.tablVers}>Рейтинг товару та відгуки</p>
+        </div>
         {favorites.length > 0 && (
-          <FavoritesList>
+          <ul className="favorites-cart_list">
             {favorites?.map((el) => (
-              <Card key={el.id}>
+              <li className={`grid ${css.card} `} key={el.id}>
                 <FavoritesCard good={el} onClickDelete={delFromFavorite} />
-              </Card>
+              </li>
             ))}
-          </FavoritesList>
+          </ul>
         )}
 
         {favorites?.length > 0 ? (
-          <Button
-            className="secondaryBtn"
+          <button
+            className={`${css.clearBtn} secondaryBtn`}
             type="button"
             onClick={() => clearFavorites()}
           >
             Очистити список бажань
-          </Button>
+          </button>
         ) : (
-          <EmptyMessage>
+          <div className="emptyMessage">
             <svg width={124} height={124}>
               <use href={`${sprite}#favorite`} />
             </svg>
             <h2>Список бажань порожній</h2>
-            <GoToCatalog to={'/catalog'} className="primaryBtn">
+            <Link to={'/catalog'} className={`${css.toCatalog} primaryBtn`}>
               <svg width={14} height={9}>
                 <use href={`${sprite}#arrow-right`} />
               </svg>
               повернутись до покупок
-            </GoToCatalog>
-          </EmptyMessage>
+            </Link>
+          </div>
         )}
       </ContainerLimiter>
     </>
