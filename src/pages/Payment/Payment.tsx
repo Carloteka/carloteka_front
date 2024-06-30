@@ -172,9 +172,9 @@ const Payment = () => {
 
   return (
     <>
-      <ContainerLimiter >
+      <ContainerLimiter>
         <Link
-          className={`${css.toDelivery} secondaryBtn`}
+          className={`secondaryBtn ${css.toDelivery}`}
           to={isSuccess ? '/catalog' : '/delivery'}
         >
           <svg width={16} height={16}>
@@ -238,7 +238,7 @@ const Payment = () => {
               <form
                 onSubmit={submitHandle}
                 id="payment"
-                className={css.paymentForm}
+                className={`payment-delivery_form ${css.paymentForm}`}
               >
                 <h2>Оплата онлайн</h2>
                 <div className={css.flexBox}>
