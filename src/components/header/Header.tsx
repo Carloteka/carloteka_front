@@ -5,6 +5,7 @@ import { CartContext, FavoritesContext } from '../Layout';
 import { SearchBar } from './SearchBar/SearchBar';
 import sprite from '../../images/sprite.svg';
 import { checkLocalStorage } from '../../utils';
+import logo from '../../images/Logo-Carloteka.png';
 
 interface HeaderProps {
   setShowMenu: (arg0: boolean) => void;
@@ -53,7 +54,7 @@ export const Header = ({ setShowCartMenu, setShowMenu }: HeaderProps) => {
     <header className={css.header}>
       <div className="limiter">
         <Link to={'/'} className={css.logo}>
-          Brand Logo
+          <img src={logo} width={112} height={96} alt={'carloteka logo'} />
         </Link>
         <NavLink
           to={'/catalog'}
@@ -70,7 +71,7 @@ export const Header = ({ setShowCartMenu, setShowMenu }: HeaderProps) => {
             className={css.favLink}
           >
             <svg width={24} height={24}>
-              <use href={`${sprite}#favorite`} />
+              <use href={`${sprite}#heart`} />
             </svg>
             {inFavorites?.length > 0 && amountInFavorites > 0 && (
               <span className={css.counter}>{amountInFavorites}</span>

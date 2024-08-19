@@ -1,10 +1,32 @@
 .thumbPhoto {
   position: relative;
 
-  &:hover {
-    div {
-      display: flex;
+  .favBtn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 40px;
+    height: 40px;
+
+    svg {
+      width: 24px;
+      height: 22px;
+      stroke: #2d3f24;
     }
+  }
+
+  .banners {
+    padding: 2px 4px;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    display: inline-flex;
+    font-size: 13px;
+    line-height: calc(20 / 13);
+    color: white;
+    background-color: #b4a525;
+    text-transform: capitalize;
+    border-radius: 6px;
   }
 
   img {
@@ -22,59 +44,17 @@
       height: 304px;
     }
   }
-
-  div {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    width: 116px;
-    height: 50px;
-    display: none;
-    gap: 16px;
-    z-index: 1;
-  }
-
-  p {
-    padding-left: 4px;
-    position: absolute;
-    top: 13px;
-    left: 16px;
-    width: 148px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    font-size: 13px;
-    line-height: calc(20 / 13);
-    color: white;
-    background-color: #b4a525;
-  }
-}
-
-.cardBtn {
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-
-  svg {
-    width: 24px;
-    height: 22px;
-  }
-
-  &:hover {
-    box-shadow: 1px 1px 7px 0 rgba(218, 212, 200, 70%);
-  }
 }
 
 .name {
   margin: 16px 0;
+  font-weight: 400;
 
   @media screen and (min-width: 834px) {
     margin: 16px 0 8px;
   }
   @media screen and (min-width: 1440px) {
-    margin: 16px 0 24px;
+    margin: 8px 0 16px;
   }
 }
 
@@ -105,6 +85,7 @@
   align-items: baseline;
   gap: 16px;
   justify-content: center;
+  line-height: 1;
 
   @media screen and (min-width: 834px) {
     justify-content: flex-start;
@@ -121,4 +102,23 @@
       height: 15px;
     }
   }
+}
+
+.cardBtn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 80px;
+  height: 40px;
+  border-radius: 6px;
+  background-color: #2d3f24;
+
+  svg {
+    width: 24px;
+    height: 22px;
+  }
+
+  // &:hover {
+  //   box-shadow: 1px 1px 7px 0 rgba(218, 212, 200, 70%);
+  // }
 }

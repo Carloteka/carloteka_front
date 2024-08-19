@@ -27,7 +27,7 @@ export const SliderPopulars = ({
 
       <ul className={css.sliderItems}>
         {arrayToRender.map((el, index) => (
-          <li key={index}>
+          <li key={index} className="productCard">
             <CatalogCard item={el} />
           </li>
         ))}

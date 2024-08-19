@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = import.meta.env.PROD
+axios.defaults.baseURL = import.meta.env.DEV
   ? 'http://localhost:8000/api'
   : 'http://carloteka.com/api';
 

@@ -57,6 +57,7 @@
     }
 
     &:nth-child(3) {
+      padding-bottom: 0;
       border: none;
     }
 
@@ -232,21 +233,19 @@
 }
 
 .flexDiv {
+  margin-bottom: 16px;
+  display: inline-flex;
+  text-align: left;
+  order: 2;
+
   @media screen and (max-width: 833px) {
     order: 1;
-    margin-bottom: 16px;
     & > span {
       display: none;
     }
   }
 
-  margin-bottom: 24px;
-  display: inline-flex;
-  text-align: left;
-  order: 2;
-
   @media screen and (min-width: 834px) and (max-width: 1439px) {
-    margin-bottom: 32px;
     flex-direction: column;
     gap: 8px;
 
@@ -268,7 +267,7 @@
     gap: 24px;
   }
   @media screen and (min-width: 1440px) {
-    gap: 32px;
+    gap: 40px 32px;
   }
 
   li {

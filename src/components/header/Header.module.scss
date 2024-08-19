@@ -42,39 +42,21 @@
 
   .logo {
     margin-right: 0;
-    background: #2d3f24;
-    min-width: 34px;
-    max-width: 34px;
-    height: 34px;
-    color: #dad4c8;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 10px;
-    line-height: calc(14 / 10);
-    letter-spacing: 0;
-
-    @media screen and (min-width: 834px) {
-      min-width: 64px;
-      max-width: 64px;
-      height: 64px;
-      font-size: 13px;
-      line-height: calc(20 / 13);
-      text-wrap: nowrap;
-    }
 
     @media screen and (min-width: 1440px) {
-      margin-right: 144px;
-      min-width: 80px;
-      height: 80px;
-      word-spacing: -4px;
-      font-size: 14px;
-      line-height: calc(21 / 14);
+      margin-right: 102px;
     }
-    &:visited {
-      color: #dad4c8;
+
+    img {
+      width: 34px;
+      @media screen and (min-width: 834px) {
+        width: 64px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        width: 112px;
+        height: 96px;
+      }
     }
   }
 
@@ -97,7 +79,7 @@
   align-items: center;
   gap: 4px;
 
-  button {
+  & > * {
     @media screen and (max-width: 833px) {
       width: 16px;
       height: 16px;
@@ -112,6 +94,21 @@
     }
   }
 
+  button {
+    // @media screen and (max-width: 833px) {
+    //   width: 16px;
+    //   height: 16px;
+    // }
+    // @media screen and (min-width: 834px) {
+    //   width: 24px;
+    //   height: 24px;
+    // }
+    // @media screen and (min-width: 1440px) {
+    //   width: 40px;
+    //   height: 40px;
+    // }
+  }
+
   svg {
     fill: #101010;
   }
@@ -122,7 +119,7 @@
 
   @media screen and (min-width: 1440px) {
     justify-content: flex-end;
-    gap: 80px;
+    gap: 56px;
     width: 232px;
   }
 
@@ -130,8 +127,13 @@
     position: relative;
 
     @media screen and (min-width: 1440px) {
-      width: 40px;
-      height: 40px;
+      // width: 40px;
+      // height: 40px;
+
+      svg {
+        stroke: #2d3f24;
+        fill: transparent;
+      }
     }
 
     @media screen and (max-width: 833px) {
