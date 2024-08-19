@@ -48,9 +48,11 @@
     }
 
     img {
-      width: 34px;
+      width: 45px;
+      height: 38px;
       @media screen and (min-width: 834px) {
-        width: 64px;
+        width: 80px;
+        height: 66px;
       }
 
       @media screen and (min-width: 1440px) {
@@ -80,37 +82,8 @@
   gap: 4px;
 
   & > * {
-    @media screen and (max-width: 833px) {
-      width: 16px;
-      height: 16px;
-    }
-    @media screen and (min-width: 834px) {
-      width: 24px;
-      height: 24px;
-    }
-    @media screen and (min-width: 1440px) {
-      width: 40px;
-      height: 40px;
-    }
-  }
-
-  button {
-    // @media screen and (max-width: 833px) {
-    //   width: 16px;
-    //   height: 16px;
-    // }
-    // @media screen and (min-width: 834px) {
-    //   width: 24px;
-    //   height: 24px;
-    // }
-    // @media screen and (min-width: 1440px) {
-    //   width: 40px;
-    //   height: 40px;
-    // }
-  }
-
-  svg {
-    fill: #101010;
+    width: 40px;
+    height: 40px;
   }
 
   @media screen and (min-width: 834px) {
@@ -126,14 +99,9 @@
   .favLink {
     position: relative;
 
-    @media screen and (min-width: 1440px) {
-      // width: 40px;
-      // height: 40px;
-
-      svg {
-        stroke: #2d3f24;
-        fill: transparent;
-      }
+    svg {
+      stroke: #2d3f24;
+      fill: transparent;
     }
 
     @media screen and (max-width: 833px) {
@@ -150,8 +118,8 @@
 
     @media screen and (max-width: 833px) {
       svg {
-        width: 12px;
-        height: 8px;
+        width: 18px;
+        height: 12px;
       }
     }
   }
@@ -162,7 +130,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  top: -14px;
+  top: -2px;
   right: -2px;
   width: 14px;
   height: 14px;
@@ -173,13 +141,17 @@
   color: #f2f0ec;
   background-color: #2d3f24;
 
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
     top: -10px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    font-size: 13px;
+    line-height: calc(20 / 13);
+  }
+  @media screen and (min-width: 1440px) {
     right: -20px;
     width: 25px;
     height: 25px;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: calc(20 / 13);
   }
 }

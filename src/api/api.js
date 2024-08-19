@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = import.meta.env.DEV
-  ? 'http://localhost:8000/api'
-  : 'http://carloteka.com/api';
+axios.defaults.baseURL = import.meta.env.PROD
+  ? 'http://carloteka.com/api'
+  : 'http://localhost:8000/api';
 
 export const fetchContacts = async () => {
   try {
