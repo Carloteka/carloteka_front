@@ -1,0 +1,128 @@
+.menuWrapper {
+  padding: 120px 16px 120px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  min-height: 1024px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  background-color: white;
+  z-index: 30;
+  transition: right 0.25s ease-out;
+  right: -1400px;
+
+  @media screen and (min-width: 834px) {
+    padding: 112px;
+    gap: 72px;
+    width: 592px;
+  }
+  a {
+    justify-content: flex-start;
+  }
+
+  @media screen and (max-width: 1439px) {
+    h3 {
+      font-size: 24px;
+      line-height: calc(31 / 24);
+    }
+  }
+
+  &.show {
+    right: 0;
+  }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 56px;
+  right: 16px;
+  width: 24px;
+  height: 24px;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    stroke: #101010;
+    @media screen and (min-width: 1440px) {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  @media screen and (min-width: 1440px) {
+    left: 56px;
+  }
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.navListFlexItem {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  cursor: pointer;
+
+  svg {
+    padding: 5px 4px;
+    fill: #101010;
+  }
+}
+
+.categoriesList {
+  padding: 16px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  li {
+    @media screen and (min-width: 1440px) {
+      width: 352px;
+    }
+  }
+}
+
+.largeLink {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: calc(31 / 24);
+}
+
+.contactsDiv {
+  h3 {
+    margin-bottom: 10px;
+  }
+  ul:first-child {
+    margin-bottom: 13px;
+  }
+  li {
+    margin-bottom: 9px;
+  }
+  li:last-child {
+    margin-bottom: 0;
+  }
+
+  .tel {
+    color: #2d3f24;
+    a {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: calc(25 / 18);
+      color: #2d3f24;
+    }
+  }
+
+  .socials {
+    display: flex;
+    gap: 16px;
+    height: 24px;
+
+    svg {
+      fill: #2d3f24;
+    }
+  }
+}

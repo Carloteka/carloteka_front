@@ -1,55 +1,33 @@
-import { SectionAdditionalInfo } from './AdditionalInfo.styled';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { fetchItemDetails } from '../../api/api';
+import css from './AdditionalInfo.module.scss';
 import sprite from '../../images/sprite.svg';
-
-type Good = {
-  height: number;
-  width: number;
-  length: number;
-};
+import { useGood } from '../../pages/GoodDetail/GoodDetail';
+import { Good } from '../../../@types/custom';
 
 const AdditionalInfo = () => {
-  const { goodId } = useParams();
-
-  const [good, setGood] = useState<Good>();
-
-  useEffect(() => {
-    async function getGoodDetail() {
-      try {
-        const data = await fetchItemDetails(goodId);
-        console.log(data);
-        setGood(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getGoodDetail();
-  }, [goodId]);
+  const { good } = useGood();
 
   return (
-    good && (
-      <SectionAdditionalInfo>
+    Object.keys(good as Good).length > 0 && (
+      <section className={css.additionalInfoSection}>
         <table>
           <tbody>
             <tr>
               <td>Матеріал</td>
               <td>Дерево, вкрите коричневим лаком, найвищого рівня якості</td>
             </tr>
-            {good.length && (
+            {good?.length && (
               <tr>
                 <td>Довжина</td>
                 <td>{Math.floor(good.length)} см</td>
               </tr>
             )}
-            {good.height && (
+            {good?.height && (
               <tr>
                 <td>Висота</td>
                 <td>{Math.floor(good.height)} см</td>
               </tr>
             )}
-            {good.width && (
+            {good?.width && (
               <tr>
                 <td>Діаметр</td>
                 <td>{Math.floor(good.width)} см</td>
@@ -87,7 +65,7 @@ const AdditionalInfo = () => {
             </tbody>
           </table>
         </details>
-      </SectionAdditionalInfo>
+      </section>
     )
   );
 };

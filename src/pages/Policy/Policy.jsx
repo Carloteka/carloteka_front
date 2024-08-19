@@ -1,15 +1,13 @@
-import { PageTitle } from '../../components/pageTitle/PageTitle';
+import css from './Policy.module.scss';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
-import { PolicyBox, PrivacyPolicy } from './Policy.styled';
 import { PopularGoods } from '../../components/popularGoods';
 
 const Policy = () => {
   return (
     <>
-      <PageTitle>Політика конфіденційності</PageTitle>
-      <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'88px'}>
-        <PolicyBox>
-          <PrivacyPolicy>
+      <ContainerLimiter >
+        <div className="privacyWrapper">
+          <div className={css.policyBox}>
             <h3>Політика конфіденційності</h3>
             <ol>
               <li>
@@ -498,11 +496,11 @@ const Policy = () => {
                 </ul>
               </li>
             </ol>
-          </PrivacyPolicy>
+          </div>
           <div>
             <PopularGoods width={1} />
           </div>
-        </PolicyBox>
+        </div>
       </ContainerLimiter>
     </>
   );

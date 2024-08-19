@@ -1,9 +1,9 @@
+import css from './Home.module.scss';
 import { useState, useEffect } from 'react';
 import { Greeting } from '../../components/greeting';
 import { CategoryCard } from '../../components/category-card';
 import { PopularGoods } from '../../components/popularGoods';
 // import categoryData from 'src/mockdata/categories.json';
-import { CategorySection, List, Category } from './Home.styled';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import { Categories } from '../../../@types/custom';
 
@@ -23,16 +23,16 @@ const Home = () => {
   return (
     <>
       <Greeting />
-      <ContainerLimiter paddingTopMob="40px" paddingTopDesc={'88px'}>
-        <CategorySection>
-          <List>
+      <ContainerLimiter>
+        <section className={css.categories}>
+          <ul>
             {categories?.map((el: Categories) => (
-              <Category key={el.id}>
+              <li key={el.id} className={css.category}>
                 <CategoryCard category={el} />
-              </Category>
+              </li>
             ))}
-          </List>
-        </CategorySection>
+          </ul>
+        </section>
 
         <PopularGoods width={4} />
       </ContainerLimiter>

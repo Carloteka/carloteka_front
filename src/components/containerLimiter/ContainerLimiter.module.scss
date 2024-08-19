@@ -1,0 +1,15 @@
+.containerLimiter {
+  margin: 0 auto;
+  padding: 16px 16px 72px;
+  text-align: center;
+
+  @media screen and (min-width: 834px) {
+    padding: 56px 0;
+    text-align: left;
+  }
+
+  @media screen and (min-width: 1440px) {
+    padding: 40px 0 112px;
+    text-align: start;
+  }
+}

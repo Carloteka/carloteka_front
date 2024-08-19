@@ -1,31 +1,35 @@
+import css from './GoodDetail.module.scss';
 import { Suspense, useState, useEffect, useContext } from 'react';
 import { CartContext, FavoritesContext } from '../../components/Layout';
-import { Outlet, useParams, Link, NavLink } from 'react-router-dom';
-import { PageTitle } from '../../components/pageTitle/PageTitle';
+import {
+  Outlet,
+  useParams,
+  Link,
+  NavLink,
+  useOutletContext,
+  useNavigate,
+} from 'react-router-dom';
 import { Loader } from '../../components/Loader/Loader';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import { Increment } from '../../components/Increment/Increment';
-import {
-  SectionInfo,
-  SellDiv,
-  Price,
-  Material,
-  AddToCartBtn,
-  AddToFavoriteBtn,
-  AdditionalNavigation,
-} from './GoodDetail.styled';
 import { Slider } from '../../components/category-card/slider/Slider';
 import sprite from '../../images/sprite.svg';
 import { fetchItemDetails } from '../../api/api';
-import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
-import { addToCart } from '../../utils/addToCart';
-import { getBanner } from '../../utils/getBanner';
+import {
+  addToCart,
+  getBanner,
+  toggleLocalStorage,
+  checkLocalStorage,
+} from '../../utils';
 import { Good } from '../../../@types/custom';
 
+type ContextType = { good: Good | null };
 type Image = { image: string };
 
 const GoodDetail = () => {
   const { goodId } = useParams();
+
+  const navigate = useNavigate();
 
   const { setAmountInCart } = useContext(CartContext);
   const { setAmountInFavorites } = useContext(FavoritesContext);
@@ -39,9 +43,14 @@ const GoodDetail = () => {
       try {
         setIsLoading(true);
         const data = await fetchItemDetails(goodId);
+
+        if (!data) {
+          navigate('/');
+          return;
+        }
         setArray(data.image_set);
         setGood(data);
-        setIsFavorite(favoriteArray.includes(data.id));
+        setIsFavorite(favoriteArray.some((el) => el.id === data.id));
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -50,15 +59,9 @@ const GoodDetail = () => {
     getGoodDetail();
   }, [goodId]);
 
-  let favoriteArray: number[] = [];
+  const favoriteArray: { id: number }[] = checkLocalStorage('favorite', []);
 
-  if (localStorage.getItem('favorite')) {
-    favoriteArray = JSON.parse(localStorage.getItem('favorite') as string);
-  } else {
-    localStorage.setItem('favorite', JSON.stringify(favoriteArray));
-  }
-
-  const isInFavorite: boolean = favoriteArray.includes(good?.id);
+  const isInFavorite: boolean = favoriteArray.some((el) => el.id === good?.id);
   const [isFavorite, setIsFavorite] = useState(isInFavorite);
 
   const [amount, setAmount] = useState(1);
@@ -95,7 +98,7 @@ const GoodDetail = () => {
   }
 
   function toggleFavorite() {
-    toggleLocalStorage(isFavorite, 'favorite', good.id);
+    toggleLocalStorage(isFavorite, 'favorite', { id: good.id });
     setIsFavorite((prev) => !prev);
     setAmountInFavorites((amountInFavorites: number) =>
       isFavorite ? amountInFavorites - 1 : amountInFavorites + 1,
@@ -103,7 +106,7 @@ const GoodDetail = () => {
   }
 
   function toggleCart() {
-    const isNeedAddNewToCart = addToCart(amount, good.id, 'add');
+    const isNeedAddNewToCart = addToCart(amount, good, 'add');
 
     isNeedAddNewToCart &&
       setAmountInCart((amountInCart: number) => amountInCart + 1);
@@ -113,44 +116,46 @@ const GoodDetail = () => {
     good && (
       <>
         {isLoading && <Loader />}
-        <PageTitle>{good.name}</PageTitle>
-        <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'56px'}>
-          <SectionInfo>
+        <ContainerLimiter>
+          <section className={css.info}>
             <Slider
               arrayToRender={arrayToRender}
               sliderHandler={sliderHandler}
               description={good.name}
             ></Slider>
-            <SellDiv>
+            <div className={css.sellBox}>
               <h3>{good.name}</h3>
-              <Price>₴ {good.price}</Price>
+              <p className={css.price}>₴ {good.price}</p>
               <p>
                 <span>Наявність в магазині: </span>
                 {good.stock === 'IN_STOCK' ? 'так' : getBanner(good.stock)}
               </p>
-              <Material>{good.mini_description}</Material>
+              <p className={css.material}>{good.mini_description}</p>
               <div>
                 <Increment
                   increment={increment}
-                  id={good.id}
+                  good={good}
                   quantity={amount}
                   setQuantity={() => {
                     return;
                   }}
                 />
-                <AddToCartBtn
+                <button
                   type="button"
                   onClick={() => toggleCart()}
-                  className="secondaryBtn"
+                  className={`${css.addToCartBtn} secondaryBtn`}
+                  title="Add to the cart"
                 >
                   Додати до кошика
-                </AddToCartBtn>
-                <AddToFavoriteBtn
+                </button>
+                <button
+                  className={css.addToFavoriteBtn}
                   type="button"
                   style={{
                     backgroundColor: isFavorite ? '#2D3F24' : 'transparent',
                   }}
                   onClick={() => toggleFavorite()}
+                  title="Add to favorites"
                 >
                   <svg
                     width={24}
@@ -161,8 +166,12 @@ const GoodDetail = () => {
                   >
                     <use href={`${sprite}#favorite`} />
                   </svg>
-                </AddToFavoriteBtn>
-                <Link to={'/cart'} className="primaryBtn">
+                </button>
+                <Link
+                  to={'/delivery'}
+                  className="primaryBtn"
+                  onClick={() => toggleCart()}
+                >
                   Купити в один клік
                 </Link>
               </div>
@@ -170,10 +179,10 @@ const GoodDetail = () => {
                 <span>Категорія: </span>
                 {good.category?.name}
               </p>
-            </SellDiv>
-          </SectionInfo>
+            </div>
+          </section>
 
-          <AdditionalNavigation>
+          <ul className={css.additionalNav}>
             <li>
               <NavLink to="description">Опис &nbsp; /</NavLink>
             </li>
@@ -183,10 +192,10 @@ const GoodDetail = () => {
             <li>
               <NavLink to="reviews">Відгуки</NavLink>
             </li>
-          </AdditionalNavigation>
+          </ul>
 
           <Suspense fallback={<Loader />}>
-            <Outlet />
+            <Outlet context={{ good }} />
           </Suspense>
         </ContainerLimiter>
       </>
@@ -194,4 +203,7 @@ const GoodDetail = () => {
   );
 };
 
+export function useGood() {
+  return useOutletContext<ContextType>();
+}
 export default GoodDetail;

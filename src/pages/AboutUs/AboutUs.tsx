@@ -1,16 +1,5 @@
-import { PageTitle } from '../../components/pageTitle/PageTitle';
+import css from './AboutUs.module.scss';
 import { Link } from 'react-router-dom';
-import {
-  SectionAboutBrand,
-  FirstP,
-  Table,
-  SectionAboutShop,
-  Img1,
-  Img2,
-  Img3,
-  Img4,
-  Img5,
-} from './AboutUs.styled';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import sprite from '../../images/sprite.svg';
 import example1Png from '../../images/about-Group-1026.png';
@@ -29,8 +18,7 @@ import imgAvif from '../../images/lamination-wood-grade-cylinders-manufacturer-1
 const AboutUs = () => {
   return (
     <>
-      <PageTitle>Про нас</PageTitle>
-      <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'80px'}>
+      <ContainerLimiter>
         <picture>
           <source
             srcSet={imgAvif}
@@ -46,14 +34,14 @@ const AboutUs = () => {
           />
         </picture>
 
-        <SectionAboutBrand>
+        <section className={css.aboutBrandSection}>
           <div>
-            <FirstP>
+            <p className={css.firstP}>
               Carloteka - це український сімейний бренд, який подарував
               позитивні емоції сотням тисяч людей. Ми розробляємо унікальну
               продукцію, яка відрізняється високою якістю і створена з любов'ю
               до наших клієнтів.
-            </FirstP>
+            </p>
             <p>
               Компанія Carloteka була заснована у Lorem ipsum dolor sit amet
               consectetur adipisicing elit. Reprehenderit architecto impedit
@@ -75,60 +63,59 @@ const AboutUs = () => {
               ducimus in velit, quo rem impedit reprehenderit.
             </p>
           </div>
-          <div>
-            <Table>
-              <div>
-                <p>Назва компанії</p>
-                <p className="companyTitle">Карлотека</p>
-              </div>
-              <div>
-                <p>Власник</p>
-                <p>Зайцева Наталія</p>
-              </div>
-              <div>
-                <p>Адреса</p>
-                <p>
-                  вул. А.Фарба 4б,<br></br> Дніпро, Україна
-                </p>
-              </div>
-              <div>
-                <p className="telNo">Номер телефону</p>
-                <p>
-                  <a href="tel:+380955810075" title="Call +380955810075">
-                    +380 (95) 581-00-75
-                  </a>
-                </p>
-              </div>
-              <div>
-                <p style={{ position: 'absolute', width: '71px' }}>
-                  Відділ продажу
-                </p>
-                <p style={{ marginLeft: 'auto' }}>
-                  <a href="tel:+380955810075" title="Call +380955810075">
-                    +380955810075
-                  </a>
-                  <a href="tel:+380955810075" title="Call +380955810075">
-                    +380955810075
-                  </a>
-                  <a
-                    href="mailto:info.carloteka@gmail.com"
-                    title="mail to info.carloteka@gmail.com"
-                  >
-                    info.carloteka@gmail.com
-                  </a>
-                </p>
-              </div>
-            </Table>
+
+          <div className={css.table}>
+            <div>
+              <p>Назва компанії</p>
+              <p className="companyTitle">Карлотека</p>
+            </div>
+            <div>
+              <p>Власник</p>
+              <p>Зайцева Наталія</p>
+            </div>
+            <div>
+              <p>Адреса</p>
+              <p>
+                вул. А.Фарба 4б,<br></br> Дніпро, Україна
+              </p>
+            </div>
+            <div>
+              <p className="telNo">Номер телефону</p>
+              <p>
+                <a href="tel:+380955810075" title="Call +380955810075">
+                  +380 (95) 581-00-75
+                </a>
+              </p>
+            </div>
+            <div>
+              <p style={{ position: 'absolute', width: '71px' }}>
+                Відділ продажу
+              </p>
+              <p style={{ marginLeft: 'auto' }}>
+                <a href="tel:+380955810075" title="Call +380955810075">
+                  +380955810075
+                </a>
+                <a href="tel:+380955810075" title="Call +380955810075">
+                  +380955810075
+                </a>
+                <a
+                  href="mailto:info.carloteka@gmail.com"
+                  title="mail to info.carloteka@gmail.com"
+                >
+                  info.carloteka@gmail.com
+                </a>
+              </p>
+            </div>
           </div>
-        </SectionAboutBrand>
-        <SectionAboutShop>
+        </section>
+        <section className={css.aboutShopSection}>
           <div>
-            <FirstP>
+            <p className={css.firstP}>
               У нашому інтернет-магазині представлені тільки якісні дерев'яні
               вироби, в тому числі і власного виробництва з натурального дерева.
               У нас Ви можете купити або замовити іграшкові мечі, щити, машинки,
               пазли, 3Д пазли.
-            </FirstP>
+            </p>
             <p>
               Ми виготовляємо для ресторанів, кафе, барів, магазинів будь-який
               посуд з дерева: підноси для піци, посуд для суші, підноси для
@@ -147,8 +134,8 @@ const AboutUs = () => {
               </svg>
             </Link>
           </div>
-          <div>
-            <Img1>
+          <div className={css.imageDiv}>
+            <picture className={css.img1}>
               <source
                 srcSet={example1Avif}
                 width="229"
@@ -162,8 +149,8 @@ const AboutUs = () => {
                 height="343"
                 loading="lazy"
               />
-            </Img1>
-            <Img2>
+            </picture>
+            <picture className={css.img2}>
               <source
                 srcSet={example2Avif}
                 width="343"
@@ -177,8 +164,8 @@ const AboutUs = () => {
                 height="228"
                 loading="lazy"
               />
-            </Img2>
-            <Img3>
+            </picture>
+            <picture className={css.img3}>
               <source
                 srcSet={example3Avif}
                 width="345"
@@ -192,8 +179,8 @@ const AboutUs = () => {
                 height="276"
                 loading="lazy"
               />
-            </Img3>
-            <Img4>
+            </picture>
+            <picture className={css.img4}>
               <source
                 srcSet={example4Avif}
                 width="345"
@@ -207,8 +194,8 @@ const AboutUs = () => {
                 height="276"
                 loading="lazy"
               />
-            </Img4>
-            <Img5>
+            </picture>
+            <picture className={css.img5}>
               <source
                 srcSet={example5Avif}
                 width="276"
@@ -222,9 +209,9 @@ const AboutUs = () => {
                 height="345"
                 loading="lazy"
               />
-            </Img5>
+            </picture>
           </div>
-        </SectionAboutShop>
+        </section>
       </ContainerLimiter>
     </>
   );

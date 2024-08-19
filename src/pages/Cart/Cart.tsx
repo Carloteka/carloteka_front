@@ -1,57 +1,25 @@
+import css from './Cart.module.scss';
 import { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { CartContext } from '../../components/Layout';
-import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
-import {
-  ListHeaderWrapper,
-  Name,
-  Price,
-  Quantity,
-  FavoritesList,
-  Card,
-  Button,
-  EmptyMessage,
-  FlexBox,
-  GoToCatalog,
-  FlexContainer,
-  CouponBox,
-  BuyBox,
-  GoToPayment,
-} from './Cart.styled';
 import { CartCard } from '../../components/CartCard/CartCard';
-import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
-import { addToCart } from '../../utils/addToCart';
+import {
+  addToCart,
+  toggleLocalStorage,
+  checkLocalStorage,
+  getTotalPrice,
+} from '../../utils';
 import sprite from '../../images/sprite.svg';
 import { Good } from '../../../@types/custom';
 
 const Cart = () => {
   const { setAmountInCart } = useContext(CartContext);
 
-  let goodsInCart: { id: number; amount: number }[] = [];
+  const goodsInCart: Good[] = checkLocalStorage('cart', []);
 
-  if (localStorage.getItem('cart')) {
-    goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
-  }
-
-  let goods: [] = [];
-
-  if (localStorage.getItem('goods')) {
-    goods = JSON.parse(localStorage.getItem('goods') as string);
-  }
-
-  const goodsInCartArray = goods.filter(
-    (el: { id: number; quantity: number }) =>
-      goodsInCart.some((item) => {
-        if (el.id === item.id) {
-          el.quantity = item.amount;
-          return true;
-        } else return false;
-      }),
-  );
-
-  const [inCart, setInCart] = useState<Good[]>(
-    goodsInCartArray.filter((el: { id: number }) => el.id !== 0),
-  );
+  const [inCart, setInCart] = useState<Good[]>(goodsInCart);
+  console.log(inCart);
 
   function clearCart() {
     localStorage.cart = [];
@@ -60,117 +28,107 @@ const Cart = () => {
   }
 
   function delFromCart(id: number) {
-    const newArray = goodsInCartArray.filter(
-      (el: { id: number }) => el.id !== id,
-    );
-    toggleCartInLocalStorage(true, id);
+    const newArray = goodsInCart.filter((el: { id: number }) => el.id !== id);
+    toggleLocalStorage(true, id);
     setInCart(newArray);
   }
 
-  function getTotalPrice() {
-    return inCart.reduce(
-      (total: number, el: { quantity: number; price: number }) =>
-        el.price * (el?.quantity ? el.quantity : 1) + total,
-      0,
-    );
-  }
-
-  function increment(amount: number, id: number) {
+  function increment(amount: number, good: Good) {
     const newArray: Good[] = [...inCart];
-    newArray[inCart.findIndex((el: { id: number }) => el.id === id)].quantity =
-      amount;
+    newArray[
+      inCart.findIndex((el: { id: number }) => el.id === good.id)
+    ].quantity = amount;
 
-    addToCart(amount, id, 'replace');
+    addToCart(amount, good, 'replace');
     setInCart(newArray);
   }
 
   return (
     <>
-      <PageTitle>Кошик</PageTitle>
-      <ContainerLimiter paddingTopMob={'32px'} paddingTopDesc={'56px'}>
-        <ListHeaderWrapper>
-          <Name>Товар</Name>
-          <Price>Ціна</Price>
-          <Quantity>Кількість</Quantity>
-          <p>Загальна вартість</p>
-        </ListHeaderWrapper>
-        <FavoritesList>
+      <ContainerLimiter>
+        <div className={`grid ${css.listHeaderWrapper}`}>
+          <p className={css.name}>Товар</p>
+          <p className={css.price}>Ціна</p>
+          <p className={css.quantity}>Кількість</p>
+          <p className={css.total}>Загальна вартість</p>
+        </div>
+        <div className="favorites-cart_list">
           {inCart.map((el: Good) => (
-            <Card key={el.id}>
+            <li className={`grid ${css.card}`} key={el.id}>
               <CartCard
                 good={el}
                 onClickDelete={delFromCart}
                 increment={increment}
               />
-            </Card>
+            </li>
           ))}
-        </FavoritesList>
+        </div>
         {inCart.length > 0 ? (
-          <FlexBox>
-            <GoToCatalog to={'/catalog'} className="secondaryBtn">
+          <div className={css.flexBox}>
+            <Link to={'/catalog'} className={`${css.toCatalog} secondaryBtn`}>
               <svg width={16} height={16}>
                 <use href={`${sprite}#arrow-right`} />
               </svg>
               продовжити покупки
-            </GoToCatalog>
-            <Button
+            </Link>
+            <button
               type="button"
               onClick={() => clearCart()}
-              className="secondaryBtn"
+              className={`${css.cartsBtn} secondaryBtn`}
             >
               Очистити кошик
-            </Button>
-          </FlexBox>
+            </button>
+          </div>
         ) : (
-          <EmptyMessage>
+          <div className="emptyMessage">
             <svg width={124} height={124}>
               <use href={`${sprite}#cart`} />
             </svg>
-            <h2>Ваш кошик пустий</h2>
-            <GoToCatalog to={'/catalog'} className="secondaryBtn">
+            <h2>Ваш кошик порожній</h2>
+            <Link to={'/catalog'} className={`${css.clearBtn} primaryBtn`}>
               <svg width={14} height={9}>
                 <use href={`${sprite}#arrow-right`} />
               </svg>
               повернутись до покупок
-            </GoToCatalog>
-          </EmptyMessage>
+            </Link>
+          </div>
         )}
         {inCart.length > 0 && (
-          <FlexContainer>
-            <CouponBox>
+          <div className={css.flexContainer}>
+            <form className={css.couponForm}>
               <h3>Купон на знижку</h3>
               <label>
                 Введіть номер купону
                 <input type="text" placeholder="Номер купону" />
               </label>
-              <Button
-                className="secondaryBtn"
+              <button
+                className={`${css.cartsBtn} secondaryBtn`}
                 type="button"
                 onClick={() => console.log('apply coupon')}
               >
                 застосувати купон
-              </Button>
-            </CouponBox>
-            <BuyBox>
+              </button>
+            </form>
+            <div className={css.buyBox}>
               <div>
                 <div>
                   <p>Ціна</p>
-                  <p>₴ {getTotalPrice()}</p>
+                  <p>₴ {getTotalPrice(inCart)}</p>
                 </div>
                 <div>
                   <p>Загальна вартість</p>
-                  <p>₴{getTotalPrice()}</p>
+                  <p>₴ {getTotalPrice(inCart)}</p>
                 </div>
               </div>
 
-              <GoToPayment to={'/payment'} className="primaryBtn">
+              <Link to={'/delivery'} className={`${css.toPayment} primaryBtn`}>
                 перейти до оплати
                 <svg width={14} height={9}>
                   <use href={`${sprite}#arrow-right`} />
                 </svg>
-              </GoToPayment>
-            </BuyBox>
-          </FlexContainer>
+              </Link>
+            </div>
+          </div>
         )}
       </ContainerLimiter>
     </>

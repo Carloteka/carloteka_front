@@ -1,43 +1,18 @@
+import css from './Favorites.module.scss';
 import { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { FavoritesContext } from '../../components/Layout';
-import { PageTitle } from 'src/components/pageTitle/PageTitle';
 import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter.tsx';
-import {
-  ListHeaderWrapper,
-  Name,
-  Price,
-  FavoritesList,
-  Card,
-  Button,
-  EmptyMessage,
-  GoToCatalog,
-} from './Favorites.styled';
 import { FavoritesCard } from '../../components/FavoritesCard/FavoritesCard';
-import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
+import { toggleLocalStorage, checkLocalStorage } from '../../utils';
 import sprite from '../../images/sprite.svg';
 
 const Favorites = () => {
   const { setAmountInFavorites } = useContext(FavoritesContext);
 
-  let favoritesIds = [];
+  const favoriteGoodsArray = checkLocalStorage('favorite', []);
 
-  if (localStorage.getItem('favorite')) {
-    favoritesIds = JSON.parse(localStorage.getItem('favorite'));
-  }
-
-  let goods = [];
-
-  if (localStorage.getItem('goods')) {
-    goods = JSON.parse(localStorage.getItem('goods'));
-  }
-
-  let favoriteGoodsArray = goods.filter((el) =>
-    favoritesIds.some((id) => el.id === id),
-  );
-
-  const [favorites, setFavorites] = useState(
-    favoriteGoodsArray.filter((el) => el.id !== 0),
-  );
+  const [favorites, setFavorites] = useState(favoriteGoodsArray);
 
   function clearFavorites() {
     localStorage.favorite = [];
@@ -47,47 +22,50 @@ const Favorites = () => {
 
   function delFromFavorite(id) {
     const newArray = favoriteGoodsArray.filter((el) => el.id !== id);
-    toggleLocalStorage(true, 'favorite', id);
+    toggleLocalStorage(true, 'favorite', { id });
     setFavorites(newArray);
   }
 
   return (
     <>
-      <PageTitle>Список бажань</PageTitle>
-      <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'56px'}>
-        <ListHeaderWrapper>
-          <Name>Товар</Name>
-          <Price>Ціна</Price>
-          <p>Рейтинг товару та відгуки</p>
-        </ListHeaderWrapper>
-        <FavoritesList>
-          {favorites?.map((el) => (
-            <Card key={el.id}>
-              <FavoritesCard good={el} onClickDelete={delFromFavorite} />
-            </Card>
-          ))}
-        </FavoritesList>
+      <ContainerLimiter>
+        <div className={`grid ${css.listHeaderWrapper}`}>
+          <p className={css.name}>Товар</p>
+          <p className={css.price}>Ціна</p>
+          <p className={css.mobVers}>Рейтинг, відгуки та ціна товару</p>
+          <p className={css.tablVers}>Рейтинг товару та відгуки</p>
+        </div>
+        {favorites.length > 0 && (
+          <ul className="favorites-cart_list">
+            {favorites?.map((el) => (
+              <li className={`grid ${css.card} `} key={el.id}>
+                <FavoritesCard good={el} onClickDelete={delFromFavorite} />
+              </li>
+            ))}
+          </ul>
+        )}
+
         {favorites?.length > 0 ? (
-          <Button
-            className="secondaryBtn"
+          <button
+            className={`${css.clearBtn} secondaryBtn`}
             type="button"
             onClick={() => clearFavorites()}
           >
             Очистити список бажань
-          </Button>
+          </button>
         ) : (
-          <EmptyMessage>
+          <div className="emptyMessage">
             <svg width={124} height={124}>
               <use href={`${sprite}#favorite`} />
             </svg>
-            <h2>Список бажань пустий</h2>
-            <GoToCatalog to={'/catalog'} className="primaryBtn">
+            <h2>Список бажань порожній</h2>
+            <Link to={'/catalog'} className={`${css.toCatalog} primaryBtn`}>
               <svg width={14} height={9}>
                 <use href={`${sprite}#arrow-right`} />
               </svg>
               повернутись до покупок
-            </GoToCatalog>
-          </EmptyMessage>
+            </Link>
+          </div>
         )}
       </ContainerLimiter>
     </>

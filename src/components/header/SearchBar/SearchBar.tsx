@@ -1,22 +1,13 @@
-import {
-  SearchBox,
-  Form,
-  Input,
-  Backdrop,
-  SearchResultDiv,
-  GoodListResult,
-  Button,
-} from './SearchBar.styled';
+import css from './SearchBar.module.scss';
 import sprite from '../../../images/sprite.svg';
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { fetchCategories, fetchPopularGoods } from '../../../api/api';
+import { fetchCategories, fetchFilteredGoods } from '../../../api/api';
 import { Categories, Good } from '../../../../@types/custom';
 import { Loader } from '../../Loader/Loader';
 
 export const SearchBar = () => {
   const [showResult, setShowResult] = useState<boolean>(false);
-  const [searchedGoods, setSearchedGoods] = useState<Good[]>([]);
   const [searchedCategories, setSearchedCategories] = useState<Categories[]>(
     [],
   );
@@ -32,9 +23,8 @@ export const SearchBar = () => {
     async function getAllGoods() {
       try {
         setIsLoading(true);
-        const data = await fetchPopularGoods();
-        localStorage.setItem('goods', JSON.stringify(data));
-        setGoods(data);
+        const data = await fetchFilteredGoods(`?search_in_name=${query}`);
+        setGoods(data?.data);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -55,7 +45,6 @@ export const SearchBar = () => {
 
     if (isFirstRender.current) {
       isFirstRender.current = false;
-      getAllGoods();
       getCategories();
 
       return;
@@ -66,16 +55,16 @@ export const SearchBar = () => {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    function filtering(array: Good[] | Categories[]): any[] {
+    function filtering(array: Categories[]): Categories[] {
       const filteredArray = array.filter((el: Good | Categories) =>
         el.name.toUpperCase().includes(query.toUpperCase()),
       );
       return filteredArray.slice(0, 4);
     }
 
-    setSearchedGoods(filtering(goods));
+    getAllGoods();
     setSearchedCategories(filtering(categories));
-  }, [goods, categories, query]);
+  }, [categories, query]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -89,16 +78,16 @@ export const SearchBar = () => {
   return (
     <>
       {isLoading && <Loader />}
-      <SearchBox>
+      <div className={css.searchBox}>
         <search>
-          <Form
+          <form
             onSubmit={handleSubmit}
             style={{
               boxShadow: query ? '1px 1px 7px 0 #c6b89e' : '',
-              background: query ? '#fff' : '',
+              background: query ? '#fff' : '#F2F0EC',
             }}
           >
-            <Input
+            <input
               type={'search'}
               name="query"
               value={query}
@@ -110,25 +99,32 @@ export const SearchBar = () => {
               onClick={() => {
                 return false;
               }}
+              title="Search"
             >
               <svg width={16} height={16}>
                 <use href={`${sprite}#search`} />
               </svg>
             </button>
-          </Form>
+          </form>
         </search>
         {showResult && query && (
           <>
-            <Backdrop onClick={() => setShowResult(false)}></Backdrop>
-            <SearchResultDiv>
-              {!(searchedGoods.length > 0) &&
-              !(searchedCategories.length > 0) ? (
+            <div
+              className="backdrop"
+              onClick={() => setShowResult(false)}
+            ></div>
+            <div className={css.searchResult}>
+              {!(goods.length > 0) && !(searchedCategories.length > 0) ? (
                 <>
                   <p>нічого не знайдено</p>
                   <div>
-                    <Button title="Show catalog" to={'/catalog'}>
+                    <Link
+                      title="Show catalog"
+                      to={'/catalog'}
+                      className={css.linkBtn}
+                    >
                       ПОДИВИТИСЬ КАТАЛОГ
-                    </Button>
+                    </Link>
                   </div>
                 </>
               ) : (
@@ -151,7 +147,7 @@ export const SearchBar = () => {
                                 alt={el.name}
                               />
                               <Link
-                                to={`/catalog?category__i=${el.id}`}
+                                to={`/catalog?category__id=${el.id}`}
                                 onClick={() => setShowResult(false)}
                               >
                                 {el?.name}
@@ -161,11 +157,11 @@ export const SearchBar = () => {
                         </ul>
                       </li>
                     )}
-                    {searchedGoods.length > 0 && (
-                      <GoodListResult>
+                    {goods.length > 0 && (
+                      <li className={css.goodListResult}>
                         <h4>Товари</h4>
                         <ul>
-                          {searchedGoods.map((el) => (
+                          {goods.map((el) => (
                             <li key={el?.id}>
                               <img
                                 src={
@@ -178,7 +174,7 @@ export const SearchBar = () => {
                                 alt={el.name}
                               />
                               <Link
-                                to={`/${el.category.id}/${el.slug}/description`}
+                                to={`/${el.slug}/description`}
                                 onClick={() => setShowResult(false)}
                               >
                                 {el?.name}
@@ -187,25 +183,25 @@ export const SearchBar = () => {
                             </li>
                           ))}
                         </ul>
-                      </GoodListResult>
+                      </li>
                     )}
                   </ul>
                   <div>
-                    <Button
+                    <Link
                       title="Show all results"
                       to={`/catalog?query=${query}`}
                       onClick={() => setShowResult(false)}
-                      className="primaryBtn"
+                      className={`${css.linkBtn} primaryBtn`}
                     >
                       Всі результати
-                    </Button>
+                    </Link>
                   </div>
                 </>
               )}
-            </SearchResultDiv>
+            </div>
           </>
         )}
-      </SearchBox>
+      </div>
     </>
   );
 };

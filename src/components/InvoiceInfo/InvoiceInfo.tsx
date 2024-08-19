@@ -1,32 +1,16 @@
-import {
-  InfoBox,
-  DeliveryPrice,
-  Total,
-  PolicyLink,
-} from './InvoiceInfo.styled';
+import css from './InvoiceInfo.module.scss';
+import { Link } from 'react-router-dom';
 import { Good } from '../../../@types/custom';
-// type Good = {
-//   name: string;
-//   price: number;
-//   id_name: string;
-//   quantity: number;
-// };
+// import { getTotalPrice } from '../../utils';
 
 interface InvoiceInfoProps {
   inCart: Good[];
+  total: number;
 }
 
-export const InvoiceInfo = ({ inCart }: InvoiceInfoProps) => {
-  function getTotalPrice() {
-    return inCart.reduce(
-      (total: number, el: { quantity: number; price: number }) =>
-        el.price * (el?.quantity ? el.quantity : 1) + total,
-      0,
-    );
-  }
-
+export const InvoiceInfo = ({ inCart, total }: InvoiceInfoProps) => {
   return (
-    <InfoBox>
+    <div className={css.infoBox}>
       <h3>Ваше замовлення</h3>
       <div>
         <h4>Товар</h4>
@@ -41,21 +25,16 @@ export const InvoiceInfo = ({ inCart }: InvoiceInfoProps) => {
                 {el.name}
                 {el.quantity > 1 && ` (${el.quantity} шт.)`}
               </p>
-              <p>₴ {el.price * el.quantity}</p>
+              <p>₴ {el.price * (el?.quantity ? el.quantity : 1)}</p>
             </div>
           </li>
         ))}
       </ul>
 
-      <DeliveryPrice>
-        <p>Вартість доставки</p>
-        <p>₴ 95</p>
-      </DeliveryPrice>
-
-      <Total>
+      <div className={css.total}>
         <p>Загальна сума:</p>
-        <p>₴ {getTotalPrice() + 95}</p>
-      </Total>
+        <p>₴ {total.toFixed(2)}</p>
+      </div>
 
       <h3>Метод оплати</h3>
       <p>
@@ -66,8 +45,11 @@ export const InvoiceInfo = ({ inCart }: InvoiceInfoProps) => {
         Ваші особисті дані використовуватимуться для обробки вашого замовлення,
         можливості користування цим веб-сайтом та для інших цілей, описаних у
         нашій
-        <PolicyLink to={'./policy'}> політиці конфіденційності.</PolicyLink>
+        <Link to={'./policy'} className={css.policyLink}>
+          {' '}
+          політиці конфіденційності.
+        </Link>
       </p>
-    </InfoBox>
+    </div>
   );
 };

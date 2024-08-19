@@ -1,18 +1,9 @@
+import css from './CatalogCard.module.scss';
 import { useState, useContext } from 'react';
-import { CartContext, FavoritesContext } from '../Layout';
 import { Link } from 'react-router-dom';
-import {
-  ThumbPhoto,
-  Name,
-  Button,
-  Div,
-  FlexContainer,
-  Star,
-} from './CatalogCard.styled';
+import { CartContext, FavoritesContext } from '../Layout';
 import sprite from '../../images/sprite.svg';
-import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
-import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
-import { getBanner } from '../../utils/getBanner';
+import { toggleLocalStorage, getBanner, checkLocalStorage } from '../../utils';
 import { Good as Popular } from '../../../@types/custom';
 
 interface SliderItemProps {
@@ -25,35 +16,26 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
   const { setAmountInCart } = useContext(CartContext);
   const { setAmountInFavorites } = useContext(FavoritesContext);
 
-  let cartArray: { id: number; amount: number }[] = [];
-  let favoriteArray: number[] = [];
-
-  if (localStorage.getItem('cart')) {
-    cartArray = JSON.parse(localStorage.getItem('cart') as string);
-  } else {
-    localStorage.setItem('cart', JSON.stringify(cartArray));
-  }
-
-  if (localStorage.getItem('favorite')) {
-    favoriteArray = JSON.parse(localStorage.getItem('favorite') as string);
-  } else {
-    localStorage.setItem('favorite', JSON.stringify(favoriteArray));
-  }
+  const cartArray: { id: number; amount: number }[] = checkLocalStorage(
+    'cart',
+    [],
+  );
+  const favoriteArray: { id: number }[] = checkLocalStorage('favorite', []);
 
   const isInCart: boolean = cartArray.some((el) => el.id === id);
-  const isInFavorite: boolean = favoriteArray.includes(id);
+  const isInFavorite: boolean = favoriteArray.some((el) => el.id === id);
   const [inCart, setInCart] = useState(isInCart);
   const [isFavorite, setIsFavorite] = useState(isInFavorite);
 
   function toggleCart() {
-    toggleCartInLocalStorage(inCart, id);
+    toggleLocalStorage(inCart, 'cart', item);
     setInCart((prev) => !prev);
     setAmountInCart((amountInCart: number) =>
       isInCart ? amountInCart - 1 : amountInCart + 1,
     );
   }
   function toggleFavorite() {
-    toggleLocalStorage(isFavorite, 'favorite', id);
+    toggleLocalStorage(isFavorite, 'favorite', item);
     setIsFavorite((prev) => !prev);
     setAmountInFavorites((amountInFavorites: number) =>
       isFavorite ? amountInFavorites - 1 : amountInFavorites + 1,
@@ -62,27 +44,29 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
 
   return (
     <>
-      <ThumbPhoto>
+      <div className={css.thumbPhoto}>
         <div>
-          <Button
+          <button
             type="button"
             style={{ backgroundColor: inCart ? '#2D3F24' : 'white' }}
             onClick={() => toggleCart()}
             disabled={stock === 'OUT_OF_STOCK'}
+            className={css.cardBtn}
           >
-            <svg>
+            <svg style={{ fill: inCart ? 'white' : '#101010' }}>
               <use href={`${sprite}#cart`} />
             </svg>
-          </Button>
-          <Button
+          </button>
+          <button
             type="button"
             style={{ backgroundColor: isFavorite ? '#2D3F24' : 'white' }}
             onClick={() => toggleFavorite()}
+            className={css.cardBtn}
           >
             <svg style={{ fill: isFavorite ? 'white' : '#101010' }}>
               <use href={`${sprite}#favorite`} />
             </svg>
-          </Button>
+          </button>
         </div>
         {!(stock === 'IN_STOCK') && (
           <p
@@ -108,7 +92,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
                 : `http://localhost:8000/${mini_image}`
             }
             alt="img першої категорії"
-            width={304}
+            width={288}
             height={304}
             style={{
               opacity:
@@ -123,25 +107,25 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
             loading="lazy"
           />
         </Link>
-      </ThumbPhoto>
-      <Name>{name}</Name>
-      <Div>
-        <FlexContainer>
+      </div>
+      <h4 className={css.name}>{name}</h4>
+      <div className={css.infoDiv}>
+        <div className={css.flexBox}>
           <ul>
             {[0, 1, 2, 3, 4].map((index) => (
               <li key={index}>
-                <Star
+                <svg
                   style={{ fill: index < stars ? '#5B5B59' : 'transparent' }}
                 >
                   <use href={`${sprite}#star`} />
-                </Star>
+                </svg>
               </li>
             ))}
           </ul>
           {stars}
-        </FlexContainer>
+        </div>
         <p>₴ {price}</p>
-      </Div>
+      </div>
     </>
   );
 };
