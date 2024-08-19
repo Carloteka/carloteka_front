@@ -45,34 +45,25 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
   return (
     <>
       <div className={css.thumbPhoto}>
-        <div>
-          <button
-            type="button"
-            style={{ backgroundColor: inCart ? '#2D3F24' : 'white' }}
-            onClick={() => toggleCart()}
-            disabled={stock === 'OUT_OF_STOCK'}
-            className={css.cardBtn}
+        <button
+          type="button"
+          onClick={() => toggleFavorite()}
+          className={css.favBtn}
+        >
+          <svg
+            style={{
+              fill: isFavorite ? '#2d3f24' : 'transparent',
+            }}
           >
-            <svg style={{ fill: inCart ? 'white' : '#101010' }}>
-              <use href={`${sprite}#cart`} />
-            </svg>
-          </button>
-          <button
-            type="button"
-            style={{ backgroundColor: isFavorite ? '#2D3F24' : 'white' }}
-            onClick={() => toggleFavorite()}
-            className={css.cardBtn}
-          >
-            <svg style={{ fill: isFavorite ? 'white' : '#101010' }}>
-              <use href={`${sprite}#favorite`} />
-            </svg>
-          </button>
-        </div>
+            <use href={`${sprite}#favorite`} />
+          </svg>
+        </button>
+
         {!(stock === 'IN_STOCK') && (
           <p
+            className={css.banners}
             style={{
               borderTop: stock === 'BACKORDER' ? '0.5px solid white' : '',
-              textTransform: 'capitalize',
               backgroundColor:
                 stock === 'BACKORDER'
                   ? '#2D3F24'
@@ -124,8 +115,24 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
           </ul>
           {stars}
         </div>
-        <p>₴ {price}</p>
+        <p>{price} грн</p>
       </div>
+      <button
+        type="button"
+        style={{ backgroundColor: !inCart ? '#2D3F24' : '#DAD4C8' }}
+        onClick={() => toggleCart()}
+        disabled={stock === 'OUT_OF_STOCK'}
+        className={css.cardBtn}
+      >
+        <svg
+          style={{
+            fill: !inCart ? 'white' : '#2d3f24',
+            padding: inCart ? '3px' : 0,
+          }}
+        >
+          <use href={`${sprite}#${inCart ? 'check-long' : 'cart'}`} />
+        </svg>
+      </button>
     </>
   );
 };

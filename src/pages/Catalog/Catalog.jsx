@@ -611,7 +611,7 @@ const Catalog = () => {
 
               <ul className={css.goodList}>
                 {getSortedGoods()?.map((el) => (
-                  <li key={el.id}>
+                  <li key={el.id} className="productCard">
                     <CatalogCard item={el} />
                   </li>
                 ))}
